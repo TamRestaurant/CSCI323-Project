@@ -107,7 +107,7 @@ public class restWinMake extends JFrame {
 		
 		lockscreen l = new lockscreen();
 		tabbedPane.addTab("Lockscreen", null, l.lock(), null);
-		
+		String dah= "kdfds";
 		//電電電電電電電電電電電電電電電電電電電電電電電電電電電電電電電電電電電
 		
 		
