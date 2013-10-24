@@ -7,6 +7,7 @@ import java.awt.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
@@ -33,6 +34,7 @@ import javax.swing.JSeparator;
 
 //import RPSGui.buttonListener;
 
+
 import java.awt.GridLayout;
 
 
@@ -43,10 +45,14 @@ public class lockscreen extends JFrame
 	public lockscreen()
 	{
 		JButton unlockBtn=new JButton("Unlock Workstation");
+		
 		unlockBtn.setBounds(0, 170, 445, 23);
 		JButton lockBtn=new JButton("Lock Workstation");
 		lockBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				kitchen.k().setEnabled(false);//here
+			//menu.m().disable();//here
+				 JOptionPane.showMessageDialog(null, "yay!!");
 			}
 		});
 		lockBtn.setBounds(0, 75, 445, 23);
@@ -57,7 +63,7 @@ public class lockscreen extends JFrame
 		
 		lockscreen.addTab("New tab", null, panel_4, null);
 		
-		JPasswordField pwdYourPin = new JPasswordField();
+		final JPasswordField pwdYourPin = new JPasswordField();
 		pwdYourPin.setText("xxxxxxxx");
 		pwdYourPin.setBounds(242, 122, 62, 29);
 		panel_4.setLayout(null);
@@ -67,6 +73,28 @@ public class lockscreen extends JFrame
 		panel_4.add(pwdYourPin);
 		panel_4.add(unlockBtn);
 		panel_4.add(lockBtn);
+		unlockBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				 char[] enteredPwrd=pwdYourPin.getPassword();
+				 String enteredStrPwd="";
+				 for(char i : enteredPwrd) {
+					 enteredStrPwd+=i;
+				 }
+				 System.out.println(enteredStrPwd);
+			
+//				  enteredStrPwd=pwdYourPin.getText();
+
+				 if (enteredStrPwd.equals("rest")) {
+					 
+					 kitchen.k().setVisible(false);
+				JOptionPane.showMessageDialog(null, "yay!!");
+				 }else {
+					 JOptionPane.showMessageDialog(null, "nay");
+				 }
+				
+			}
+		});
 	}
 	
 	

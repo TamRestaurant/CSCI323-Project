@@ -38,7 +38,7 @@ import java.awt.GridLayout;
 
 public class kitchen extends JFrame 
 {
-	private JTabbedPane kitchen;
+	private static JTabbedPane kitchen;//here
 	private JPanel panel_3;
 	public kitchen()
 	{
@@ -49,7 +49,7 @@ public class kitchen extends JFrame
 		panel_3.setLayout(null);
 	}
 
-	public JTabbedPane k()
+	public static JTabbedPane k()//here
 	{
 		return kitchen;
 	}

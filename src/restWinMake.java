@@ -103,6 +103,16 @@ public class restWinMake extends JFrame {
 		kitchen k = new kitchen();
 		tabbedPane.addTab("Kitchen", null, k.k(), null);
 		
+		//locksreen tab
+		
+		lockscreen l = new lockscreen();
+		tabbedPane.addTab("Lockscreen", null, l.lock(), null);
+		
+		//電電電電電電電電電電電電電電電電電電電電電電電電電電電電電電電電電電電
+		
+		
+		
+		
 		/*
 		 * 
 		 * 
