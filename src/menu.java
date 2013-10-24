@@ -104,18 +104,15 @@ public class menu extends JFrame
 		JPanel subWaitTab = new JPanel();
 		waitTab.addTab("Ticket Maker", null, subWaitTab, null);
 		subWaitTab.setLayout(null);
-		// ≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈ Load images
-		// ≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈
-		
-		
+		//---------------------------------------------------------------------------------------------		
+
 		menuButtonsImage = new ImageIcon[64];
 		for (int i = 0; i < menuButtonsImage.length; i++) 
 		{
 			menuButtonsImage[i] = new ImageIcon("./src/Unknown.jpeg");
 
 		}
-		//≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈ Start ButtonSubPanels ≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈
-		
+//---------------------------------------------------------------------------------------------		
 		subWaitTab.setBounds(6, 6, 810, 810);
 		menuPanel.add(subWaitTab);
 		
@@ -145,9 +142,7 @@ public class menu extends JFrame
 		sidesButtonPanel.setBorder(BorderFactory.createLoweredBevelBorder());
 
 //		
-		//≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈ End ButtonSubPanels ≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈
-		//≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈ Start ButtonLabels ≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈
-
+		//---------------------------------------------------------------------------------------------		
 
 		JLabel lblMainEntree = new JLabel("Main Entree");
 		lblMainEntree.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
@@ -173,8 +168,7 @@ public class menu extends JFrame
 		lblTicketDisplay.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		lblTicketDisplay.setBounds(830, 6, 145, 25);
 		subWaitTab.add(lblTicketDisplay);
-		//≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈ End ButtonLabels ≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈
-		//≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈ Start Load Buttons ≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈
+		//---------------------------------------------------------------------------------------------		
 
 	
 				for (int j = 0; j < 24; j++) {
@@ -201,9 +195,8 @@ public class menu extends JFrame
 					sidesButtonPanel.add(menuButtons[j]);
 					menuButtons[j].addActionListener(new buttonListener());
 				}			
-	//≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈ End Load Buttons ≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈
-
-				
+				//---------------------------------------------------------------------------------------------		
+	
 		
 		
 		//-----------------------------Order buttons-------------------------------
