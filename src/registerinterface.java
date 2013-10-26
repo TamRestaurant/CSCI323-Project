@@ -122,9 +122,9 @@ public class registerinterface extends JFrame {
 		String[] itm = new String[orders.size()];
 		// line;
 		for (int i = 0; i < orders.size(); i++) {
-			String line = "Order number: "
+			String line = "        Order number:  "
 					+ orders.get(i).getOrderNumber()
-					+ "   Total Due: "
+					+ "      Total Due:   "
 					+ NumberFormat.getCurrencyInstance().format(
 							orders.get(i).getOrderTotal()) + "";
 			// comboBox.add(orders.get(i));
