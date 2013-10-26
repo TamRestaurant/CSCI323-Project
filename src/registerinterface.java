@@ -111,25 +111,27 @@ public class registerinterface extends JFrame {
 
 		// ArrayList<Order> orders=menu.getOrders();
 		orders = menu.getOrders();
-//		orders = new ArrayList<Order>();
-//
-//		for (int i = 0; i < 9; i++) {
-//			Order o = new Order();
-//			o.setOrderNumber(i * 325);
-//			o.setOrderTotal(i + 11);
-//			orders.add(o);
-//		}
+		// orders = new ArrayList<Order>();
+		//
+		// for (int i = 0; i < 9; i++) {
+		// Order o = new Order();
+		// o.setOrderNumber(i * 325);
+		// o.setOrderTotal(i + 11);
+		// orders.add(o);
+		// }
 		String[] itm = new String[orders.size()];
 		// line;
 		for (int i = 0; i < orders.size(); i++) {
-			String line = "Order number: " + orders.get(i).getOrderNumber()
-					+ "   Total Due: " + NumberFormat.getCurrencyInstance()
-					.format(orders.get(i).getOrderTotal()) + "";
+			String line = "Order number: "
+					+ orders.get(i).getOrderNumber()
+					+ "   Total Due: "
+					+ NumberFormat.getCurrencyInstance().format(
+							orders.get(i).getOrderTotal()) + "";
 			// comboBox.add(orders.get(i));
 			itm[i] = line;
 		}
 		orderComboBox = new JComboBox(itm);
-		System.out.println(itm.length+"\n"+orders.size()+"\n"+orderComboBox.getComponentCount());
+		
 		orderComboBox.setMaximumRowCount(100);
 		orderComboBox.setBounds(258, 104, 300, 20);
 		contentPane.add(orderComboBox);
@@ -137,18 +139,18 @@ public class registerinterface extends JFrame {
 		btnNewButton = new JButton("Apply Payment");
 
 		btnNewButton.addActionListener(new ActionListener() {
-////////accept payment
+			// //////accept payment
 			public void actionPerformed(ActionEvent e) {
 				index = orderComboBox.getSelectedIndex();
 				double amountDue = orders.get(index).getOrderTotal();
 				double amountTendered = 0;
 				try {
-					amountTendered = Double.parseDouble(amountTendTxt
-							.getText());
+					amountTendered = Double.parseDouble(amountTendTxt.getText());
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(null, "Enter numbers only! Try again.");
-//					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null,
+							"Enter numbers only! Try again.");
+					// e1.printStackTrace();
 					return;
 				}
 				double diff = amountDue - amountTendered;
@@ -199,14 +201,14 @@ public class registerinterface extends JFrame {
 				// if order is paid then we can close order and send to db etc
 				if (paid) {
 					// ////////reset combo box etc
-					//orderComboBox.remove(index);
+					// orderComboBox.remove(index);
 					orders.remove(index);
 					// ////////////////
 					dispose();
-//					changelbl.setText(NumberFormat.getCurrencyInstance()
-//							.format(0));
-//					orderComboBox.revalidate();
-//					orderComboBox.repaint();
+					// changelbl.setText(NumberFormat.getCurrencyInstance()
+					// .format(0));
+					// orderComboBox.revalidate();
+					// orderComboBox.repaint();
 				} else {
 					JOptionPane.showMessageDialog(null,
 							"Order must be paid before it can be closed.");
@@ -219,10 +221,11 @@ public class registerinterface extends JFrame {
 		contentPane.add(btnNewButton_1);
 
 	}
+
 	public void pullThePlug() {
-        WindowEvent wev = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
-        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
-}
+		WindowEvent wev = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+		Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
+	}
 
 	private class buttonListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
