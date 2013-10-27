@@ -108,7 +108,10 @@ public class restWinMake extends JFrame {
 		lockscreen l = new lockscreen();
 		tabbedPane.addTab("Lockscreen", null, l.lock(), null);
 		String dah= "kdfds";
-//-----------------------------------------------------------------------		
+//----------------------ADD employee tab (for managing of menu/past orders/employees)----------------------		
+		admin a = new admin();
+		tabbedPane.addTab("Administration", a.getAdminPanel());
+		//TODO: Create dbConnector in one place and allow other classes to use it to avoid multiple connections
 		
 		
 		
