@@ -141,6 +141,13 @@ public class registerinterface extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			// //////accept payment
 			public void actionPerformed(ActionEvent e) {
+				// check if there is an order to pay
+				if (orders.size()==0) {
+					JOptionPane.showMessageDialog(null,
+							"There is no order to process.");
+					dispose();
+					return;
+				}
 				index = orderComboBox.getSelectedIndex();
 				double amountDue = orders.get(index).getOrderTotal();
 				double amountTendered = 0;
@@ -196,8 +203,16 @@ public class registerinterface extends JFrame {
 		JButton btnNewButton_1 = new JButton("Close Order");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//check if there is an order to close
+				if (orders.size()==0) {
+					JOptionPane.showMessageDialog(null,
+							"There is no order to process.");
+					dispose();
+					return;
+				}
 				index = orderComboBox.getSelectedIndex();
 				boolean paid = orders.get(index).isPaid();
+				
 				// if order is paid then we can close order and send to db etc
 				if (paid) {
 					// ////////reset combo box etc
