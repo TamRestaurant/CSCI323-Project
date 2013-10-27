@@ -8,13 +8,13 @@ import javax.swing.JTabbedPane;
 
 public class admin extends JPanel {
 	private JTabbedPane tabbedPane;
-	private employeeGui empGui = new employeeGui();
-	private orderHistory orderHist = new orderHistory();
+	private employeeGui empGui;
+	private orderHistory orderHist;
 
 	/**
 	 * Create the panel.
 	 */
-	public admin() {
+	public admin(dbAction DBAction) {
 		setBounds(new Rectangle(5, 5, 1100, 550));
 		setLayout(null);
 		
@@ -22,6 +22,8 @@ public class admin extends JPanel {
 		tabbedPane.setBounds(0, 0, 1100, 550);
 		add(tabbedPane);
 		
+		empGui = new employeeGui(DBAction);
+		orderHist = new orderHistory(DBAction);
 		
 		
 		tabbedPane.addTab("Employee Management", empGui.getEmployeeGui());

@@ -68,7 +68,7 @@ public class orderHistory implements ActionListener {
 	private JPanel panelReportOptions;
 	private JButton btnSubmit;
 	private JButton btnSaveReport;
-	private dbAction myDBconnection = new dbAction();
+	private dbAction myDBconnection;
 	private JLabel lblErrorLabel;
 	
 	private ResultSet resultSet;
@@ -93,8 +93,8 @@ public class orderHistory implements ActionListener {
 	/**
 	 * Create the application.
 	 */
-	public orderHistory() {
-		initialize();
+	public orderHistory(dbAction DBAction) {
+		initialize(DBAction);
 	}
 	
 	public JPanel getOrderHistory(){
@@ -104,12 +104,12 @@ public class orderHistory implements ActionListener {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(dbAction DBAction) {
 //		frame = new JFrame();
 //		frame.setBounds(100, 100, 984, 612);
 //		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		frame.getContentPane().setLayout(null);
-		
+		myDBconnection = DBAction;
 		panelOrderHistory = new JPanel();
 		panelOrderHistory.setBounds(0, 0, 968, 573);
 //		frame.getContentPane().add(panel);

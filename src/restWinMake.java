@@ -33,7 +33,11 @@ import java.awt.GridLayout;
 public class restWinMake extends JFrame {
 	private JPanel contentPane;
 	private JPasswordField pwdYourPin;
-
+	
+	//This connects to DB and can be passed into any class that needs to connect to DB 
+	//(best to config constructor initialization, refer to admin tab for example)
+	private dbAction DBAction = new dbAction();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -109,7 +113,7 @@ public class restWinMake extends JFrame {
 		tabbedPane.addTab("Lockscreen", null, l.lock(), null);
 		String dah= "kdfds";
 //----------------------ADD employee tab (for managing of menu/past orders/employees)----------------------		
-		admin a = new admin();
+		admin a = new admin(DBAction);
 		tabbedPane.addTab("Administration", a.getAdminPanel());
 		//TODO: Create dbConnector in one place and allow other classes to use it to avoid multiple connections
 		

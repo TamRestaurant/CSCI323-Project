@@ -80,7 +80,7 @@ public class employeeGui {
 	private JPanel panelEmpGui;
 	
 	//Connect to database on load
-	private dbAction myDBconnection = new dbAction();
+	private dbAction myDBconnection;
 	private JLabel lblHireDate;
 	private JComboBox comboBoxMonth;
 	private JComboBox comboBoxDay;
@@ -110,8 +110,8 @@ public class employeeGui {
 	/**
 	 * Create the application.
 	 */
-	public employeeGui() {
-		initialize();
+	public employeeGui(dbAction DBAction) {
+		initialize(DBAction);
 	}
 
 	/**
@@ -123,12 +123,13 @@ public class employeeGui {
 	}
 	
 	@SuppressWarnings("serial")
-	private void initialize() {
+	private void initialize(dbAction DBAction) {
 //		frmEmployeeManagement = new JFrame();
 //		frmEmployeeManagement.setTitle("Employee Management");
 //		frmEmployeeManagement.setBounds(100, 100, 1093, 571);
 //		frmEmployeeManagement.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		frmEmployeeManagement.getContentPane().setLayout(null);
+		myDBconnection = DBAction;
 		
 		panelEmpGui = new JPanel();
 		panelEmpGui.setBounds(0, 0, 1077, 532);
