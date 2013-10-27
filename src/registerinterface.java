@@ -133,7 +133,7 @@ public class registerinterface extends JFrame {
 		orderComboBox = new JComboBox(itm);
 		
 		orderComboBox.setMaximumRowCount(100);
-		orderComboBox.setBounds(258, 104, 300, 20);
+		orderComboBox.setBounds(240, 104, 350, 20);
 		contentPane.add(orderComboBox);
 
 		btnNewButton = new JButton("Apply Payment");
@@ -167,7 +167,7 @@ public class registerinterface extends JFrame {
 					orders.get(index).setPaid(true);
 					change = diff;
 					changelbl.setText(NumberFormat.getCurrencyInstance()
-							.format(change));
+							.format(-change));
 				} else if (diff > 0) {
 					JOptionPane.showMessageDialog(null, "Payment is "
 							+ NumberFormat.getCurrencyInstance().format(diff)
@@ -179,12 +179,12 @@ public class registerinterface extends JFrame {
 		btnNewButton.setBounds(320, 466, 192, 23);
 		contentPane.add(btnNewButton);
 
-		lblNewLabel.setBounds(372, 79, 74, 14);
+		lblNewLabel.setBounds(372, 79, 100, 17);
 		contentPane.add(lblNewLabel);
 		lblNewLabel.setText("Select Order");
 
 		lblEnterAmountTendered = new JLabel("Enter Amount tendered");
-		lblEnterAmountTendered.setBounds(353, 135, 132, 14);
+		lblEnterAmountTendered.setBounds(353, 135, 200, 14);
 		contentPane.add(lblEnterAmountTendered);
 
 		amountTendTxt = new JTextField();
@@ -193,7 +193,7 @@ public class registerinterface extends JFrame {
 		amountTendTxt.setColumns(10);
 
 		lblChange = new JLabel("Change");
-		lblChange.setBounds(342, 515, 46, 14);
+		lblChange.setBounds(342, 508, 80, 20);
 		contentPane.add(lblChange);
 
 		changelbl = new JLabel("$0");
