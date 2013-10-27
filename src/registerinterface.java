@@ -131,9 +131,9 @@ public class registerinterface extends JFrame {
 			itm[i] = line;
 		}
 		orderComboBox = new JComboBox(itm);
-		
+
 		orderComboBox.setMaximumRowCount(100);
-		orderComboBox.setBounds(240, 104, 350, 20);
+		orderComboBox.setBounds(258, 104, 300, 20);
 		contentPane.add(orderComboBox);
 
 		btnNewButton = new JButton("Apply Payment");
@@ -142,7 +142,7 @@ public class registerinterface extends JFrame {
 			// //////accept payment
 			public void actionPerformed(ActionEvent e) {
 				// check if there is an order to pay
-				if (orders.size()==0) {
+				if (orders.size() == 0) {
 					JOptionPane.showMessageDialog(null,
 							"There is no order to process.");
 					dispose();
@@ -157,17 +157,16 @@ public class registerinterface extends JFrame {
 					// TODO Auto-generated catch block
 					JOptionPane.showMessageDialog(null,
 							"Enter numbers only! Try again.");
-					// e1.printStackTrace();
 					return;
 				}
 				double diff = amountDue - amountTendered;
-				
+				boolean paid = true;
 				double change = 0.0;
 				if (diff <= 0) {
 					orders.get(index).setPaid(true);
-					change = diff;
+					change = -diff;
 					changelbl.setText(NumberFormat.getCurrencyInstance()
-							.format(-change));
+							.format(change));
 				} else if (diff > 0) {
 					JOptionPane.showMessageDialog(null, "Payment is "
 							+ NumberFormat.getCurrencyInstance().format(diff)
@@ -179,12 +178,12 @@ public class registerinterface extends JFrame {
 		btnNewButton.setBounds(320, 466, 192, 23);
 		contentPane.add(btnNewButton);
 
-		lblNewLabel.setBounds(372, 79, 100, 17);
+		lblNewLabel.setBounds(372, 79, 74, 14);
 		contentPane.add(lblNewLabel);
 		lblNewLabel.setText("Select Order");
 
-		lblEnterAmountTendered = new JLabel("Enter Amount tendered");
-		lblEnterAmountTendered.setBounds(353, 135, 200, 14);
+		lblEnterAmountTendered = new JLabel("      Amount tendered");
+		lblEnterAmountTendered.setBounds(353, 135, 132, 14);
 		contentPane.add(lblEnterAmountTendered);
 
 		amountTendTxt = new JTextField();
@@ -193,7 +192,7 @@ public class registerinterface extends JFrame {
 		amountTendTxt.setColumns(10);
 
 		lblChange = new JLabel("Change");
-		lblChange.setBounds(342, 508, 80, 20);
+		lblChange.setBounds(342, 515, 46, 14);
 		contentPane.add(lblChange);
 
 		changelbl = new JLabel("$0");
@@ -203,8 +202,8 @@ public class registerinterface extends JFrame {
 		JButton btnNewButton_1 = new JButton("Close Order");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//check if there is an order to close
-				if (orders.size()==0) {
+				// check if there is an order to close
+				if (orders.size() == 0) {
 					JOptionPane.showMessageDialog(null,
 							"There is no order to process.");
 					dispose();
@@ -212,7 +211,7 @@ public class registerinterface extends JFrame {
 				}
 				index = orderComboBox.getSelectedIndex();
 				boolean paid = orders.get(index).isPaid();
-				
+
 				// if order is paid then we can close order and send to db etc
 				if (paid) {
 					// ////////reset combo box etc
@@ -234,6 +233,10 @@ public class registerinterface extends JFrame {
 		});
 		btnNewButton_1.setBounds(353, 551, 117, 23);
 		contentPane.add(btnNewButton_1);
+		
+		JLabel lblNewLabel_1 = new JLabel("_________________________________________________________________________________________________________________________________________");
+		lblNewLabel_1.setBounds(0, 54, 834, 14);
+		contentPane.add(lblNewLabel_1);
 
 	}
 
@@ -273,5 +276,4 @@ public class registerinterface extends JFrame {
 			// What ever button does
 		}
 	}
-
 }
