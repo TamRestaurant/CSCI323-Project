@@ -161,7 +161,7 @@ public class registerinterface extends JFrame {
 					return;
 				}
 				double diff = amountDue - amountTendered;
-				boolean paid = true;
+				
 				double change = 0.0;
 				if (diff <= 0) {
 					orders.get(index).setPaid(true);
