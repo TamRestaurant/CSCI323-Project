@@ -4,7 +4,12 @@ import javax.swing.JDesktopPane;
 import java.awt.Color;
 import java.awt.SystemColor;
 import javax.swing.JTabbedPane;
-
+/***
+ * Admin tab, brings in all the managerial functionality tabs
+ * 
+ * @author Austin
+ *
+ */
 
 public class admin extends JPanel {
 	private JTabbedPane tabbedPane;
