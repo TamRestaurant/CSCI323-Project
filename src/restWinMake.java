@@ -53,19 +53,19 @@ public class restWinMake extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	// еееееееееееееееееееееееееее Declarations ееееееееееееееееееееееееееееееее
+	// ------------------------------- Declarations ---------------------------------
 
 	private char[] pWord;
-	private String Fooditems[] = { "", "Burger", "Fry", "hotDog" };
-	private String Drinkitems[] = { "", "Water", "Coffee", "Pepsi" };
-	private String Desertitems[] = { "", "Cake", "Pie", "IceCream" };
-	private String Sides[] = { "", "baccon", "CheeseFries", "Fries" };
+//	private String Fooditems[] = { "", "Burger", "Fry", "hotDog" };
+//	private String Drinkitems[] = { "", "Water", "Coffee", "Pepsi" };
+//	private String Desertitems[] = { "", "Cake", "Pie", "IceCream" };
+//	private String Sides[] = { "", "baccon", "CheeseFries", "Fries" };
 	private String Tickets[] = { "", "Table 1", "Table 2", "Table 3" };
 	private ArrayList<Object> ticketObject = new ArrayList<Object>();
 	private String current_orders = "";
-	// еееее Labels ееее
+	// ------ Labels ------
 	private JLabel lblTicket, lblOrders;
-	// еееее Buttons ееее
+	// -------- Buttons -------
 	private JButton btnGetIt, btnPlaceOrder, btnMarkPaid, btnVeiwTicket,
 			btnPrintTicket, btnEnter;
 
@@ -73,29 +73,29 @@ public class restWinMake extends JFrame {
     JPanel panel_1, panel_2, panel_3panel_4, panel_5, Passwordpanel;
     
 
-	// еееееееееееееееееееееееееее Main ееееееееееееееееееееееееееееееее
+	// -------------------------------- Main ------------------------------------
 
 	public restWinMake() {// Begin Main
 
 		
 		
-		//еееееееееееееееееееееееееееееееееее Change order of tabs and Panels at own risk ееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееее
+		//------------- Change order of tabs and Panels at own risk --------------------------------
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1200, 1200);
+		setBounds(100, 100, 1150, 1000);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(5, 5, 1100, 1100);
+		tabbedPane.setBounds(25, 25, 1100, 950);
 		contentPane.add(tabbedPane);
 		//-----------------------ADD menu tab-----------------------------------
 		menu m = new menu();
 		tabbedPane.addTab("menu", null, m.m(), null);
 		//-----------------------ADD wait station tab-----------------------------------
-		waitStation w = new waitStation();
-		tabbedPane.addTab("Wait Station", null, w.w(), null);
+//		waitStation w = new waitStation();
+//		tabbedPane.addTab("Wait Station", null, w.w(), null);
 		//-----------------------ADD register tab-----------------------------------
 		register r = new register();
 		tabbedPane.addTab("Register", null, r.r(), null);
@@ -108,8 +108,7 @@ public class restWinMake extends JFrame {
 		lockscreen l = new lockscreen();
 		tabbedPane.addTab("Lockscreen", null, l.lock(), null);
 		String dah= "kdfds";
-		//ееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееее
-		
+//-----------------------------------------------------------------------		
 		
 		
 		
@@ -129,15 +128,15 @@ public class restWinMake extends JFrame {
 		pwdYourPin.setText("xxxxxxxx");
 		pwdYourPin.setBounds(145, 62, 117, 20);
 		//panel.add(pwdYourPin);
-//		//ееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееее
+		//-----------------------------------------------------------------------		
 //		
 
 		
 		
-		// еееееееееееееееееееееееееее Labels ееееееееееееееееееееееееееееееее
-		 JLabel lblTicket = new JLabel("Orders appear here");
-		JLabel lblOrders = new JLabel("Orders");
-		// еееееееееееееееееееееееееее Buttons ееееееееееееееееееееееееееееееее
+		//------------------------------------------- Labels //-------------------------------------------
+//		 JLabel lblTicket = new JLabel("Orders appear here");
+//		JLabel lblOrders = new JLabel("Orders");
+		//------------------------------------------- Buttons //-------------------------------------------
 
 		JButton btnGetIt = new JButton("Add to current Ticket");
 		JButton btnNewTicket = new JButton("New Ticket");
@@ -147,8 +146,8 @@ public class restWinMake extends JFrame {
 		JButton btnVeiwTicket = new JButton("Veiw Ticket");
 		JButton btnPrintTicket = new JButton("Print Ticket");
 		JButton btnEnter = new JButton("Enter");
-//		// еееееееееееееееееееееееееее ActionListeners
-//		// ееееееееееееееееееееееееееееееее
+		//------------------------------------------- ActionListeners
+		//-------------------------------------------
 
 		btnGetIt.addActionListener(new buttonListener());
 		btnNewTicket.addActionListener(new buttonListener());
@@ -163,20 +162,18 @@ public class restWinMake extends JFrame {
 		
 	}// End of Main
 
-	// ееееееееееееееееееееееееееееееееееееееее End of main
-	// ееееееееееееееееееееееееееееееееееее
+	//------------------------------------------- End of main//-------------------------------------------
 
-	// ееееееееееееееееееееееееееееееееееееееее methods
-	// ееееееееееееееееееееееееееееееееееееееее
+	//------------------------------------------- methods //-------------------------------------------
+	
 
 	public void refreshKitchen() {
 		System.out.println("weeewefsd");
 		lblOrders.setText(current_orders);
 	}
 
-	// ееееееееееееееееееееееееееееееее start button listener
-	// ееееееееееееееееееееееееееееееееее
-	// еееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееее
+	//------------------------------------------- start button listener //-------------------------------------------
+	
 
 	private class buttonListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
