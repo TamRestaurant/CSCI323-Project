@@ -94,15 +94,15 @@ public class menu extends JFrame
 		menu.addTab("Menu", null, menuPanel, null);
 		menuPanel.setLayout(null);
 		//----------------END load images-----------------------
-		JTabbedPane mainTab = new JTabbedPane(JTabbedPane.TOP);
-		mainTab.setBounds(5, 5, 1100, 1100);
-		subWaitTab.add(mainTab);
-		
-		JTabbedPane waitTab = new JTabbedPane(JTabbedPane.TOP);
-		mainTab.addTab("Wait Station", null, waitTab, null);
+//		JTabbedPane mainTab = new JTabbedPane(JTabbedPane.TOP);
+//		mainTab.setBounds(5, 5, 900, 900);
+//		subWaitTab.add(mainTab);
+//		
+//		JTabbedPane waitTab = new JTabbedPane(JTabbedPane.TOP);
+//		mainTab.addTab("Wait Station", null, waitTab, null);
 		
 		JPanel subWaitTab = new JPanel();
-		waitTab.addTab("Ticket Maker", null, subWaitTab, null);
+		menu.addTab("Ticket Maker", null, subWaitTab, null);
 		subWaitTab.setLayout(null);
 		//---------------------------------------------------------------------------------------------		
 		     /*
