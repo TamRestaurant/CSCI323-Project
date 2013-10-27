@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Frame;
 import java.awt.List;
 
 import javax.swing.ImageIcon;
@@ -35,6 +36,7 @@ import javax.swing.JSeparator;
 //import RPSGui.buttonListener;
 
 
+
 import java.awt.GridLayout;
 
 
@@ -50,7 +52,16 @@ public class lockscreen extends JFrame
 		JButton lockBtn=new JButton("Lock Workstation");
 		lockBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				kitchen.k().setEnabled(false);//here
+			
+//		ArrayList <Frame>  menuFrame=new ArrayList<Frame>();
+//		        menuFrame.add(menu.getFrames()[0]);
+//		        menuFrame.add(kitchen.getFrames()[0]);
+//		        menuFrame.add(register.getFrames()[0]);
+//		        for(Frame f:menuFrame) {
+//		        	f.setEnabled(false);
+//		        }
+		        
+				//kitchen.k().setEnabled(false);//here
 			//menu.m().disable();//here
 				 JOptionPane.showMessageDialog(null, "yay!!");
 			}

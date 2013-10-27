@@ -1,3 +1,4 @@
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -31,26 +32,44 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
+
+
 //import RPSGui.buttonListener;
 
 import java.awt.GridLayout;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import java.awt.GridBagLayout;
 
 
 public class register extends JFrame 
 {
-	private JTabbedPane reg;
-	private JPanel panel_2;
-	public register()
-	{
-		reg = new JTabbedPane(JTabbedPane.TOP);
-		panel_2 = new JPanel();
-		
-		reg.addTab("New tab", null, panel_2, null);
-		panel_2.setLayout(null);
-	}
-	
-	public JTabbedPane r()
-	{
-		return reg;
-	}
+        private JTabbedPane reg= new JTabbedPane(JTabbedPane.TOP);
+        private JPanel panel_2;
+        private JButton [] cashierButtons;
+
+        public register()
+        
+        {
+        	
+        	JButton btnOpenRegister = new JButton("Open Register");
+        	btnOpenRegister.addActionListener(new buttonListener());
+        	reg.add(btnOpenRegister, BorderLayout.CENTER);
+        }
+        
+        public JTabbedPane r()
+        {
+                return reg;
+        }
+        
+        ///////////invokes register frame
+        private class buttonListener implements ActionListener 
+        {
+                public void actionPerformed(ActionEvent event) 
+                {
+                	registerinterface.main(null);
+//                        What ever button does
+                }
+        }
 }
