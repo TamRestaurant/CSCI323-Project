@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -41,31 +42,49 @@ import java.awt.GridLayout;
 public class lockscreen extends JFrame 
 {
 	private JTabbedPane lockscreen;
-	private JPanel panel_4;
+	private JPanel lockPanel,subLockpanel;
 	public lockscreen()
 	{
 		JButton unlockBtn=new JButton("Unlock Workstation");
 		
+<<<<<<< HEAD
 		unlockBtn.setBounds(0, 170, 445, 23);
+=======
+		unlockBtn.setBounds(28, 170, 445, 23);
+>>>>>>> f86a61c0a49b6a916ba420d091e058f8e3d311ef
 		JButton lockBtn=new JButton("Lock Workstation");
 		lockBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				kitchen.k().setEnabled(false);//here
+			//menu.m().disable();//here
+				 JOptionPane.showMessageDialog(null, "yay!!");
 			}
 		});
-		lockBtn.setBounds(0, 75, 445, 23);
+		lockBtn.setBounds(28, 75, 445, 23);
 		JLabel passwordLabel=new JLabel();
-		passwordLabel.setBounds(111, 23, 89, 226);
+		passwordLabel.setBounds(111, 23, 200, 226);
 		lockscreen = new JTabbedPane(JTabbedPane.TOP);
-		panel_4 = new JPanel();
+		lockPanel = new JPanel();
+		subLockpanel = new JPanel();
+		subLockpanel.setLayout(null);
+		subLockpanel.setBounds(5, 5, 900, 900);
+		subLockpanel.setBorder(BorderFactory.createLoweredBevelBorder());
+		lockPanel.setBorder(BorderFactory.createLoweredBevelBorder());
+
 		
-		lockscreen.addTab("New tab", null, panel_4, null);
+		lockscreen.addTab("Password tab", null, subLockpanel, null);
+		lockscreen.setBorder(BorderFactory.createLoweredBevelBorder());
+		
+		subLockpanel.add(lockPanel);
+		lockPanel.setBounds(275, 50, 500, 250);
 		
 		final JPasswordField pwdYourPin = new JPasswordField();
 		pwdYourPin.setText("xxxxxxxx");
 		pwdYourPin.setBounds(242, 122, 62, 29);
-		panel_4.setLayout(null);
+		lockPanel.setLayout(null);
 		//subPanel1.add(displayText, BorderLayout.CENTER);
 		passwordLabel.setText("Enter unlock code");
+<<<<<<< HEAD
 		panel_4.add(passwordLabel);
 		panel_4.add(pwdYourPin);
 		panel_4.add(unlockBtn);
@@ -78,6 +97,27 @@ public class lockscreen extends JFrame
 				 String enteredStrPwd=pwdYourPin.getText();
 
 				 if (enteredStrPwd.equals("rest")) {
+=======
+		lockPanel.add(passwordLabel);
+		lockPanel.add(pwdYourPin);
+		lockPanel.add(unlockBtn);
+		lockPanel.add(lockBtn);
+		unlockBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				 char[] enteredPwrd=pwdYourPin.getPassword();
+				 String enteredStrPwd="";
+				 for(char i : enteredPwrd) {
+					 enteredStrPwd+=i;
+				 }
+				 System.out.println(enteredStrPwd);
+			
+//				  enteredStrPwd=pwdYourPin.getText();
+
+				 if (enteredStrPwd.equals("rest")) {
+					 
+					 kitchen.k().setVisible(false);
+>>>>>>> f86a61c0a49b6a916ba420d091e058f8e3d311ef
 				JOptionPane.showMessageDialog(null, "yay!!");
 				 }else {
 					 JOptionPane.showMessageDialog(null, "nay");

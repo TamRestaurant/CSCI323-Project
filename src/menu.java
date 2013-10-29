@@ -55,7 +55,7 @@ public class menu extends JFrame
 	private Order order;
 	private ArrayList<Item> items;
 	private Item item;
-	public ArrayList<Order> orders;
+	public static ArrayList<Order> orders;
 	private JTextArea display;
 	private int orderNumber;
 	private JLabel currentOrder; 
@@ -86,6 +86,7 @@ public class menu extends JFrame
 		setOrderPanel.setLayout(null);
 		setOrderPanel.setBorder(BorderFactory.createLoweredBevelBorder());
 		
+<<<<<<< HEAD
 		
 		currentOrder.setBounds(20, 75, 500, 20);
 		setOrderPanel.add(currentOrder);
@@ -106,6 +107,55 @@ public class menu extends JFrame
 		subWaitTab.setLayout(null);
 		//---------------------------------------------------------------------------------------------		
 
+=======
+		
+		currentOrder.setBounds(20, 75, 500, 20);
+		setOrderPanel.add(currentOrder);
+		setOrderPanel.add(display);
+		//----------------------END Display Panel---------------------------
+		menu.addTab("Menu", null, menuPanel, null);
+		menuPanel.setLayout(null);
+		//----------------END load images-----------------------
+//		JTabbedPane mainTab = new JTabbedPane(JTabbedPane.TOP);
+//		mainTab.setBounds(5, 5, 900, 900);
+//		subWaitTab.add(mainTab);
+//		
+//		JTabbedPane waitTab = new JTabbedPane(JTabbedPane.TOP);
+//		mainTab.addTab("Wait Station", null, waitTab, null);
+		
+		JPanel subWaitTab = new JPanel();
+		menu.addTab("Ticket Maker", null, subWaitTab, null);
+		subWaitTab.setLayout(null);
+		//---------------------------------------------------------------------------------------------		
+		     /*
+                 * 
+                 * 
+                 * 
+                 * 
+                 * 
+                 * 
+                 * 
+                 * 
+                 * 
+                 * 
+                 * 
+                 */
+                orders = new ArrayList<Order>();
+
+        		for (int i = 0; i < 9; i++) {
+        			Order o = new Order();
+        			o.setOrderNumber(i * 325);
+        			o.setOrderTotal(i + 11);
+        			orders.add(o);
+        		}/*
+        		*
+        		*
+        		*
+        		*
+        		*
+        		*
+        		*/
+>>>>>>> f86a61c0a49b6a916ba420d091e058f8e3d311ef
 		menuButtonsImage = new ImageIcon[64];
 		for (int i = 0; i < menuButtonsImage.length; i++) 
 		{
@@ -115,6 +165,7 @@ public class menu extends JFrame
 //---------------------------------------------------------------------------------------------		
 		subWaitTab.setBounds(6, 6, 810, 810);
 		menuPanel.add(subWaitTab);
+<<<<<<< HEAD
 		
 		JPanel entreeButtonPanel = new JPanel();
 		entreeButtonPanel.setBounds(40, 32, 730, 199);
@@ -123,6 +174,16 @@ public class menu extends JFrame
 		entreeButtonPanel.setLayout(new GridLayout(3, 8, 2, 2));
 		entreeButtonPanel.setBorder(BorderFactory.createLoweredBevelBorder());
 		
+=======
+		
+		JPanel entreeButtonPanel = new JPanel();
+		entreeButtonPanel.setBounds(40, 32, 730, 199);
+		subWaitTab.setBorder(BorderFactory.createLoweredBevelBorder());
+		subWaitTab.add(entreeButtonPanel);
+		entreeButtonPanel.setLayout(new GridLayout(3, 8, 2, 2));
+		entreeButtonPanel.setBorder(BorderFactory.createLoweredBevelBorder());
+		
+>>>>>>> f86a61c0a49b6a916ba420d091e058f8e3d311ef
 		JPanel drinkButtonPanel = new JPanel();
 		drinkButtonPanel.setBounds(40, 270, 730, 184);
 		subWaitTab.add(drinkButtonPanel);
@@ -239,7 +300,10 @@ public class menu extends JFrame
 		//----------------------END order buttons-------------------------
 		
 	}
-	
+	        public static ArrayList<Order> getOrders(){
+        	
+        	return orders;
+        }
 	public JTabbedPane m()
 	{
 		return menu;

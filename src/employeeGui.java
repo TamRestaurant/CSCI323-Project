@@ -55,7 +55,7 @@ import javax.swing.DropMode;
  */
 public class employeeGui {
 
-	private JFrame frmEmployeeManagement;
+	//private JFrame frmEmployeeManagement;
 	private JTable table_employee;
 	private Button btnPopulateEmployees;
 	private ResultSet resultSet;
@@ -77,9 +77,10 @@ public class employeeGui {
 	private JCheckBox chkIsActive;
 	private JLabel labelError;
 	private JButton buttonClearText;
+	private JPanel panelEmpGui;
 	
 	//Connect to database on load
-	private dbAction myDBconnection = new dbAction();
+	private dbAction myDBconnection;
 	private JLabel lblHireDate;
 	private JComboBox comboBoxMonth;
 	private JComboBox comboBoxDay;
@@ -91,44 +92,49 @@ public class employeeGui {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					employeeGui window = new employeeGui();
-					window.frmEmployeeManagement.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}/// end main
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					employeeGui window = new employeeGui();
+//					window.frmEmployeeManagement.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}/// end main
 	
 	
 
 	/**
 	 * Create the application.
 	 */
-	public employeeGui() {
-		initialize();
+	public employeeGui(dbAction DBAction) {
+		initialize(DBAction);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	
+	public JPanel getEmployeeGui(){
+		return panelEmpGui;
+	}
+	
 	@SuppressWarnings("serial")
-	private void initialize() {
-		frmEmployeeManagement = new JFrame();
-		frmEmployeeManagement.setTitle("Employee Management");
-		frmEmployeeManagement.setBounds(100, 100, 1093, 571);
-		frmEmployeeManagement.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmEmployeeManagement.getContentPane().setLayout(null);
+	private void initialize(dbAction DBAction) {
+//		frmEmployeeManagement = new JFrame();
+//		frmEmployeeManagement.setTitle("Employee Management");
+//		frmEmployeeManagement.setBounds(100, 100, 1093, 571);
+//		frmEmployeeManagement.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frmEmployeeManagement.getContentPane().setLayout(null);
+		myDBconnection = DBAction;
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 1077, 532);
-		frmEmployeeManagement.getContentPane().add(panel);
-		panel.setLayout(null);
+		panelEmpGui = new JPanel();
+		panelEmpGui.setBounds(0, 0, 1077, 532);
+		//frmEmployeeManagement.getContentPane().add(panel);
+		panelEmpGui.setLayout(null);
 		
 		btnPopulateEmployees = new Button("Populate Employees");
 		btnPopulateEmployees.addActionListener(new ActionListener() {
@@ -144,11 +150,11 @@ public class employeeGui {
 		});
 		btnPopulateEmployees.setFont(new Font("Calibri", Font.PLAIN, 16));
 		btnPopulateEmployees.setBounds(10, 332, 200, 51);
-		panel.add(btnPopulateEmployees);
+		panelEmpGui.add(btnPopulateEmployees);
 		
 		panel_1 = new JPanel();
 		panel_1.setBounds(0, 0, 1070, 291);
-		panel.add(panel_1);
+		panelEmpGui.add(panel_1);
 		panel_1.setLayout(null);
 		
 		
@@ -208,7 +214,7 @@ public class employeeGui {
 		panelAddEmployee = new JPanel();
 		panelAddEmployee.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Add New Employee", TitledBorder.LEFT, TitledBorder.TOP, null, null));
 		panelAddEmployee.setBounds(511, 302, 556, 219);
-		panel.add(panelAddEmployee);
+		panelEmpGui.add(panelAddEmployee);
 		panelAddEmployee.setLayout(null);
 		
 		textFirstName = new JTextField();
@@ -418,7 +424,7 @@ public class employeeGui {
 		labelError.setForeground(Color.BLACK);
 		labelError.setFont(new Font("Calibri", Font.PLAIN, 14));
 		labelError.setBounds(10, 302, 491, 24);
-		panel.add(labelError);
+		panelEmpGui.add(labelError);
 	} // end initialize
 	
 	

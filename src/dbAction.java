@@ -3,6 +3,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /***
  * This class is the interface that interacts with the database for running queries
@@ -77,7 +78,8 @@ public class dbAction {
 	    		+ "Inner Join\n    "
 	    		+ "csci_323_exp20140101.Employee ON csci_323_exp20140101.Employee.Address_idAddress = csci_323_exp20140101.Address.idAddress\n        "
 	    		+ "Inner Join\n    "
-	    		+ "csci_323_exp20140101.EmployeeRole ON csci_323_exp20140101.Employee.EmployeeRole_idEmployeeRole = csci_323_exp20140101.EmployeeRole.idEmployeeRole");
+	    		+ "csci_323_exp20140101.EmployeeRole ON csci_323_exp20140101.Employee.EmployeeRole_idEmployeeRole = csci_323_exp20140101.EmployeeRole.idEmployeeRole\n  "
+	    		+ "Order By\n Employee.idEmployee");
 	    		
 	    		
 	    		
@@ -294,8 +296,116 @@ public class dbAction {
 		
 		return rs;
 		
+	}//Close get menu items
+	//Overloaded constructor, allow others to pass in without dates
+	public ResultSet getOrderReport(int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders){
+		return getOrderReport(allDates, showEmpID, showQTY, itemDescription, groupOrders, "", "");
 	}
 	
+	
+	public ResultSet getOrderReport(int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders, String dateFrom, String dateTo){
+
+
+		String sqlQuery = prepareReportSQL(allDates, showEmpID, showQTY, itemDescription, groupOrders, dateFrom, dateTo);
+		
+				try {
+				    stmt = conn.createStatement();
+				    rs = stmt.executeQuery(sqlQuery);
+				    		
+				    		
+				    		
+				    		
+				}
+				catch(SQLException ex){
+					//TODO print to console the exception if occurred
+				    System.out.println("SQLException: " + ex.getMessage());
+				    System.out.println("SQLState: " + ex.getSQLState());
+				    System.out.println("VendorError: " + ex.getErrorCode());
+				}
+				
+				return rs;
+		
+	}// close getReports
+	
+	
+	
+	
+	/***
+	 * This method prepares string for report depending on what options the user has selected
+	 * I attempted to use a prepared statement instead, but if values were not present it was causing major problems
+	 * @param allDates
+	 * @param showEmpID
+	 * @param showQTY
+	 * @param itemDescription
+	 * @param groupOrders
+	 * @param dateFrom
+	 * @param dateTo
+	 * @return
+	 */
+	private String prepareReportSQL(int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders, String dateFrom, String dateTo){
+		//int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders, String dateFrom, String dateTo
+		String tempReturn = "";
+		
+
+		String[] tempSQL = new String[16];
+		tempSQL[0] = "Select\n  ";
+		tempSQL[1] = "";
+		tempSQL[2] = "Concat(Employee.FirstName, \" \", Employee.LastName) As Server,\n    ";
+		tempSQL[3] = "Order.idOrder AS \"Order #\",\n  ";
+		tempSQL[4] = "Order.OrderDate As \"Order Date\",\n  ";
+		tempSQL[5] = "";
+		tempSQL[6] = "";
+		tempSQL[7] = "";
+		tempSQL[8] = "";
+		tempSQL[9] = "Employee Inner Join\n  ";
+		tempSQL[10] = "csci_323_exp20140101.Order On csci_323_exp20140101.Order.Employee_idEmployee = csci_323_exp20140101.Employee.idEmployee Inner Join\n  ";
+		tempSQL[11] = "csci_323_exp20140101.OrderMenuItem On csci_323_exp20140101.OrderMenuItem.Order_idOrder = csci_323_exp20140101.Order.idOrder Inner Join\n  ";
+		tempSQL[12] = "csci_323_exp20140101.MenuItem On csci_323_exp20140101.OrderMenuItem.MenuItem_idMenuItem = csci_323_exp20140101.MenuItem.idMenuItem\n  ";
+		tempSQL[13] = "";
+		tempSQL[14] = "";
+		tempSQL[15] = "Order By\n \"Order Date\"";
+		
+		//Loop through and as options are selected, add them as needed to tempSQL (with tempOptionsIndex[] guiding where to put them)
+		if (allDates == 0){
+			tempSQL[13] = "WHERE\n    Order.OrderDate Between \"" + dateFrom +"\" And \""+ dateTo + "\"\n  ";
+		}
+		
+		if (showEmpID == 1){
+			tempSQL[1] = "Employee.idEmployee As \"Employee ID\",\n  ";
+		}
+		
+		if (groupOrders == 1){
+			//If grouped we want to sum the order total and omit qty, item, price, description
+			tempSQL[14] = "Group By\n `Order`.idOrder  ";
+			tempSQL[8] = "Sum(MenuItem.ItemPrice) As \"Order Total\"\nFrom\n  ";
+
+		}
+		else{
+			tempSQL[8] = "MenuItem.ItemPrice As \"Item Price\"\nFrom\n  ";
+			tempSQL[6] = "MenuItem.ItemName As \"Menu Item\",\n  ";
+			//These can only take place if group is not selected
+			if (showQTY == 1){
+				tempSQL[5] = "OrderMenuItem.OrderMenuItemQTY As QTY,\n  ";
+			}
+
+			if (itemDescription == 1){
+				tempSQL[7] = "MenuItem.ItemDescription AS \"Item Description\",\n  ";
+			}
+
+			
+		}
+		
+		for (int i = 0; i < tempSQL.length; i++){
+			if (tempSQL[i].length() > 0){
+				tempReturn += tempSQL[i];
+			}
+		}
+		
+
+		
+		return tempReturn;
+		
+	}
 	
 	
 }
@@ -303,5 +413,8 @@ public class dbAction {
 
 
 	
+	
+
+
 	
 

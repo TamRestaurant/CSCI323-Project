@@ -10,7 +10,8 @@ public class Order {
 	private int tableNumber;
 	private long startTime, endTime, orderTime;
 	private String totalOrderTime;
-
+	private boolean isPaid=false;
+	
 	public Order() {
 	}
 
@@ -136,6 +137,14 @@ public class Order {
 
 	public void setTotalOrderTime(String totalOrderTime) {
 		this.totalOrderTime = totalOrderTime;
+	}
+
+	public boolean isPaid() {
+		return isPaid;
+	}
+
+	public void setPaid(boolean isPaid) {
+		this.isPaid = isPaid;
 	}
 
 }
