@@ -6,11 +6,14 @@ import java.awt.Font;
 import java.awt.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.ListModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 
@@ -20,13 +23,11 @@ import javax.swing.JTextArea;
 
 import java.awt.ScrollPane;
 import java.awt.CardLayout;
-
-import javax.swing.JList;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentListener;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.JMenuBar;
 import javax.swing.JComboBox;
@@ -36,6 +37,10 @@ import javax.swing.JSeparator;
 //import restWinMake.buttonListener;
 
 //import RPSGui.buttonListener;
+
+
+
+
 
 
 
@@ -56,10 +61,10 @@ public class menu extends JFrame
 	private ArrayList<Item> items;
 	private Item item;
 	public static ArrayList<Order> orders;
-	private JTextArea display;
 	private int orderNumber;
 	private JLabel currentOrder; 
-	
+	private Vector<String> food;
+	private JList list;
 	public menu()
 	{
 		menu = new JTabbedPane(JTabbedPane.TOP);
@@ -69,27 +74,28 @@ public class menu extends JFrame
 		menuButtons = new JButton[64];
 		separator = new JSeparator();
 		orders= new ArrayList<Order>();
-		display = new JTextArea();
 		orderNumber = 1;
 		currentOrder = new JLabel("Current Order");
 		separator.setBounds(432, 259, 1, 12);
 		menuPanel.add(separator);
 		//-------------------Display Panel-----------------------------------
-		display = new JTextArea();
-		display.setBounds(15, 100, 170, 695);
-		display.setEditable(false);
 		
+		JTabbedPane orderButtons = new JTabbedPane(JTabbedPane.TOP);
+		JPanel openOrders = new JPanel();
+		openOrders.setBounds(830, 6, 200, 810);
+		openOrders.setLayout(null);
+		orderButtons.setBounds(830, 6, 200, 810);
 		JPanel setOrderPanel = new JPanel();
 		setOrderPanel.setBounds(830, 6, 200, 810);
 		setOrderPanel.setBorder(BorderFactory.createLoweredBevelBorder());
-		menuPanel.add(setOrderPanel);
+		orderButtons.addTab("New Order", null, setOrderPanel, null);
+		orderButtons.addTab("Open Orders", null, openOrders, null);
+		menuPanel.add(orderButtons);
 		setOrderPanel.setLayout(null);
-		setOrderPanel.setBorder(BorderFactory.createLoweredBevelBorder());
 		
 		
 		currentOrder.setBounds(20, 75, 500, 20);
 		setOrderPanel.add(currentOrder);
-		setOrderPanel.add(display);
 		//----------------------END Display Panel---------------------------
 		menu.addTab("Menu", null, menuPanel, null);
 		menuPanel.setLayout(null);
@@ -229,26 +235,34 @@ public class menu extends JFrame
 		//-----------------------------Order buttons-------------------------------
 		
 		
-		final JButton closeOrder = new JButton("Close Order");
+		final JButton closeOrder = new JButton("End Order");
 		final JButton newOrder = new JButton("New Order");
+		final JButton remove = new JButton("Remove");
+		list = new JList(); 
+		food = new Vector<String>();
 		newOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				openTicket=false;
 				newOrder.setEnabled(openTicket);
 				closeOrder.setEnabled(!openTicket);
 				items = new ArrayList<Item>();
-				display.selectAll();
-				display.replaceSelection("");
+				food.clear();
+				list.setListData(food);
 				currentOrder.setText("Current Order: "+orderNumber);
+				 
+				
 				
 			}
 		});
-		
-		
+		list.setBounds(15, 100, 170, 300);
+		list.setEnabled(true);
+		setOrderPanel.add(list);
 		newOrder.setBounds(10, 15, 117, 29);
 		setOrderPanel.add(newOrder);
-		
+		remove.setEnabled(true);
+		remove.setBounds(15, 400, 117, 29);
 		closeOrder.setEnabled(!openTicket);
+		setOrderPanel.add(remove);
 		closeOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//brings ticket up in window
@@ -259,10 +273,24 @@ public class menu extends JFrame
 				orders.add(order);
 				orderNumber++;
 				
+				
+				
 			}
 		});
 		closeOrder.setBounds(10, 40, 117, 29);
 		setOrderPanel.add(closeOrder);
+		
+		remove.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				int[] sel = list.getSelectedIndices();
+				for(int i = 0; i<sel.length; i++)
+				{
+					food.remove(i);
+					items.remove(i);
+				}
+				list.setListData(food);
+			}
+		});
 		//----------------------END order buttons-------------------------
 		
 	}
@@ -283,9 +311,10 @@ public class menu extends JFrame
 
 				if(openTicket == false)
 				{
-					display.insert("burger\n", 0);
 					item = new Item("burger", 1, 6.00);
 					items.add( item);
+					food.add("Burger, $5.00");
+					list.setListData(food);
 				}
 			} else if (event.getSource() == menuButtons[1]) {
 				System.out.println("button 1 wrks");
