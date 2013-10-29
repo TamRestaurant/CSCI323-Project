@@ -328,6 +328,33 @@ public class dbAction {
 	}// close getReports
 	
 	
+	/***
+	 * Get open orders will return the order ID from all open order in a string array
+	 */
+	public ArrayList<String> getOpenOrderIDs(){
+		try {
+		    stmt = conn.createStatement();
+		    rs = stmt.executeQuery("SELECT * FROM csci_323_exp20140101.Order\n"
+		    		+ "WHERE\n"
+		    		+ "Order.OrderClose is null");
+
+		}
+		catch(SQLException ex){
+			//TODO print to console the exception if occurred
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		
+		
+		//Call method to turn RS into string[] and return vale
+		//TODO: possible concat table number to each item in array
+		return prepareOpenOrderString(rs);
+		
+
+	}
+	
+	
 	
 	
 	/***
@@ -415,6 +442,26 @@ public class dbAction {
 
 		
 		return tempReturn;
+		
+	}//close prepare reportSQL
+	
+	
+	private ArrayList<String> prepareOpenOrderString(ResultSet rs){
+		ArrayList<String> tempList = new ArrayList();
+
+		try {
+			while (rs.next()){
+				tempList.add(rs.getString(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		return tempList;
+		
+		
 		
 	}
 	
