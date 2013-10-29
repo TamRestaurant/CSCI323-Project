@@ -298,15 +298,15 @@ public class dbAction {
 		
 	}//Close get menu items
 	//Overloaded constructor, allow others to pass in without dates
-	public ResultSet getOrderReport(int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders){
-		return getOrderReport(allDates, showEmpID, showQTY, itemDescription, groupOrders, "", "");
+	public ResultSet getOrderReport(int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders, int openOrders){
+		return getOrderReport(allDates, showEmpID, showQTY, itemDescription, groupOrders, openOrders,  "", "");
 	}
 	
 	
-	public ResultSet getOrderReport(int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders, String dateFrom, String dateTo){
+	public ResultSet getOrderReport(int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders, int openOrders, String dateFrom, String dateTo){
 
 
-		String sqlQuery = prepareReportSQL(allDates, showEmpID, showQTY, itemDescription, groupOrders, dateFrom, dateTo);
+		String sqlQuery = prepareReportSQL(allDates, showEmpID, showQTY, itemDescription, groupOrders, openOrders, dateFrom, dateTo);
 		
 				try {
 				    stmt = conn.createStatement();
@@ -328,6 +328,33 @@ public class dbAction {
 	}// close getReports
 	
 	
+	/***
+	 * Get open orders will return the order ID from all open order in a string array
+	 */
+	public ArrayList<String> getOpenOrderIDs(){
+		try {
+		    stmt = conn.createStatement();
+		    rs = stmt.executeQuery("SELECT * FROM csci_323_exp20140101.Order\n"
+		    		+ "WHERE\n"
+		    		+ "Order.OrderClose is null");
+
+		}
+		catch(SQLException ex){
+			//TODO print to console the exception if occurred
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		
+		
+		//Call method to turn RS into string[] and return vale
+		//TODO: possible concat table number to each item in array
+		return prepareOpenOrderString(rs);
+		
+
+	}
+	
+	
 	
 	
 	/***
@@ -342,7 +369,7 @@ public class dbAction {
 	 * @param dateTo
 	 * @return
 	 */
-	private String prepareReportSQL(int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders, String dateFrom, String dateTo){
+	private String prepareReportSQL(int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders, int openOrders, String dateFrom, String dateTo){
 		//int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders, String dateFrom, String dateTo
 		String tempReturn = "";
 		
@@ -352,7 +379,7 @@ public class dbAction {
 		tempSQL[1] = "";
 		tempSQL[2] = "Concat(Employee.FirstName, \" \", Employee.LastName) As Server,\n    ";
 		tempSQL[3] = "Order.idOrder AS \"Order #\",\n  ";
-		tempSQL[4] = "Order.OrderDate As \"Order Date\",\n  ";
+		tempSQL[4] = "Order.OrderDate As \"Order Date\",\n  Order.OrderClose As \"Order Close Date\",\n";
 		tempSQL[5] = "";
 		tempSQL[6] = "";
 		tempSQL[7] = "";
@@ -366,8 +393,19 @@ public class dbAction {
 		tempSQL[15] = "Order By\n \"Order Date\"";
 		
 		//Loop through and as options are selected, add them as needed to tempSQL (with tempOptionsIndex[] guiding where to put them)
-		if (allDates == 0){
-			tempSQL[13] = "WHERE\n    Order.OrderDate Between \"" + dateFrom +"\" And \""+ dateTo + "\"\n  ";
+		if ((allDates == 0) || (openOrders == 1)){
+			tempSQL[13] = "WHERE\n    ";
+		}
+		if (allDates == 0){// Change SQL if we have to use multiple WHERE statements (add comma)
+			if (openOrders == 1){
+				tempSQL[13] += "Order.OrderDate Between \"" + dateFrom +"\" And \""+ dateTo + "\" And\n  ";
+			}
+			else{
+				tempSQL[13] += "Order.OrderDate Between \"" + dateFrom +"\" And \""+ dateTo + "\"\n  ";
+			}
+		}
+		if (openOrders == 1){
+			tempSQL[13] += "Order.OrderClose is null\n  ";
 		}
 		
 		if (showEmpID == 1){
@@ -404,6 +442,26 @@ public class dbAction {
 
 		
 		return tempReturn;
+		
+	}//close prepare reportSQL
+	
+	
+	private ArrayList<String> prepareOpenOrderString(ResultSet rs){
+		ArrayList<String> tempList = new ArrayList();
+
+		try {
+			while (rs.next()){
+				tempList.add(rs.getString(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		return tempList;
+		
+		
 		
 	}
 	

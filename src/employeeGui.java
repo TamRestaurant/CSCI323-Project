@@ -52,6 +52,17 @@ import javax.swing.DropMode;
  * TODO : Allow employee status to be edited and information regarding the employee changed
  * 
  * 
+ * 
+ TODO: This is the USPS API interface that will allow a use to enter in zip and city/state will be returned in XML
+ TODO: Need to parse XML and fill in city and state for user
+http://production.shippingapis.com/ShippingAPITest.dll?API=CityStateLookup&XML=<CityStateLookupRequest%20USERID="387STUDE4227">
+     <ZipCode ID= "0">
+         <Zip5>90210</Zip5>
+     </ZipCode>
+</CityStateLookupRequest>
+ * 
+ * 
+ * 
  */
 public class employeeGui {
 

@@ -72,6 +72,7 @@ public class orderHistory implements ActionListener {
 	private JLabel lblErrorLabel;
 	
 	private ResultSet resultSet;
+	private JCheckBox chckbxOnlyShowOpen;
 
 	
 	/**
@@ -131,7 +132,7 @@ public class orderHistory implements ActionListener {
 		lblOrderReports.setBounds(10, 18, 164, 18);
 		panelOrderHistory.add(lblOrderReports);
 		
-		chckbxAllOrders = new JCheckBox("All orders");
+		chckbxAllOrders = new JCheckBox("All Dates");
 		chckbxAllOrders.addActionListener(this);
 		chckbxAllOrders.setSelected(false);
 		chckbxAllOrders.setBounds(6, 43, 112, 18);
@@ -207,7 +208,7 @@ public class orderHistory implements ActionListener {
 		
 		panelReportOptions = new JPanel();
 		panelReportOptions.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Report Options", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelReportOptions.setBounds(4, 222, 176, 130);
+		panelReportOptions.setBounds(4, 222, 176, 153);
 		panelOrderHistory.add(panelReportOptions);
 		panelReportOptions.setLayout(null);
 		
@@ -231,15 +232,19 @@ public class orderHistory implements ActionListener {
 		chckbxGroupByOrder.setBounds(6, 99, 164, 23);
 		panelReportOptions.add(chckbxGroupByOrder);
 		
+		chckbxOnlyShowOpen = new JCheckBox("Only Show Open Orders");
+		chckbxOnlyShowOpen.setBounds(6, 125, 164, 23);
+		panelReportOptions.add(chckbxOnlyShowOpen);
+		
 		btnSubmit = new JButton("Submit");
 		btnSubmit.setMnemonic('B');
 		btnSubmit.addActionListener(this);
-		btnSubmit.setBounds(10, 363, 160, 23);
+		btnSubmit.setBounds(10, 386, 160, 23);
 		panelOrderHistory.add(btnSubmit);
 		
 		btnSaveReport = new JButton("Save Report to File");
 		btnSaveReport.setMnemonic('S');
-		btnSaveReport.setBounds(10, 397, 160, 23);
+		btnSaveReport.setBounds(10, 420, 160, 23);
 		panelOrderHistory.add(btnSaveReport);
 		
 		lblErrorLabel = new JLabel("");
@@ -303,14 +308,16 @@ public class orderHistory implements ActionListener {
 		int showQTY = chckbxQtyOfEach.isSelected()? 1 : 0;
 		int itemDescription = chckbxItemDescription.isSelected()? 1 : 0;
 		int groupOrders = chckbxGroupByOrder.isSelected()? 1 : 0;
+		int openOrders = chckbxOnlyShowOpen.isSelected()? 1 : 0;
+		
 		String dateFrom = comboFromYear.getSelectedItem().toString() +"/" + Integer.toString((comboFromMonth.getSelectedIndex()) + 1) + "/" + comboFromDay.getSelectedItem().toString();
 		String dateTo = comboToYear.getSelectedItem().toString() +"/" + Integer.toString((comboToMonth.getSelectedIndex()) + 1) + "/" + comboToDay.getSelectedItem().toString();
 		
 		if (allDates == 1){
-			resultSet = myDBconnection.getOrderReport(allDates, showEmpID, showQTY, itemDescription, groupOrders);
+			resultSet = myDBconnection.getOrderReport(allDates, showEmpID, showQTY, itemDescription, openOrders, groupOrders);
 		}
 		else{
-			resultSet = myDBconnection.getOrderReport(allDates, showEmpID, showQTY, itemDescription, groupOrders, dateFrom, dateTo);
+			resultSet = myDBconnection.getOrderReport(allDates, showEmpID, showQTY, itemDescription, groupOrders, openOrders, dateFrom, dateTo);
 		}
 		
 

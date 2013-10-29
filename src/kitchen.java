@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -28,6 +29,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentListener;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.JMenuBar;
 import javax.swing.JComboBox;
@@ -36,7 +38,12 @@ import javax.swing.JSeparator;
 
 //import RPSGui.buttonListener;
 
+
+
+
 import java.awt.GridLayout;
+
+import javax.swing.ListSelectionModel;
 
 public class kitchen extends JFrame {
 	private static JTabbedPane kitchen;// here
@@ -44,13 +51,18 @@ public class kitchen extends JFrame {
 	private JLabel lblSelectOrd, lblComments;
 	private JButton btnContact;
 	private JCheckBox orderUp;
-	private JTextArea display;
 	private JTextField txtComment;
 	private JComboBox orderComboBox;
+	private JList list;
+	private dbAction myDBConnection;
+	private ArrayList<String> openOrderArray;
+	private Vector orders = new Vector();
+	private DefaultComboBoxModel model = new DefaultComboBoxModel(orders);
 
+	public kitchen(dbAction DBAction) {
 
-	public kitchen() {
-
+		//Connect to DB (passed in as parameter)
+		myDBConnection = DBAction;
 		// ---------------------------------------------------
 		kitchen = new JTabbedPane(JTabbedPane.TOP);
 		activeOrdersPanel = new JPanel();
@@ -63,9 +75,8 @@ public class kitchen extends JFrame {
 		lblComments = new JLabel("Type Comments to Wait Person");
 		btnContact = new JButton("Send Notification");
 		orderUp = new JCheckBox("Order Up");
-		display = new JTextArea();
 		txtComment = new JTextField();
-		orderComboBox = new JComboBox();
+		orderComboBox = new JComboBox(model);
 
 		// ----------------------- settings ----------------------------
 		lblSelectOrd.setBounds(15, 80, 170, 50);
@@ -74,8 +85,6 @@ public class kitchen extends JFrame {
 		orderUp.setBounds(15, 300, 170, 50);
 		txtComment.setBounds(15, 220, 170, 50);
 		orderComboBox.setBounds(15, 120, 170, 50);
-		display.setBounds(400, 100, 300, 695);
-		display.setEditable(false);
 
 		// ---------------------- adds to panel -----------------------------
 
@@ -84,14 +93,28 @@ public class kitchen extends JFrame {
 		activeOrdersPanel.add(lblComments);
 		activeOrdersPanel.add(btnContact);
 		activeOrdersPanel.add(orderUp);
-		activeOrdersPanel.add(display);
 		activeOrdersPanel.add(orderComboBox);
+		
+		list = new JList();
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.setBounds(311, 120, 298, 326);
+		activeOrdersPanel.add(list);
 
 		
 		btnContact.addActionListener(new buttonListener());
 
 		// ---------------------------------------------------
-
+		/**
+		 * THIS GETS OPEN ORDERS FROM THE DB AND ADDS THEM TO THE COMBOBOX
+		 * 
+		 */
+		
+		openOrderArray = myDBConnection.getOpenOrderIDs();
+		
+		for (String s : openOrderArray){
+			
+			model.addElement(s);
+		}
 	
 
 		// ---------------------------------------------------
@@ -110,5 +133,4 @@ public class kitchen extends JFrame {
 	 System.out.println("works");
 	 }
 	 }
-	 
 }
