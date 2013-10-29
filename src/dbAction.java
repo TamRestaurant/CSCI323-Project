@@ -298,15 +298,15 @@ public class dbAction {
 		
 	}//Close get menu items
 	//Overloaded constructor, allow others to pass in without dates
-	public ResultSet getOrderReport(int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders){
-		return getOrderReport(allDates, showEmpID, showQTY, itemDescription, groupOrders, "", "");
+	public ResultSet getOrderReport(int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders, int openOrders){
+		return getOrderReport(allDates, showEmpID, showQTY, itemDescription, groupOrders, openOrders,  "", "");
 	}
 	
 	
-	public ResultSet getOrderReport(int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders, String dateFrom, String dateTo){
+	public ResultSet getOrderReport(int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders, int openOrders, String dateFrom, String dateTo){
 
 
-		String sqlQuery = prepareReportSQL(allDates, showEmpID, showQTY, itemDescription, groupOrders, dateFrom, dateTo);
+		String sqlQuery = prepareReportSQL(allDates, showEmpID, showQTY, itemDescription, groupOrders, openOrders, dateFrom, dateTo);
 		
 				try {
 				    stmt = conn.createStatement();
@@ -342,7 +342,7 @@ public class dbAction {
 	 * @param dateTo
 	 * @return
 	 */
-	private String prepareReportSQL(int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders, String dateFrom, String dateTo){
+	private String prepareReportSQL(int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders, int openOrders, String dateFrom, String dateTo){
 		//int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders, String dateFrom, String dateTo
 		String tempReturn = "";
 		
@@ -352,7 +352,7 @@ public class dbAction {
 		tempSQL[1] = "";
 		tempSQL[2] = "Concat(Employee.FirstName, \" \", Employee.LastName) As Server,\n    ";
 		tempSQL[3] = "Order.idOrder AS \"Order #\",\n  ";
-		tempSQL[4] = "Order.OrderDate As \"Order Date\",\n  ";
+		tempSQL[4] = "Order.OrderDate As \"Order Date\",\n  Order.OrderClose As \"Order Close Date\",\n";
 		tempSQL[5] = "";
 		tempSQL[6] = "";
 		tempSQL[7] = "";
@@ -366,8 +366,19 @@ public class dbAction {
 		tempSQL[15] = "Order By\n \"Order Date\"";
 		
 		//Loop through and as options are selected, add them as needed to tempSQL (with tempOptionsIndex[] guiding where to put them)
-		if (allDates == 0){
-			tempSQL[13] = "WHERE\n    Order.OrderDate Between \"" + dateFrom +"\" And \""+ dateTo + "\"\n  ";
+		if ((allDates == 0) || (openOrders == 1)){
+			tempSQL[13] = "WHERE\n    ";
+		}
+		if (allDates == 0){// Change SQL if we have to use multiple WHERE statements (add comma)
+			if (openOrders == 1){
+				tempSQL[13] += "Order.OrderDate Between \"" + dateFrom +"\" And \""+ dateTo + "\" And\n  ";
+			}
+			else{
+				tempSQL[13] += "Order.OrderDate Between \"" + dateFrom +"\" And \""+ dateTo + "\"\n  ";
+			}
+		}
+		if (openOrders == 1){
+			tempSQL[13] += "Order.OrderClose is null\n  ";
 		}
 		
 		if (showEmpID == 1){
