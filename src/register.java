@@ -1,4 +1,3 @@
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -43,55 +42,6 @@ import java.awt.GridBagLayout;
 
 public class register extends JFrame 
 {
-<<<<<<< HEAD
-	private JTabbedPane reg;
-	private JPanel panel_2;
-	private JButton [] cashierButtons;
-
-	public register()
-	
-	{
-		panel_2 = new JPanel();
-		cashierButtons = new JButton[36];
-
-		panel_2.setLayout(null);
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(6, 6, 600, 600);
-		panel_2.add(panel);
-		panel.setLayout(new GridLayout(6, 6, 3, 3));
-		reg = new JTabbedPane(JTabbedPane.TOP);
-		
-		
-		reg.addTab("New tab", null, panel_2, null);
-		panel_2.setLayout(null);
-		
-		
-		
-		for (int j = 0; j < 36; j++) {
-			
-			cashierButtons[j] = new JButton(""+j+1);
-			panel.add(cashierButtons[j]);
-			cashierButtons[j].addActionListener(new buttonListener());
-		}
-	}
-	
-	public JTabbedPane r()
-	{
-		return reg;
-	}
-	private class buttonListener implements ActionListener 
-	{
-		public void actionPerformed(ActionEvent event) 
-		{
-			if (event.getSource() == cashierButtons[0]) {
-			System.out.println("button 1 works");
-			}
-
-//			What ever button does
-		}
-	}
-=======
         private JTabbedPane reg= new JTabbedPane(JTabbedPane.TOP);
         private JPanel panel_2;
         private JButton [] cashierButtons;
@@ -99,10 +49,10 @@ public class register extends JFrame
         public register()
         
         {
-        	
-        	JButton btnOpenRegister = new JButton("Open Register");
-        	btnOpenRegister.addActionListener(new buttonListener());
-        	reg.add(btnOpenRegister, BorderLayout.CENTER);
+                
+                JButton btnOpenRegister = new JButton("Open Register");
+                btnOpenRegister.addActionListener(new buttonListener());
+                reg.add(btnOpenRegister, BorderLayout.CENTER);
         }
         
         public JTabbedPane r()
@@ -115,9 +65,8 @@ public class register extends JFrame
         {
                 public void actionPerformed(ActionEvent event) 
                 {
-                	registerinterface.main(null);
+                        registerinterface.main(null);
 //                        What ever button does
                 }
         }
->>>>>>> f86a61c0a49b6a916ba420d091e058f8e3d311ef
 }

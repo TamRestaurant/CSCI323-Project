@@ -57,11 +57,11 @@ public class restWinMake extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-<<<<<<< HEAD
+
 	// ��������������������������� Declarations ��������������������������������
-=======
+
 	// ------------------------------- Declarations ---------------------------------
->>>>>>> f86a61c0a49b6a916ba420d091e058f8e3d311ef
+
 
 	private char[] pWord;
 //	private String Fooditems[] = { "", "Burger", "Fry", "hotDog" };
@@ -71,15 +71,11 @@ public class restWinMake extends JFrame {
 	private String Tickets[] = { "", "Table 1", "Table 2", "Table 3" };
 	private ArrayList<Object> ticketObject = new ArrayList<Object>();
 	private String current_orders = "";
-<<<<<<< HEAD
-	// ����� Labels ����
-	private JLabel lblTicket, lblOrders;
-	// ����� Buttons ����
-=======
+
 	// ------ Labels ------
 	private JLabel lblTicket, lblOrders;
 	// -------- Buttons -------
->>>>>>> f86a61c0a49b6a916ba420d091e058f8e3d311ef
+
 	private JButton btnGetIt, btnPlaceOrder, btnMarkPaid, btnVeiwTicket,
 			btnPrintTicket, btnEnter;
 
@@ -87,21 +83,17 @@ public class restWinMake extends JFrame {
     JPanel panel_1, panel_2, panel_3panel_4, panel_5, Passwordpanel;
     
 
-<<<<<<< HEAD
+
 	// ��������������������������� Main ��������������������������������
-=======
+
 	// -------------------------------- Main ------------------------------------
->>>>>>> f86a61c0a49b6a916ba420d091e058f8e3d311ef
 
 	public restWinMake() {// Begin Main
 
-		
-		
-<<<<<<< HEAD
 		//����������������������������������� Change order of tabs and Panels at own risk ������������������������������������������������������������������
-=======
+
 		//------------- Change order of tabs and Panels at own risk --------------------------------
->>>>>>> f86a61c0a49b6a916ba420d091e058f8e3d311ef
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1150, 1000);
 		contentPane = new JPanel();
@@ -125,11 +117,7 @@ public class restWinMake extends JFrame {
 		kitchen k = new kitchen(DBAction);
 		tabbedPane.addTab("Kitchen", null, k.k(), null);
 		
-<<<<<<< HEAD
-		//add lockscreen		
-		lockscreen l = new lockscreen();
-		tabbedPane.addTab("Lockscreen", null, l.lock(), null);
-=======
+
 		//locksreen tab
 		
 		lockscreen l = new lockscreen();
@@ -141,7 +129,6 @@ public class restWinMake extends JFrame {
 		//TODO: Create dbConnector in one place and allow other classes to use it to avoid multiple connections
 		
 		
->>>>>>> f86a61c0a49b6a916ba420d091e058f8e3d311ef
 		
 		/*
 		 * 
@@ -159,26 +146,19 @@ public class restWinMake extends JFrame {
 		pwdYourPin.setText("xxxxxxxx");
 		pwdYourPin.setBounds(145, 62, 117, 20);
 		//panel.add(pwdYourPin);
-<<<<<<< HEAD
-//		//����������������������������������������������������������������������������������������������������������������������
-=======
-		//-----------------------------------------------------------------------		
->>>>>>> f86a61c0a49b6a916ba420d091e058f8e3d311ef
-//		
 
 		
 		
-<<<<<<< HEAD
 		// ��������������������������� Labels ��������������������������������
 		 JLabel lblTicket = new JLabel("Orders appear here");
 		JLabel lblOrders = new JLabel("Orders");
 		// ��������������������������� Buttons ��������������������������������
-=======
+
 		//------------------------------------------- Labels //-------------------------------------------
 //		 JLabel lblTicket = new JLabel("Orders appear here");
 //		JLabel lblOrders = new JLabel("Orders");
 		//------------------------------------------- Buttons //-------------------------------------------
->>>>>>> f86a61c0a49b6a916ba420d091e058f8e3d311ef
+
 
 		JButton btnGetIt = new JButton("Add to current Ticket");
 		JButton btnNewTicket = new JButton("New Ticket");
@@ -188,13 +168,9 @@ public class restWinMake extends JFrame {
 		JButton btnVeiwTicket = new JButton("Veiw Ticket");
 		JButton btnPrintTicket = new JButton("Print Ticket");
 		JButton btnEnter = new JButton("Enter");
-<<<<<<< HEAD
-//		// ��������������������������� ActionListeners
-//		// ��������������������������������
-=======
+
 		//------------------------------------------- ActionListeners
-		//-------------------------------------------
->>>>>>> f86a61c0a49b6a916ba420d091e058f8e3d311ef
+
 
 		btnGetIt.addActionListener(new buttonListener());
 		btnNewTicket.addActionListener(new buttonListener());
@@ -209,32 +185,22 @@ public class restWinMake extends JFrame {
 		
 	}// End of Main
 
-<<<<<<< HEAD
-	// ���������������������������������������� End of main
-	// ������������������������������������
 
-	// ���������������������������������������� methods
-	// ����������������������������������������
-=======
 	//------------------------------------------- End of main//-------------------------------------------
 
 	//------------------------------------------- methods //-------------------------------------------
 	
->>>>>>> f86a61c0a49b6a916ba420d091e058f8e3d311ef
+
 
 	public void refreshKitchen() {
 		System.out.println("weeewefsd");
 		lblOrders.setText(current_orders);
 	}
 
-<<<<<<< HEAD
-	// �������������������������������� start button listener
-	// ����������������������������������
-	// �����������������������������������������������������������������������������������������
-=======
+
 	//------------------------------------------- start button listener //-------------------------------------------
 	
->>>>>>> f86a61c0a49b6a916ba420d091e058f8e3d311ef
+
 
 	private class buttonListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
