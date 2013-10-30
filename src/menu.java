@@ -26,6 +26,7 @@ import java.awt.CardLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -45,8 +46,9 @@ import javax.swing.JSeparator;
 
 
 
-import java.awt.GridLayout;
 
+import java.awt.GridLayout;
+import java.awt.event.MouseListener;
 public class menu extends JFrame
 {
         private JTabbedPane menu;
@@ -66,6 +68,9 @@ public class menu extends JFrame
         private Vector<String> food;
         private JList list;
         private ArrayList<Item> menuItems;
+		//private MouseListener mouseListener;
+        private long time;
+        
         public menu(ArrayList<Item> mItems)
         {
                 menu = new JTabbedPane(JTabbedPane.TOP);
@@ -207,10 +212,10 @@ public class menu extends JFrame
 
         
                                 for (int j = 0; j < 24; j++) {
-                                        menuButtons[j] = new JButton(menuButtonsImage[j]);
+                                        menuButtons[j] = new JButton(menuItems.get(j).getItemName());
                                         
                                         entreeButtonPanel.add(menuButtons[j]);
-                                        menuButtons[j].addActionListener(new buttonListener());
+                                        menuButtons[j].addMouseListener(new mouseListener());
                                 }
                                 for (int j = 24; j < 40; j++) {
                                         menuButtons[j] = new JButton(menuButtonsImage[j]);
@@ -305,6 +310,54 @@ public class menu extends JFrame
                 return menu;
         }
         
+        private class mouseListener implements MouseListener
+        {
+        	
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				if(!openTicket)
+					time = System.currentTimeMillis();
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent event) {
+				if(!openTicket)
+				{
+					if(( System.currentTimeMillis()-time)>=2000)
+					{
+						System.out.println("modify");
+					}
+					int i =0;
+					while(event.getSource()!=menuButtons[i])
+						i++;
+            	
+					item = new Item (menuItems.get(i).getItemName(),menuItems.get(i).getDescription(),menuItems.get(i).getCategory(),menuItems.get(i).getitemID(), menuItems.get(i).getItemPrice() );
+					items.add( item);
+					food.add("Burger, $5.00");
+					list.setListData(food);
+				}
+			}
+        	
+        }
+        
         private class buttonListener implements ActionListener 
         {
                 public void actionPerformed(ActionEvent event) 
@@ -314,9 +367,9 @@ public class menu extends JFrame
                 		i++;
                 	
                 	//item = new Item("burger", 1, 6.00);
-                   // items.add( item);
-                   // food.add("Burger, $5.00");
-                    //list.setListData(food);
+                    items.add( item);
+                    food.add("Burger, $5.00");
+                    list.setListData(food);
                 	
                 	/*
                         if (event.getSource() == menuButtons[0]) {
