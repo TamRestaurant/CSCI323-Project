@@ -11,9 +11,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.ListModel;
+import javax.swing.Popup;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 
@@ -48,6 +50,8 @@ import javax.swing.JSeparator;
 
 
 
+
+
 import java.awt.GridLayout;
 import java.awt.event.MouseListener;
 public class menu extends JFrame
@@ -66,12 +70,13 @@ public class menu extends JFrame
         public static ArrayList<Order> orders;
         private int orderNumber;
         private JLabel currentOrder; 
+        private JLabel currentTable;
         private Vector<String> food;
         private JList list;
         private ArrayList<Item> menuItems;
 		//private MouseListener mouseListener;
         private long time;
-        
+        private int table;
         public menu(ArrayList<Item> mItems)
         {
                 menu = new JTabbedPane(JTabbedPane.TOP);
@@ -83,6 +88,7 @@ public class menu extends JFrame
                 orders= new ArrayList<Order>();
                 orderNumber = 1;
                 currentOrder = new JLabel("Current Order");
+                currentTable = new JLabel("Current Table");
                 separator.setBounds(432, 259, 1, 12);
                 menuPanel.add(separator);
                 //-------------------Display Panel-----------------------------------
@@ -101,8 +107,10 @@ public class menu extends JFrame
                 setOrderPanel.setLayout(null);
                 
                 
-                currentOrder.setBounds(20, 75, 500, 20);
+                currentOrder.setBounds(20, 80, 500, 20);
+                currentTable.setBounds(20, 65, 500, 20);
                 setOrderPanel.add(currentOrder);
+                setOrderPanel.add(currentTable);
                 //----------------------END Display Panel---------------------------
                 menu.addTab("Menu", null, menuPanel, null);
                 menuPanel.setLayout(null);
@@ -247,15 +255,25 @@ public class menu extends JFrame
                 final JButton remove = new JButton("Remove");
                 list = new JList(); 
                 food = new Vector<String>();
+                final Object[] tables = {1, 2, 3, 4, 5};
                 newOrder.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-                                openTicket=false;
-                                newOrder.setEnabled(openTicket);
-                                closeOrder.setEnabled(!openTicket);
-                                items = new ArrayList<Item>();
-                                food.clear();
-                                list.setListData(food);
-                                currentOrder.setText("Current Order: "+orderNumber);
+                                
+                                Object t = JOptionPane.showInputDialog(menu,"What is the table number?","",JOptionPane.PLAIN_MESSAGE, null,tables,null);
+                                if(t == null)
+                                {}
+                                else
+                                {
+                                	table = (Integer)t;
+                                	openTicket=false;
+                                	newOrder.setEnabled(openTicket);
+                                	closeOrder.setEnabled(!openTicket);
+                                	items = new ArrayList<Item>();
+                                	food.clear();
+                                	list.setListData(food);
+                                	currentOrder.setText("Current Order: "+orderNumber);
+                                	currentTable.setText("Current Table: "+table);
+                                }
                                  
                                 
                                 
@@ -276,7 +294,7 @@ public class menu extends JFrame
                                 openTicket=true;
                                 newOrder.setEnabled(openTicket);
                                 closeOrder.setEnabled(!openTicket);
-                                order = new Order(items, 1, 1);
+                                order = new Order(items, table, 1);
                                 orders.add(order);
                                 orderNumber++;
                                 
@@ -344,18 +362,19 @@ public class menu extends JFrame
 			public void mouseReleased(MouseEvent event) {
 				if(!openTicket)
 				{
+					String comments=null ;
 					//This checks to see if button was held down, if so message box will open to allow user to type in comments about item and add it to item
 					if(( System.currentTimeMillis()-time)>=1000)
 					{
-						
-						//TODO: Create message popup allowing user to put comments on item using method: setItemComment(String itemComment)
-						System.out.println("modify");
+						comments = JOptionPane.showInputDialog( "Modifications" );
 					}
 					int i =0;
 					while(event.getSource()!=menuButtons[i])
 						i++;
-            	
-					item = new Item (menuItems.get(i).getItemName(),menuItems.get(i).getDescription(),menuItems.get(i).getCategory(),menuItems.get(i).getitemID(), menuItems.get(i).getItemPrice() );
+					if(comments != null)
+						item = new Item (menuItems.get(i).getItemName(),menuItems.get(i).getDescription(),menuItems.get(i).getCategory(),menuItems.get(i).getitemID(), menuItems.get(i).getItemPrice(), comments );
+					else
+						item = new Item (menuItems.get(i).getItemName(),menuItems.get(i).getDescription(),menuItems.get(i).getCategory(),menuItems.get(i).getitemID(), menuItems.get(i).getItemPrice() );
 					items.add( item);
 					food.add(item.getItemName());
 					list.setListData(food);
