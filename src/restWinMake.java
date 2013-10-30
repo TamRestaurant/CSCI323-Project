@@ -42,7 +42,6 @@ import java.awt.GridLayout;
 public class restWinMake extends JFrame {
 	private JPanel contentPane;
 	private JPasswordField pwdYourPin;
-	private
 	
 	//This connects to DB and can be passed into any class that needs to connect to DB 
 	//(best to config constructor initialization, refer to admin tab for example)
@@ -115,7 +114,7 @@ public class restWinMake extends JFrame {
 		tabbedPane.setBounds(25, 25, 1100, 950);
 		contentPane.add(tabbedPane);
 		//-----------------------ADD menu tab-----------------------------------
-		menu m = new menu();
+		menu m = new menu(getMenuItems());
 		tabbedPane.addTab("menu", null, m.m(), null);
 		//-----------------------ADD wait station tab-----------------------------------
 //		waitStation w = new waitStation();
@@ -211,23 +210,47 @@ public class restWinMake extends JFrame {
 		
 		ResultSet rs = DBAction.getMenuItems();
 		ArrayList<Item> myMenuItems = new ArrayList();
-		
+		ArrayList<Item> beverages = new ArrayList();
+		ArrayList<Item> sides = new ArrayList();
+		ArrayList<Item> desserts = new ArrayList();
+		ArrayList<Item> entrees = new ArrayList();
 		
 		//Populate arrayList of menuItems from ResultSet
 		try{
-			int counter = 0;
+
 		while (rs.next()){
 			//Have option of using rs.getString(1) for column numbers or can use names. Opted for names for readability
-
-			myMenuItems.add(new  Item(rs.getString("ItemName"), rs.getString("ItemDescription"), rs.getString("CategoryName"), rs.getInt("idMenuItem"), rs.getDouble("ItemPrice")));
-			System.out.println(myMenuItems.get(counter).toString());
-			counter ++;
+			String name = rs.getString("ItemName");
+			String descr = rs.getString("ItemDescription");
+			String category = rs.getString("CategoryName");
+			int itemID = rs.getInt("idMenuItem");
+			Double price = rs.getDouble("ItemPrice");
 			
+			//depending on category, put into array that will hold that specific category
+			if (category.equals("Beverage")){
+				beverages.add(new  Item(name, descr, category, itemID, price));
+			}
+			else if (category.equals("Entree")){
+				entrees.add(new  Item(name, descr, category, itemID, price));
+			}
+			else if (category.equals("Side")){
+				sides.add(new  Item(name, descr, category, itemID, price));	
+			}
+			else if (category.equals("Dessert")){
+				desserts.add(new  Item(name, descr, category, itemID, price));
+			}
+
 		}
 		}
 		catch (SQLException e ) {
 	        System.out.println(e);
 		}
+		
+		myMenuItems.addAll(entrees);
+		myMenuItems.addAll(beverages);
+		myMenuItems.addAll(desserts);
+		myMenuItems.addAll(sides);
+		
 		
 		return myMenuItems;
 		

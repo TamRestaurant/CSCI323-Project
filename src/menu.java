@@ -313,10 +313,10 @@ public class menu extends JFrame
                 	while(event.getSource()!=menuButtons[i])
                 		i++;
                 	
-                	item = new Item("burger", 1, 6.00);
-                    items.add( item);
-                    food.add("Burger, $5.00");
-                    list.setListData(food);
+                	//item = new Item("burger", 1, 6.00);
+                   // items.add( item);
+                   // food.add("Burger, $5.00");
+                    //list.setListData(food);
                 	
                 	/*
                         if (event.getSource() == menuButtons[0]) {
