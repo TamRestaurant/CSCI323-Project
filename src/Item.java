@@ -26,7 +26,15 @@ public class Item {
 		setCategory(category);
 		
 	}
-	
+	public Item(String name,String description, String category, int num, double price, String comment){
+		setItemName(name);
+		setitemID(num);
+		setItemPrice(price);
+		setDescription(description);
+		setCategory(category);
+		setItemComment(comment);
+		
+	}
 	public Item(){}
 
 	/* (non-Javadoc)
