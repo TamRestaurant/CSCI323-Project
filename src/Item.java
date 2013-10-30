@@ -7,6 +7,7 @@ public class Item {
 	private String itemName, description, category;
 	private int itemID;
 	private double itemPrice;
+	private String itemComment = "";
 	NumberFormat formatMoney = NumberFormat.getCurrencyInstance();
 	
 	
@@ -84,4 +85,14 @@ public class Item {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+
+	public String getItemComment() {
+		return itemComment;
+	}
+
+	public void setItemComment(String itemComment) {
+		this.itemComment = itemComment;
+	}
+
+	
 }

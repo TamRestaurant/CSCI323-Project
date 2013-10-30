@@ -47,6 +47,7 @@ import javax.swing.JSeparator;
 
 
 
+
 import java.awt.GridLayout;
 import java.awt.event.MouseListener;
 public class menu extends JFrame
@@ -343,8 +344,11 @@ public class menu extends JFrame
 			public void mouseReleased(MouseEvent event) {
 				if(!openTicket)
 				{
-					if(( System.currentTimeMillis()-time)>=2000)
+					//This checks to see if button was held down, if so message box will open to allow user to type in comments about item and add it to item
+					if(( System.currentTimeMillis()-time)>=1000)
 					{
+						
+						//TODO: Create message popup allowing user to put comments on item using method: setItemComment(String itemComment)
 						System.out.println("modify");
 					}
 					int i =0;
@@ -360,86 +364,6 @@ public class menu extends JFrame
         	
         }
         
-        private class buttonListener implements ActionListener 
-        {
-                public void actionPerformed(ActionEvent event) 
-                {
-                	int i =0;
-                	while(event.getSource()!=menuButtons[i])
-                		i++;
-                	
-                	//item = new Item("burger", 1, 6.00);
-                    items.add( item);
-                    food.add("Burger, $5.00");
-                    list.setListData(food);
-                	
-                	/*
-                        if (event.getSource() == menuButtons[0]) {
 
-                                if(openTicket == false)
-                                {
-                                        
-                                }
-                        } else if (event.getSource() == menuButtons[1]) {
-                                System.out.println("button 1 wrks");
-                        } else if (event.getSource() == menuButtons[2]) {
-                                System.out.println("button 2 wrks");
-                        } else if (event.getSource() == menuButtons[3]) {
-                                System.out.println("button 3 wrks");
-                        } else if (event.getSource() == menuButtons[4]) {
-                                System.out.println("button 4 wrks");
-                        } else if (event.getSource() == menuButtons[5]) {
-                                System.out.println("button 5 wrks");
-                        } else if (event.getSource() == menuButtons[6]) {
-                                System.out.println("button 6 wrks");
-                        } else if (event.getSource() == menuButtons[7]) {
-                                System.out.println("button 7 wrks");
-                        } else if (event.getSource() == menuButtons[8]) {
-                                System.out.println("button 8 wrks");
-                        } else if (event.getSource() == menuButtons[9]) {
-                                System.out.println("button 9 wrks");
-                        } else if (event.getSource() == menuButtons[10]) {
-                                System.out.println("button 10 wrks");
-                        } else if (event.getSource() == menuButtons[11]) {
-                                System.out.println("button 11 wrks");
-                        } else if (event.getSource() == menuButtons[12]) {
-                                System.out.println("button 12 wrks");
-                        } else if (event.getSource() == menuButtons[13]) {
-                                System.out.println("button 13 wrks");
-                        } else if (event.getSource() == menuButtons[14]) {
-                                System.out.println("button 1 wrks");
-                        } else if (event.getSource() == menuButtons[15]) {
-                                System.out.println("button 1 wrks");
-                        } else if (event.getSource() == menuButtons[16]) {
-                                System.out.println("button 1 wrks");
-                        } else if (event.getSource() == menuButtons[17]) {
-                                System.out.println("button 1 wrks");
-                        } else if (event.getSource() == menuButtons[18]) {
-                                System.out.println("button 1 wrks");
-                        } else if (event.getSource() == menuButtons[19]) {
-                                System.out.println("button 1 wrks");
-                        } else if (event.getSource() == menuButtons[20]) {
-                                System.out.println("button 1 wrks");
-                        } else if (event.getSource() == menuButtons[21]) {
-                                System.out.println("button 1 wrks");
-                        } else if (event.getSource() == menuButtons[22]) {
-                                System.out.println("button 1 wrks");
-                        } else if (event.getSource() == menuButtons[23]) {
-                                System.out.println("button 1 wrks");
-                        } else if (event.getSource() == menuButtons[24]) {
-                                System.out.println("button 1 wrks");
-                        } else if (event.getSource() == menuButtons[25]) {
-                                System.out.println("button 1 wrks");
-                        } else if (event.getSource() == menuButtons[26]) {
-                                System.out.println("button 1 wrks");
-                        } else if (event.getSource() == menuButtons[27]) {
-                                System.out.println("button 1 wrks");
-                        } else if (event.getSource() == menuButtons[28]) {
-                                System.out.println("button 1 wrks");
-                        } else if (event.getSource() == menuButtons[29]) {
-                                System.out.println("button 1 wrks");
-                        }*/
-                }
-        }
 
 }
