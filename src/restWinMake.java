@@ -67,7 +67,7 @@ public class restWinMake extends JFrame {
 	 * Create the frame.
 	 */
 
-	// ��������������������������� Declarations ��������������������������������
+
 
 	// ------------------------------- Declarations ---------------------------------
 
@@ -93,13 +93,9 @@ public class restWinMake extends JFrame {
     
 
 
-	// ��������������������������� Main ��������������������������������
-
 	// -------------------------------- Main ------------------------------------
 
 	public restWinMake() {// Begin Main
-
-		//����������������������������������� Change order of tabs and Panels at own risk ������������������������������������������������������������������
 
 		//------------- Change order of tabs and Panels at own risk --------------------------------
 
@@ -158,10 +154,10 @@ public class restWinMake extends JFrame {
 
 		
 		
-		// ��������������������������� Labels ��������������������������������
+
 		 JLabel lblTicket = new JLabel("Orders appear here");
 		JLabel lblOrders = new JLabel("Orders");
-		// ��������������������������� Buttons ��������������������������������
+
 
 		//------------------------------------------- Labels //-------------------------------------------
 //		 JLabel lblTicket = new JLabel("Orders appear here");
