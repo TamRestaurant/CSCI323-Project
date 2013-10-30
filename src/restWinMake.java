@@ -11,14 +11,21 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
+
 import java.awt.FlowLayout;
+
 import javax.swing.JTextArea;
+
 import java.awt.ScrollPane;
 import java.awt.CardLayout;
+
 import javax.swing.JList;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JMenuBar;
@@ -28,11 +35,14 @@ import javax.swing.JSeparator;
 
 //import RPSGui.buttonListener;
 
+
+
 import java.awt.GridLayout;
 
 public class restWinMake extends JFrame {
 	private JPanel contentPane;
 	private JPasswordField pwdYourPin;
+	private
 	
 	//This connects to DB and can be passed into any class that needs to connect to DB 
 	//(best to config constructor initialization, refer to admin tab for example)
@@ -196,6 +206,33 @@ public class restWinMake extends JFrame {
 		System.out.println("weeewefsd");
 		lblOrders.setText(current_orders);
 	}
+	
+	private ArrayList<Item> getMenuItems(){
+		
+		ResultSet rs = DBAction.getMenuItems();
+		ArrayList<Item> myMenuItems = new ArrayList();
+		
+		
+		//Populate arrayList of menuItems from ResultSet
+		try{
+			int counter = 0;
+		while (rs.next()){
+			//Have option of using rs.getString(1) for column numbers or can use names. Opted for names for readability
+
+			myMenuItems.add(new  Item(rs.getString("ItemName"), rs.getString("ItemDescription"), rs.getString("CategoryName"), rs.getInt("idMenuItem"), rs.getDouble("ItemPrice")));
+			System.out.println(myMenuItems.get(counter).toString());
+			counter ++;
+			
+		}
+		}
+		catch (SQLException e ) {
+	        System.out.println(e);
+		}
+		
+		return myMenuItems;
+		
+		
+	}//close getMenuItems()
 
 
 	//------------------------------------------- start button listener //-------------------------------------------

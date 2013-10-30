@@ -4,16 +4,26 @@ import java.text.NumberFormat;
 
 public class Item {
 
-	private String itemName;
-	private int itemNumber;
+	private String itemName, description, category;
+	private int itemID;
 	private double itemPrice;
 	NumberFormat formatMoney = NumberFormat.getCurrencyInstance();
 	
 	
-	public Item(String name,int num, double price){
+//	public Item(String name,int num, double price){
+//		setItemName(name);
+//		setitemID(num);
+//		setItemPrice(price);
+//		
+//	}
+	
+	public Item(String name,String description, String category, int num, double price){
 		setItemName(name);
-		setItemNumber(num);
+		setitemID(num);
 		setItemPrice(price);
+		setDescription(description);
+		setCategory(category);
+		
 	}
 	
 	public Item(){}
@@ -23,7 +33,7 @@ public class Item {
 	 */
 	@Override
 	public String toString() {
-		return "Item: " + itemName + ", item number: " + itemNumber
+		return "Item: " + itemName + ", item number: " + itemID
 				+ ", item price: " + formatMoney.format(itemPrice);
 	}
 
@@ -40,13 +50,13 @@ public class Item {
 	}
 
 
-	public int getItemNumber() {
-		return itemNumber;
+	public int getitemID() {
+		return itemID;
 	}
 
 
-	public void setItemNumber(int itemNumber) {
-		this.itemNumber = itemNumber;
+	public void setitemID(int itemID) {
+		this.itemID = itemID;
 	}
 
 
@@ -57,5 +67,21 @@ public class Item {
 
 	public void setItemPrice(double itemPrice) {
 		this.itemPrice = itemPrice;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 }
