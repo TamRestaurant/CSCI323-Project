@@ -77,7 +77,6 @@ public class menu extends JFrame
                 menuItems = mItems;
                 panel = new JPanel();
                 menuPanel = new JPanel();
-                subWaitTab = new JPanel();
                 menuButtons = new JButton[64];
                 separator = new JSeparator();
                 orders= new ArrayList<Order>();
@@ -115,7 +114,7 @@ public class menu extends JFrame
 //                mainTab.addTab("Wait Station", null, waitTab, null);
                 
                 JPanel subWaitTab = new JPanel();
-                menu.addTab("Ticket Maker", null, subWaitTab, null);
+                menu.addTab("Ticket Maker", subWaitTab);
                 subWaitTab.setLayout(null);
                 //---------------------------------------------------------------------------------------------                
                      /*
@@ -164,19 +163,19 @@ public class menu extends JFrame
                 entreeButtonPanel.setBorder(BorderFactory.createLoweredBevelBorder());
                 
                 JPanel drinkButtonPanel = new JPanel();
-                drinkButtonPanel.setBounds(40, 270, 730, 184);
+                drinkButtonPanel.setBounds(40, 270, 730, 125);
                 subWaitTab.add(drinkButtonPanel);
                 drinkButtonPanel.setLayout(new GridLayout(2, 8, 2, 2));
                 drinkButtonPanel.setBorder(BorderFactory.createLoweredBevelBorder());
 
                 JPanel dessertButtonPanel = new JPanel();
-                dessertButtonPanel.setBounds(40, 516, 730, 116);
+                dessertButtonPanel.setBounds(40, 430, 730, 116);
                 subWaitTab.add(dessertButtonPanel);
                 dessertButtonPanel.setLayout(new GridLayout(2, 8, 2, 2));
                 dessertButtonPanel.setBorder(BorderFactory.createLoweredBevelBorder());
 
                 JPanel sidesButtonPanel = new JPanel();
-                sidesButtonPanel.setBounds(40, 677, 730, 63);
+                sidesButtonPanel.setBounds(40, 581, 730, 63);
                 subWaitTab.add(sidesButtonPanel);
                 sidesButtonPanel.setLayout(new GridLayout(1, 8, 2, 2));
                 sidesButtonPanel.setBorder(BorderFactory.createLoweredBevelBorder());
@@ -196,12 +195,12 @@ public class menu extends JFrame
                 
                 JLabel lblDesserts = new JLabel("Desserts");
                 lblDesserts.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-                lblDesserts.setBounds(360, 466, 145, 25);
+                lblDesserts.setBounds(360, 400, 145, 25);
                 subWaitTab.add(lblDesserts);
                 
                 JLabel lblSideOrders = new JLabel("Side Orders");
                 lblSideOrders.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-                lblSideOrders.setBounds(360, 640, 145, 25);
+                lblSideOrders.setBounds(360, 555, 145, 25);
                 subWaitTab.add(lblSideOrders);
                 
                 JLabel lblTicketDisplay = new JLabel("Ticket Display");
@@ -218,22 +217,22 @@ public class menu extends JFrame
                                         menuButtons[j].addMouseListener(new mouseListener());
                                 }
                                 for (int j = 24; j < 40; j++) {
-                                        menuButtons[j] = new JButton(menuButtonsImage[j]);
+                                        menuButtons[j] = new JButton(menuItems.get(j).getItemName());
                                         
                                         drinkButtonPanel.add(menuButtons[j]);
-                                        menuButtons[j].addActionListener(new buttonListener());
+                                        menuButtons[j].addMouseListener(new mouseListener());
                                 }
                                 for (int j = 40; j < 56; j++) {
-                                        menuButtons[j] = new JButton(menuButtonsImage[j]);
+                                        menuButtons[j] = new JButton(menuItems.get(j).getItemName());
                                         
                                         dessertButtonPanel.add(menuButtons[j]);
-                                        menuButtons[j].addActionListener(new buttonListener());
+                                        menuButtons[j].addMouseListener(new mouseListener());
                                 }
                                 for (int j = 56; j < 64; j++) {
-                                        menuButtons[j] = new JButton(menuButtonsImage[j]);
+                                        menuButtons[j] = new JButton(menuItems.get(j).getItemName());
                                         
                                         sidesButtonPanel.add(menuButtons[j]);
-                                        menuButtons[j].addActionListener(new buttonListener());
+                                        menuButtons[j].addMouseListener(new mouseListener());
                                 }                        
                                 //---------------------------------------------------------------------------------------------                
         
@@ -286,7 +285,10 @@ public class menu extends JFrame
                 });
                 closeOrder.setBounds(10, 40, 117, 29);
                 setOrderPanel.add(closeOrder);
-                
+
+                /**
+                 * For soeme reason the list is re-ordered after this happens??
+                 */
                 remove.addActionListener(new ActionListener(){
                         public void actionPerformed(ActionEvent e){
                                 int[] sel = list.getSelectedIndices();
@@ -351,7 +353,7 @@ public class menu extends JFrame
             	
 					item = new Item (menuItems.get(i).getItemName(),menuItems.get(i).getDescription(),menuItems.get(i).getCategory(),menuItems.get(i).getitemID(), menuItems.get(i).getItemPrice() );
 					items.add( item);
-					food.add("Burger, $5.00");
+					food.add(item.getItemName());
 					list.setListData(food);
 				}
 			}
