@@ -65,9 +65,11 @@ public class menu extends JFrame
         private JLabel currentOrder; 
         private Vector<String> food;
         private JList list;
-        public menu()
+        private ArrayList<Item> menuItems;
+        public menu(ArrayList<Item> mItems)
         {
                 menu = new JTabbedPane(JTabbedPane.TOP);
+                menuItems = mItems;
                 panel = new JPanel();
                 menuPanel = new JPanel();
                 subWaitTab = new JPanel();
@@ -307,14 +309,21 @@ public class menu extends JFrame
         {
                 public void actionPerformed(ActionEvent event) 
                 {
+                	int i =0;
+                	while(event.getSource()!=menuButtons[i])
+                		i++;
+                	
+                	item = new Item("burger", 1, 6.00);
+                    items.add( item);
+                    food.add("Burger, $5.00");
+                    list.setListData(food);
+                	
+                	/*
                         if (event.getSource() == menuButtons[0]) {
 
                                 if(openTicket == false)
                                 {
-                                        item = new Item("burger", 1, 6.00);
-                                        items.add( item);
-                                        food.add("Burger, $5.00");
-                                        list.setListData(food);
+                                        
                                 }
                         } else if (event.getSource() == menuButtons[1]) {
                                 System.out.println("button 1 wrks");
@@ -374,7 +383,7 @@ public class menu extends JFrame
                                 System.out.println("button 1 wrks");
                         } else if (event.getSource() == menuButtons[29]) {
                                 System.out.println("button 1 wrks");
-                        }
+                        }*/
                 }
         }
 
