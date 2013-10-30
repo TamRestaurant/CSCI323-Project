@@ -20,6 +20,8 @@ public class Order {
 		setTableNumber(table);
 		this.items = items;
 		orderTotal = total(items); // calculate order total
+		//Consider turning this into a a date and time instead of integer in milliseconds
+		
 		startTime = System.currentTimeMillis(); // get the system time at start
 												// of order
 	}
