@@ -3,7 +3,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Vector;
 
 /***
  * This class is the interface that interacts with the database for running queries
@@ -54,9 +58,168 @@ public class dbAction {
 		
 		
 	}
+	
+	/**
+	 * This class returns an array list containing an int[2] array that houses recordID and employeeID of all employees that are currently clocked in
+	 * @return
+	 */
+	public ArrayList<int[]> getClockedInEmployees(){
+		final int CLOCK_IN_RECORD_ID = 0;
+		final int CLOCK_IN_EMP_ID = 1;
+		
+		ArrayList<int[]> clockedInEmployees = new ArrayList();
+		String sqlQuery = "Select\n  EmployeeTimeRecord.idEmployeeTimeRecord,\n  EmployeeTimeRecord.Employee_idEmployee,\n  EmployeeTimeRecord.ClockOutDateTime\n"
+				+ "From\n  EmployeeTimeRecord\n"
+				+ "Where\n  EmployeeTimeRecord.ClockOutDateTime Is Null";
+		
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sqlQuery);
+
+			
+			//Iterate through result set and create array with record id and emp id
+			while (rs.next()){
+				int[] empRecord = new int[2];
+				empRecord[CLOCK_IN_RECORD_ID] = rs.getInt("idEmployeeTimeRecord");
+				empRecord[CLOCK_IN_EMP_ID] = rs.getInt("Employee_idEmployee");
+				clockedInEmployees.add(empRecord);
+			}
+			
+		}
+		
+		catch (SQLException ex){
+		    // handle any errors
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+		}
+
+		return clockedInEmployees;
+		
+	}
+	
+	/**
+	 * This method allows an employee to get clocked in
+	 * This returns and array[2] that contains the record of clock in and the employee id
+	 * @param currEmployee
+	 */
+	public int[] clockInEmployee(employee currEmployee){
+		String sqlAddress = "INSERT into csci_323_exp20140101.EmployeeTimeRecord(Employee_idEmployee,ClockInDateTime) VALUES (?,?)";
+		int[] clockInRecordArray = new int[2];
+		final int CLOCK_IN_RECORD_ID = 0;
+		final int CLOCK_IN_EMP_ID = 1;
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		
+		try{
+			//Prepared statement for the address
+			PreparedStatement createTimeRecord = conn.prepareStatement(sqlAddress, Statement.RETURN_GENERATED_KEYS);
+			//Insert needed values into prepared statement
+			createTimeRecord.setString(1, Integer.toString(currEmployee.getEmpId()));
+			createTimeRecord.setString(2, dateFormat.format(date).toString());
+			//Execute prepared statement (run SQL query)
+			createTimeRecord.executeUpdate();
+			
+			//Get return generated keys
+			ResultSet rs = createTimeRecord.getGeneratedKeys();
+			
+			//add employeeId and generated keys into int[] to be returned
+			rs.next();
+			clockInRecordArray[CLOCK_IN_RECORD_ID] = rs.getInt(1);
+			clockInRecordArray[CLOCK_IN_EMP_ID] = currEmployee.getEmpId();
+			
+			
+		}
+		catch(SQLException ex){
+			//TODO print to console the exception if occurred
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+			
+		}
+		return clockInRecordArray;
+		
+	}
+	
+	public void clockOutEmployee(int recordId){
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		
+		//String sqlTimeUpdate= "UPDATE csci_323_exp20140101.EmployeeTimeRecord SET ClockOutDateTime = ? WHERE idEmployeeTimeRecord = ?";
+		String sqlTimeUpdate = "UPDATE csci_323_exp20140101.EmployeeTimeRecord SET ClockOutDateTime = \""+ dateFormat.format(date).toString() +"\" WHERE idEmployeeTimeRecord = " + recordId;
+	
+		
+		
+		try{
+			//Was not working, but exact same query taken from debug worked in  DBMS - WTF
+			PreparedStatement updateTimeRecord  = conn.prepareStatement(sqlTimeUpdate);
+			//updateTimeRecord.setString(1, dateFormat.format(date).toString());
+			//String temp = dateFormat.format(date).toString();
+			//updateTimeRecord.setInt(2, recordId);
+			updateTimeRecord.executeUpdate(sqlTimeUpdate);
+
+			//stmt = conn.createStatement();
+			//stmt.executeQuery(sqlTimeupdate);
+			
+			
+		}
+		catch(SQLException ex){
+			//TODO print to console the exception if occurred
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+			
+		}
+	}
+	
+	/**
+	 * This method gets employees and populates an array list of employee objects from result set
+	 * (with helper method below)  Ability to get all employees or just active employees
+	 * 
+	 * @param onlyActive
+	 * @return
+	 */
+	public Vector getEmployees(boolean onlyActive){
+		
+		Vector<employee> employeeList = new Vector();
+		String sqlAll = "Select\n  Employee.idEmployee,\n  Employee.FirstName,\n  Employee.LastName,\n  EmployeeRole.RoleName,\n  Employee.Pin,\n  Employee.Active\n"
+				+ "From\n  Employee Inner Join\n  EmployeeRole On Employee.EmployeeRole_idEmployeeRole =\n    EmployeeRole.idEmployeeRole"
+				+ "Order By\n  Employee.idEmployee";
+		String sqlActive = "Select\n  Employee.idEmployee,\n  Employee.FirstName,\n  Employee.LastName,\n  EmployeeRole.RoleName,\n  Employee.Pin,\n  Employee.Active\n"
+				+ "From\n  Employee Inner Join\n  EmployeeRole On Employee.EmployeeRole_idEmployeeRole =\n    EmployeeRole.idEmployeeRole\n"
+				+ "Where\n  Employee.Active = 1\n"
+				+ "Order By\n  Employee.idEmployee";
+		try {
+			stmt = conn.createStatement();
+			if (onlyActive){
+				 rs = stmt.executeQuery(sqlActive);
+			}
+			else{
+				 rs = stmt.executeQuery(sqlAll);
+			}
+			
+			//Iterate through arraylist and add employees
+			while (rs.next()){
+				employeeList.add(new employee(rs.getInt("idEmployee"), rs.getString("FirstName"), rs.getString("LastName"), rs.getString("RoleName"), rs.getString("Pin")));
+			}
+			
+		}
+		
+		catch (SQLException ex){
+		    // handle any errors
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+		}
+
+		return employeeList;	
+	}
+	
+	
 	/**
 	 * Get employee name list, including address and role name
-	 * @return
+	 * @return ResultSet
 	 */
 	public ResultSet getEmployeesFull(){
 	try {
@@ -297,7 +460,7 @@ public class dbAction {
 		return rs;
 		
 	}//Close get menu items
-	//Overloaded constructor, allow others to pass in without dates
+	//Overloaded MethodCall, allow others to pass in without dates
 	public ResultSet getOrderReport(int allDates, int showEmpID, int showQTY, int itemDescription, int groupOrders, int openOrders){
 		return getOrderReport(allDates, showEmpID, showQTY, itemDescription, groupOrders, openOrders,  "", "");
 	}
@@ -353,7 +516,6 @@ public class dbAction {
 		
 
 	}
-	
 	
 	
 	

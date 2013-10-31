@@ -134,6 +134,10 @@ public class restWinMake extends JFrame {
 		//TODO: Create dbConnector in one place and allow other classes to use it to avoid multiple connections
 		
 		
+		//Add employee clock in tab
+		clockInPanel c = new clockInPanel(DBAction);
+		tabbedPane.addTab("Employee Clock-in", c);
+		
 		
 		/*
 		 * 
