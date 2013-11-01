@@ -112,8 +112,12 @@ public class kitchen extends JFrame {
 		openOrderArray = DBAction.getOpenOrders();
 		
 		//This was used to iterate the openOrderArray when we just had order numbers
-		
-		//for (String s : openOrderArray){
+		/**
+		 * WES, YOU CAN UNCOMMENT THE LINES BELOW TO SEE WHAT HAPPENS TO THE COMBOBOX, IT MIGHT HELP.
+		 * the .addElements can be anystring, and it just pulls to .tostring() from the Order class
+		 * 
+		 */
+		//for (Order s : openOrderArray){
 			
 		//	model.addElement(s);
 		//}
