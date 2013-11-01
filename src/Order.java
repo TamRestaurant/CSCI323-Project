@@ -1,6 +1,7 @@
 
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Order {
 
@@ -11,6 +12,8 @@ public class Order {
 	private long startTime, endTime, orderTime;
 	private String totalOrderTime;
 	private boolean isPaid=false;
+	private int empID;
+	private Date orderDate;
 	
 	public Order() {
 	}
@@ -21,9 +24,26 @@ public class Order {
 		this.items = items;
 		orderTotal = total(items); // calculate order total
 		//Consider turning this into a a date and time instead of integer in milliseconds
-		
+		orderDate = new Date(); // Gets current time in date format instead of integer format
 		startTime = System.currentTimeMillis(); // get the system time at start
 												// of order
+	}
+	/**
+	 * This class is for creating orders that already exist in the database
+	 * @param items
+	 * @param table
+	 * @param orderNum
+	 * @param empId
+	 * @param orderDate
+	 */
+	public Order(ArrayList<Item> items, int table, int orderNum, int empId, Date orderDate){
+		
+		setOrderNumber(orderNum);
+		setTableNumber(table);
+		this.items = items;
+		this.empID = empId;
+		this.orderDate = orderDate;
+
 	}
 
 	// work on this later

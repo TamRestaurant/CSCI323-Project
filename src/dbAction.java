@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -329,6 +330,10 @@ public class dbAction {
 		
 	} // close getRoles(String)
 	
+	
+	
+
+	
 	/***
 	 * This method adds an employee to the employee table (but also adds address to address table first, as this is required for employee)
 	 * using prepared statement for security
@@ -517,6 +522,42 @@ public class dbAction {
 
 	}
 	
+	/**
+	 * This method runs a SQL query and returns an array list of orders
+	 * @return
+	 */
+	public ArrayList<Order> getOpenOrders(){
+		try {
+		    stmt = conn.createStatement();
+		    rs = stmt.executeQuery("Select\n  MenuItem.ItemName,\n  MenuItem.ItemDescription,\n  menuItemCategory.CategoryName,\n  MenuItem.idMenuItem,\n  MenuItem.ItemPrice,\n  "
+		    		+ "`Order`.idOrder,\n  `Order`.Employee_idEmployee,\n  `Order`.OrderDate,\n  `Order`.OrderClose,\n    `Order`.seatingTable\n"
+		    		+ "From\n  Menu Inner Join\n  MenuItem On MenuItem.Menu_idMenu = Menu.idMenu "
+		    		+ "Inner Join\n  menuItemCategory On MenuItem.MenuCategory_idCategory =\n    menuItemCategory.idmenuItemCategory "
+		    		+ "Inner Join\n  OrderMenuItem On OrderMenuItem.MenuItem_idMenuItem = MenuItem.idMenuItem\n  "
+		    		+ "Inner Join\n  `Order` On OrderMenuItem.Order_idOrder = `Order`.idOrder\n"
+		    		+ "Where\n  `Order`.OrderClose Is Null\n"
+		    		+ "Order By\n  `Order`.idOrder");
+
+		}
+		catch(SQLException ex){
+			//TODO print to console the exception if occurred
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		
+		
+		//Call method to turn RS into string[] and return vale
+		//TODO: possible concat table number to each item in array
+		
+		
+		
+		return prepareOpenOrders(rs);
+		
+		
+		
+	}
+	
 	
 	
 	/***
@@ -624,6 +665,90 @@ public class dbAction {
 		return tempList;
 		
 		
+		
+	}// close prepareOpenOrderString
+	
+	/**
+	 * This private method takes in a resultSet and produces an arraylist of orders from all open orders in RS
+	 * @param rs
+	 * @return
+	 */
+	private ArrayList<Order> prepareOpenOrders(ResultSet rs){
+		ArrayList<Order> openOrders = new ArrayList();
+		
+		String itemName, itemDescription,categoryName;
+		int idMenuItem, itemPrice, idOrder, empId, table;
+		Date orderOpenDate = null;
+		int currOrderCounter = 0, currTable;
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:MM:SS");
+		
+		int tempTable = 0, tempOrderNum = 0, tempEmpId = 0;
+		Date tempOpenOrderDate = null;
+		
+		
+		boolean isFirstIteration = true;
+		ArrayList<Item> currItems = new ArrayList();
+		
+		try {
+			while(rs.next()){
+				itemName = rs.getString("ItemName");
+				itemDescription = rs.getString("ItemName");
+				categoryName = rs.getString("ItemName");
+				idMenuItem = rs.getInt("idMenuItem");
+				itemPrice = rs.getInt("ItemPrice");
+				idOrder = rs.getInt("idOrder");
+				empId = rs.getInt("Employee_idEmployee");
+				String tempDate = rs.getString("OrderDate");
+				tempDate = tempDate.substring(0, tempDate.length() - 2);
+				table = rs.getInt("seatingTable");
+				
+				//Prep for first iteration
+				if (isFirstIteration){
+					tempOrderNum = idOrder;
+					isFirstIteration = false;
+		
+				}
+				//Check if item is on same order as previous item, if so init temp variables to hold order information for when order change is detected
+				if (tempOrderNum == idOrder){
+					currItems.add(new Item(itemName, itemDescription, categoryName, idMenuItem, itemPrice));
+					
+					tempTable = table;
+					orderOpenDate = dateFormat.parse(tempDate);
+					tempTable = table;
+					tempOrderNum = idOrder;
+					tempEmpId = empId;
+
+				}
+				else{
+					openOrders.add(new Order(currItems, tempTable, tempOrderNum, tempEmpId, tempOpenOrderDate));
+					currItems = new ArrayList(); // Clear ArrayList and create new one with new items
+					//create item with current returns from rs
+					currItems.add(new Item(itemName, itemDescription, categoryName, idMenuItem, itemPrice));
+					
+					//Create temp variable in case this item is on order with no other items
+					tempTable = table;
+					
+						orderOpenDate = dateFormat.parse(tempDate);
+					
+					tempTable = table;
+					tempOrderNum = idOrder;
+					tempEmpId = empId;
+
+				}
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return openOrders;
 		
 	}
 	

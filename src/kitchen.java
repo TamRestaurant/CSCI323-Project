@@ -54,15 +54,15 @@ public class kitchen extends JFrame {
 	private JTextField txtComment;
 	private JComboBox orderComboBox;
 	private JList list;
-	private dbAction myDBConnection;
-	private ArrayList<String> openOrderArray;
+	private dbAction DBAction;
+	private ArrayList<Order> openOrderArray;
 	private Vector orders = new Vector();
 	private DefaultComboBoxModel model = new DefaultComboBoxModel(orders);
 
 	public kitchen(dbAction DBAction) {
 
 		//Connect to DB (passed in as parameter)
-		myDBConnection = DBAction;
+		DBAction = DBAction;
 		// ---------------------------------------------------
 		kitchen = new JTabbedPane(JTabbedPane.TOP);
 		activeOrdersPanel = new JPanel();
@@ -109,12 +109,14 @@ public class kitchen extends JFrame {
 		 * 
 		 */
 		
-		openOrderArray = myDBConnection.getOpenOrderIDs();
+		openOrderArray = DBAction.getOpenOrders();
 		
-		for (String s : openOrderArray){
+		//This was used to iterate the openOrderArray when we just had order numbers
+		
+		//for (String s : openOrderArray){
 			
-			model.addElement(s);
-		}
+		//	model.addElement(s);
+		//}
 	
 
 		// ---------------------------------------------------
