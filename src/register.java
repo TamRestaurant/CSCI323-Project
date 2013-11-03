@@ -45,11 +45,12 @@ public class register extends JFrame
         private JTabbedPane reg= new JTabbedPane(JTabbedPane.TOP);
         private JPanel panel_2;
         private JButton [] cashierButtons;
+        private dbAction DBAction;
 
-        public register()
+        public register(dbAction DBAction)
         
         {
-                
+                this.DBAction = DBAction;
                 JButton btnOpenRegister = new JButton("Open Register");
                 btnOpenRegister.addActionListener(new buttonListener());
                 reg.add(btnOpenRegister, BorderLayout.CENTER);
@@ -65,7 +66,7 @@ public class register extends JFrame
         {
                 public void actionPerformed(ActionEvent event) 
                 {
-                        registerinterface.main(null);
+                        registerinterface.main(null, DBAction);
 //                        What ever button does
                 }
         }

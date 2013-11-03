@@ -49,16 +49,21 @@ public class registerinterface extends JFrame {
 	private JLabel lblChange, changelbl;
 	private JButton[] mb;
 	private int index = 0;
+	private dbAction DBAction;
+	private ArrayList<Order> openOrderArray;
 
 	// private NumberFormat fmt=new NumberFormat();.getCurrencyInstance();
 	/*
 	 * Launch the application.
+	 * 
+	 * Because this is in its own application, the dbAction is required to be final
+	 * 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args, final dbAction DBAction) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					registerinterface frame = new registerinterface();
+					registerinterface frame = new registerinterface(DBAction);
 					frame.setVisible(true);
 					// frame.pack();
 				} catch (Exception e) {
@@ -70,8 +75,16 @@ public class registerinterface extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param dbAction
 	 */
-	public registerinterface() {
+	public registerinterface(dbAction DBAction) {
+		//Create instance of DBAction (database interface)
+		this.DBAction = DBAction;
+		//Get all open orders from the database so that menu can be populated
+		openOrderArray = DBAction.getOpenOrders();
+		
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(225, 0, 850, 800);
 		contentPane = new JPanel();
