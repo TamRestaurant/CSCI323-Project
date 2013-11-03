@@ -227,6 +227,14 @@ public class registerinterface extends JFrame {
 				if (paid) {
 					// ////////reset combo box etc
 					// orderComboBox.remove(index);
+					
+					/**
+					 * TODO: close order in database prior to removing it from the ArrayList
+					 * This functionality does not exist yet, but we will need to send a String
+					 * representation of the current date to the database in the following format: "YYYY-DD-MM hh:mm:ss"
+					 * Along with the order number (also in string format)
+					 */
+					
 					openOrders.remove(index);
 					// ////////////////
 					dispose();
