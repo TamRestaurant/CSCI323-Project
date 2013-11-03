@@ -116,7 +116,7 @@ public class restWinMake extends JFrame {
 //		waitStation w = new waitStation();
 //		tabbedPane.addTab("Wait Station", null, w.w(), null);
 		//-----------------------ADD register tab-----------------------------------
-		register r = new register();
+		register r = new register(DBAction);
 		tabbedPane.addTab("Register", null, r.r(), null);
 		//-----------------------ADD kitchen tab-----------------------------------
 		kitchen k = new kitchen(DBAction);
