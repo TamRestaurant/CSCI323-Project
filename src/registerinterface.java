@@ -43,14 +43,13 @@ public class registerinterface extends JFrame {
 	private JTextField amountTendTxt;
 	@SuppressWarnings("rawtypes")
 	private JComboBox orderComboBox;
-	private ArrayList<Order> orders;
+	private ArrayList<Order> openOrders;
 	private JButton btnNewButton;
 	private JLabel lblEnterAmountTendered;
 	private JLabel lblChange, changelbl;
 	private JButton[] mb;
 	private int index = 0;
 	private dbAction DBAction;
-	private ArrayList<Order> openOrderArray;
 
 	// private NumberFormat fmt=new NumberFormat();.getCurrencyInstance();
 	/*
@@ -81,7 +80,7 @@ public class registerinterface extends JFrame {
 		//Create instance of DBAction (database interface)
 		this.DBAction = DBAction;
 		//Get all open orders from the database so that menu can be populated
-		openOrderArray = DBAction.getOpenOrders();
+		openOrders = DBAction.getOpenOrders();
 		
 		
 		
@@ -122,8 +121,6 @@ public class registerinterface extends JFrame {
 		// list.setEditable(false);
 		// JList<Order> list = new JList<Order>();
 
-		// ArrayList<Order> orders=menu.getOrders();
-		orders = menu.getOrders();
 		// orders = new ArrayList<Order>();
 		//
 		// for (int i = 0; i < 9; i++) {
@@ -132,14 +129,14 @@ public class registerinterface extends JFrame {
 		// o.setOrderTotal(i + 11);
 		// orders.add(o);
 		// }
-		String[] itm = new String[orders.size()];
+		String[] itm = new String[openOrders.size()];
 		// line;
-		for (int i = 0; i < orders.size(); i++) {
+		for (int i = 0; i < openOrders.size(); i++) {
 			String line = "        Order number:  "
-					+ orders.get(i).getOrderNumber()
+					+ openOrders.get(i).getOrderNumber()
 					+ "      Total Due:   "
 					+ NumberFormat.getCurrencyInstance().format(
-							orders.get(i).getOrderTotal()) + "";
+							openOrders.get(i).getOrderTotal()) + "";
 			// comboBox.add(orders.get(i));
 			itm[i] = line;
 		}
@@ -155,14 +152,14 @@ public class registerinterface extends JFrame {
 			// //////accept payment
 			public void actionPerformed(ActionEvent e) {
 				// check if there is an order to pay
-				if (orders.size()==0) {
+				if (openOrders.size()==0) {
 					JOptionPane.showMessageDialog(null,
 							"There is no order to process.");
 					dispose();
 					return;
 				}
 				index = orderComboBox.getSelectedIndex();
-				double amountDue = orders.get(index).getOrderTotal();
+				double amountDue = openOrders.get(index).getOrderTotal();
 				double amountTendered = 0;
 				try {
 					amountTendered = Double.parseDouble(amountTendTxt.getText());
@@ -177,7 +174,7 @@ public class registerinterface extends JFrame {
 				
 				double change = 0.0;
 				if (diff <= 0) {
-					orders.get(index).setPaid(true);
+					openOrders.get(index).setPaid(true);
 					change = diff;
 					changelbl.setText(NumberFormat.getCurrencyInstance()
 							.format(-change));
@@ -217,20 +214,20 @@ public class registerinterface extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//check if there is an order to close
-				if (orders.size()==0) {
+				if (openOrders.size()==0) {
 					JOptionPane.showMessageDialog(null,
 							"There is no order to process.");
 					dispose();
 					return;
 				}
 				index = orderComboBox.getSelectedIndex();
-				boolean paid = orders.get(index).isPaid();
+				boolean paid = openOrders.get(index).isPaid();
 				
 				// if order is paid then we can close order and send to db etc
 				if (paid) {
 					// ////////reset combo box etc
 					// orderComboBox.remove(index);
-					orders.remove(index);
+					openOrders.remove(index);
 					// ////////////////
 					dispose();
 					// changelbl.setText(NumberFormat.getCurrencyInstance()

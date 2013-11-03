@@ -43,6 +43,7 @@ public class Order {
 		this.items = items;
 		this.empID = empId;
 		this.orderDate = orderDate;
+		orderTotal = total(items);
 
 	}
 
