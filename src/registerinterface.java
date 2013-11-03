@@ -233,6 +233,8 @@ public class registerinterface extends JFrame {
 					 * This functionality does not exist yet, but we will need to send a String
 					 * representation of the current date to the database in the following format: "YYYY-DD-MM hh:mm:ss"
 					 * Along with the order number (also in string format)
+					 * Below will probably be the method that will be created
+					 * DBAction.closeOpenOrder(int orderNumber, String date)
 					 */
 					
 					openOrders.remove(index);
