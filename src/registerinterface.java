@@ -254,6 +254,15 @@ public class registerinterface extends JFrame {
 		});
 		btnNewButton_1.setBounds(353, 551, 117, 23);
 		contentPane.add(btnNewButton_1);
+		
+		JButton closeBtn = new JButton("Close");
+		closeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+		closeBtn.setBounds(735, 0, 89, 23);
+		contentPane.add(closeBtn);
 
 	}
 
@@ -293,5 +302,4 @@ public class registerinterface extends JFrame {
 			// What ever button does
 		}
 	}
-
 }
