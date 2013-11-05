@@ -36,6 +36,7 @@ import java.beans.PropertyChangeEvent;
 import javax.swing.JTextField;
 
 import java.awt.GridLayout;
+import javax.swing.JCheckBox;
 
 public class registerinterface extends JFrame {
 
@@ -50,6 +51,7 @@ public class registerinterface extends JFrame {
 	private JButton[] mb;
 	private int index = 0;
 	private dbAction DBAction;
+	private JTextField discountTextBox;
 
 	// private NumberFormat fmt=new NumberFormat();.getCurrencyInstance();
 	/*
@@ -95,7 +97,7 @@ public class registerinterface extends JFrame {
 		contentPane.add(panel);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(320, 197, 192, 258);
+		panel_1.setBounds(135, 193, 192, 258);
 		contentPane.add(panel_1);
 		panel_1.setLayout(new GridLayout(4, 3, 0, 0));
 		mb = new JButton[12];
@@ -171,28 +173,28 @@ public class registerinterface extends JFrame {
 
 			}
 		});
-		btnNewButton.setBounds(320, 466, 192, 23);
+		btnNewButton.setBounds(135, 462, 192, 23);
 		contentPane.add(btnNewButton);
 
-		lblNewLabel.setBounds(372, 79, 100, 17);
+		lblNewLabel.setBounds(187, 75, 100, 17);
 		contentPane.add(lblNewLabel);
 		lblNewLabel.setText("Select Order");
 
 		lblEnterAmountTendered = new JLabel("Enter Amount tendered");
-		lblEnterAmountTendered.setBounds(353, 135, 200, 14);
+		lblEnterAmountTendered.setBounds(168, 131, 200, 14);
 		contentPane.add(lblEnterAmountTendered);
 
 		amountTendTxt = new JTextField();
-		amountTendTxt.setBounds(353, 160, 117, 20);
+		amountTendTxt.setBounds(168, 156, 117, 20);
 		contentPane.add(amountTendTxt);
 		amountTendTxt.setColumns(10);
 
 		lblChange = new JLabel("Change");
-		lblChange.setBounds(342, 508, 80, 20);
+		lblChange.setBounds(157, 504, 80, 20);
 		contentPane.add(lblChange);
 
 		changelbl = new JLabel("$0");
-		changelbl.setBounds(455, 512, 46, 14);
+		changelbl.setBounds(270, 508, 46, 14);
 		contentPane.add(changelbl);
 
 		JButton btnNewButton_1 = new JButton("Close Order");
@@ -237,7 +239,7 @@ public class registerinterface extends JFrame {
 
 			}
 		});
-		btnNewButton_1.setBounds(353, 551, 117, 23);
+		btnNewButton_1.setBounds(168, 547, 117, 23);
 		contentPane.add(btnNewButton_1);
 		
 		JButton closeBtn = new JButton("Close");
@@ -248,6 +250,29 @@ public class registerinterface extends JFrame {
 		});
 		closeBtn.setBounds(735, 0, 89, 23);
 		contentPane.add(closeBtn);
+		/// add discount checkbox and text field and action listener
+		discountTextBox = new JTextField();
+		discountTextBox.setText("Enter Discount percentage");
+		discountTextBox.setEnabled(false);
+		discountTextBox.setBounds(436, 128, 86, 20);
+		contentPane.add(discountTextBox);
+		discountTextBox.setColumns(10);
+		discountTextBox.setVisible(false);
+		final JCheckBox discountCheckBox = new JCheckBox("Apply Discount");
+		discountCheckBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (discountCheckBox.isSelected()) {
+					//discountTextBox.setVisible(true);
+					discountTextBox.setEnabled(true);
+					
+				}else {
+					//discountTextBox.setVisible(false);
+					discountTextBox.setEnabled(false);
+				}
+			}
+		});
+		discountCheckBox.setBounds(426, 99, 97, 23);
+		contentPane.add(discountCheckBox);
 
 	}//close constructor
 	
@@ -268,7 +293,7 @@ public class registerinterface extends JFrame {
 		orderComboBox = new JComboBox(itm);
 		
 		orderComboBox.setMaximumRowCount(100);
-		orderComboBox.setBounds(240, 104, 350, 20);
+		orderComboBox.setBounds(55, 100, 350, 20);
 		contentPane.add(orderComboBox);
 		
 	}
