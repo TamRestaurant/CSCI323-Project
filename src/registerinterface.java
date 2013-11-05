@@ -132,7 +132,7 @@ public class registerinterface extends JFrame {
 		String[] itm = new String[openOrders.size()];
 		// line;
 		for (int i = 0; i < openOrders.size(); i++) {
-			String line = "        Order number:  "
+			String line = "ServerID: "+openOrders.get(i).getEmpID()+"      Order number:  "
 					+ openOrders.get(i).getOrderNumber()
 					+ "      Total Due:   "
 					+ NumberFormat.getCurrencyInstance().format(

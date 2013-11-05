@@ -41,7 +41,7 @@ public class Order {
 		setOrderNumber(orderNum);
 		setTableNumber(table);
 		this.items = items;
-		this.empID = empId;
+		this.setEmpID(empId);
 		this.orderDate = orderDate;
 		orderTotal = total(items);
 
@@ -168,6 +168,14 @@ public class Order {
 
 	public void setPaid(boolean isPaid) {
 		this.isPaid = isPaid;
+	}
+
+	public int getEmpID() {
+		return empID;
+	}
+
+	public void setEmpID(int empID) {
+		this.empID = empID;
 	}
 
 }
