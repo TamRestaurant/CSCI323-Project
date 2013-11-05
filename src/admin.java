@@ -15,7 +15,7 @@ public class admin extends JPanel {
 	private JTabbedPane tabbedPane;
 	private employeeGui empGui;
 	private orderHistory orderHist;
-
+	private employeeTimeTrackingGui empTimeTracking;
 	/**
 	 * Create the panel.
 	 */
@@ -29,10 +29,13 @@ public class admin extends JPanel {
 		
 		empGui = new employeeGui(DBAction);
 		orderHist = new orderHistory(DBAction);
+		empTimeTracking = new employeeTimeTrackingGui(DBAction);
 		
 		
 		tabbedPane.addTab("Employee Management", empGui.getEmployeeGui());
 		tabbedPane.addTab("Order History", orderHist.getOrderHistory());
+		tabbedPane.addTab("Employee Time Tracking", empTimeTracking);
+		
 		//tabbedPane.addTab("Order History", panelOrderHistory);
 		
 

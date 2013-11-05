@@ -141,6 +141,36 @@ public class dbAction {
 		}
 		return clockInRecordArray;
 		
+	}// Close employee clock-in/out
+	
+	/**
+	 * This method returns a result set of all the employee time records
+	 * @return
+	 */
+	public ResultSet getTimeRecords(){
+		
+		String sqlGetTimeRecords = "Select\n  Employee.idEmployee As `Employee ID`,\n  Employee.FirstName,\n  Employee.LastName,\n  EmployeeRole.RoleName,\n  "
+				+ "EmployeeTimeRecord.idEmployeeTimeRecord As `Entry ID`,\n  EmployeeTimeRecord.ClockInDateTime,\n  EmployeeTimeRecord.ClockOutDateTime\n"
+				+ "From\n  EmployeeRole "
+				+ "Inner Join\n  Employee On Employee.EmployeeRole_idEmployeeRole = EmployeeRole.idEmployeeRole\n  "
+				+ "Inner Join\n  EmployeeTimeRecord On EmployeeTimeRecord.Employee_idEmployee =\n    Employee.idEmployee\n"
+				+ "Order By\n  EmployeeTimeRecord.ClockInDateTime";
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sqlGetTimeRecords);
+
+			
+		}
+		
+		catch (SQLException ex){
+		    // handle any errors
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+		} 
+		
+		
+		return rs;
 	}
 	
 	public void clockOutEmployee(int recordId){

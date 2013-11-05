@@ -11,7 +11,6 @@ import java.awt.Color;
 
 import javax.swing.border.BevelBorder;
 
-import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
@@ -38,6 +37,8 @@ import java.awt.ComponentOrientation;
 import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DropMode;
+import java.awt.event.FocusListener;
+import java.awt.event.FocusEvent;
 
 
 
@@ -68,7 +69,7 @@ public class employeeGui {
 
 	//private JFrame frmEmployeeManagement;
 	private JTable table_employee;
-	private Button btnPopulateEmployees;
+	private JButton btnPopulateEmployees;
 	private ResultSet resultSet;
 	private JScrollPane scrollPane;
 	private JTextField textFirstName;
@@ -143,11 +144,12 @@ public class employeeGui {
 		myDBconnection = DBAction;
 		
 		panelEmpGui = new JPanel();
+
 		panelEmpGui.setBounds(0, 0, 1077, 532);
 		//frmEmployeeManagement.getContentPane().add(panel);
 		panelEmpGui.setLayout(null);
 		
-		btnPopulateEmployees = new Button("Populate Employees");
+		btnPopulateEmployees = new JButton("Populate Employees");
 		btnPopulateEmployees.addActionListener(new ActionListener() {
 			//Action listener for populating employees
 			public void actionPerformed(ActionEvent e) {
@@ -698,4 +700,5 @@ public class employeeGui {
 		return temp;
 		
 	}
+
 }
