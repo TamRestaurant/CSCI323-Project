@@ -80,7 +80,7 @@ public class registerinterface extends JFrame {
 		//Create instance of DBAction (database interface)
 		this.DBAction = DBAction;
 		//Get all open orders from the database so that menu can be populated
-		openOrders = DBAction.getOpenOrders();
+		
 		
 		
 		
@@ -129,23 +129,8 @@ public class registerinterface extends JFrame {
 		// o.setOrderTotal(i + 11);
 		// orders.add(o);
 		// }
-		String[] itm = new String[openOrders.size()];
-		// line;
-		for (int i = 0; i < openOrders.size(); i++) {
-			String line = "ServerID: "+openOrders.get(i).getEmpID()+"      Order number:  "
-					+ openOrders.get(i).getOrderNumber()
-					+ "      Total Due:   "
-					+ NumberFormat.getCurrencyInstance().format(
-							openOrders.get(i).getOrderTotal()) + "";
-			// comboBox.add(orders.get(i));
-			itm[i] = line;
-		}
-		orderComboBox = new JComboBox(itm);
 		
-		orderComboBox.setMaximumRowCount(100);
-		orderComboBox.setBounds(240, 104, 350, 20);
-		contentPane.add(orderComboBox);
-
+		updateDropBox();
 		btnNewButton = new JButton("Apply Payment");
 
 		btnNewButton.addActionListener(new ActionListener() {
@@ -264,12 +249,37 @@ public class registerinterface extends JFrame {
 		closeBtn.setBounds(735, 0, 89, 23);
 		contentPane.add(closeBtn);
 
+	}//close constructor
+	
+	public void updateDropBox() {
+		
+		openOrders = DBAction.getOpenOrders();
+		String[] itm = new String[openOrders.size()];
+		// line;
+		for (int i = 0; i < openOrders.size(); i++) {
+			String line = "ServerID: "+openOrders.get(i).getEmpID()+"      Order number:  "
+					+ openOrders.get(i).getOrderNumber()
+					+ "      Total Due:   "
+					+ NumberFormat.getCurrencyInstance().format(
+							openOrders.get(i).getOrderTotal()) + "";
+			// comboBox.add(orders.get(i));
+			itm[i] = line;
+		}
+		orderComboBox = new JComboBox(itm);
+		
+		orderComboBox.setMaximumRowCount(100);
+		orderComboBox.setBounds(240, 104, 350, 20);
+		contentPane.add(orderComboBox);
+		
 	}
+	
+	
+	
 
-	public void pullThePlug() {
-		WindowEvent wev = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
-		Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
-	}
+//	public void pullThePlug() {
+//		WindowEvent wev = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+//		Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
+//	}
 
 	private class buttonListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
