@@ -54,7 +54,7 @@ public class editTimePunchGui extends JPanel implements ActionListener {
 	private JTextField textField;
 	private JLabel lblTime;
 	private JLabel label;
-	private JFormattedTextField textField_1;
+	private JTextField textField_1;
 	
 	
 	
@@ -266,7 +266,7 @@ public class editTimePunchGui extends JPanel implements ActionListener {
 		label.setBounds(314, 104, 46, 14);
 		contentPane.add(label);
 		
-		textField_1 = new JFormattedTextField();
+		textField_1 = new JTextField();
 		textField_1.setFont(new Font("Calibri", Font.PLAIN, 16));
 		textField_1.setColumns(10);
 		textField_1.setBounds(371, 100, 92, 20);
