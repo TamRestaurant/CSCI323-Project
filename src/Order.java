@@ -1,5 +1,4 @@
 
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -11,10 +10,12 @@ public class Order {
 	private int tableNumber;
 	private long startTime, endTime, orderTime;
 	private String totalOrderTime;
-	private boolean isPaid=false;
+	private boolean isPaid = false;
 	private int empID;
 	private Date orderDate;
-	
+	private double tipPaid = 0.0;
+	private double amountDiscount = 0.0;
+
 	public Order() {
 	}
 
@@ -23,21 +24,26 @@ public class Order {
 		setTableNumber(table);
 		this.items = items;
 		orderTotal = total(items); // calculate order total
-		//Consider turning this into a a date and time instead of integer in milliseconds
-		orderDate = new Date(); // Gets current time in date format instead of integer format
+		// Consider turning this into a a date and time instead of integer in
+		// milliseconds
+		orderDate = new Date(); // Gets current time in date format instead of
+								// integer format
 		startTime = System.currentTimeMillis(); // get the system time at start
 												// of order
 	}
+
 	/**
 	 * This class is for creating orders that already exist in the database
+	 * 
 	 * @param items
 	 * @param table
 	 * @param orderNum
 	 * @param empId
 	 * @param orderDate
 	 */
-	public Order(ArrayList<Item> items, int table, int orderNum, int empId, Date orderDate){
-		
+	public Order(ArrayList<Item> items, int table, int orderNum, int empId,
+			Date orderDate) {
+
 		setOrderNumber(orderNum);
 		setTableNumber(table);
 		this.items = items;
@@ -95,7 +101,7 @@ public class Order {
 
 	public void applyDiscount(double percent) { // apply a discount in percent
 												// to total
-		orderTotal = orderTotal * ((100 - percent)/100);
+		orderTotal = orderTotal * ((100 - percent) / 100);
 	}
 
 	public ArrayList<Item> getItems() {
@@ -176,6 +182,22 @@ public class Order {
 
 	public void setEmpID(int empID) {
 		this.empID = empID;
+	}
+
+	public double getTipPaid() {
+		return tipPaid;
+	}
+
+	public void setTipPaid(double tipPaid) {
+		this.tipPaid = tipPaid;
+	}
+
+	public double getAmountDiscount() {
+		return amountDiscount;
+	}
+
+	public void setAmountDiscount(double amountDiscount) {
+		this.amountDiscount = amountDiscount;
 	}
 
 }

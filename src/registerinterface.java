@@ -36,7 +36,12 @@ import java.beans.PropertyChangeEvent;
 import javax.swing.JTextField;
 
 import java.awt.GridLayout;
+
 import javax.swing.JCheckBox;
+import javax.swing.JFormattedTextField;
+
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class registerinterface extends JFrame {
 
@@ -52,13 +57,25 @@ public class registerinterface extends JFrame {
 	private int index = 0;
 	private dbAction DBAction;
 	private JTextField discountTextBox;
+	private JTextField tipAmountTxtBox;
+	private JLabel lblEnterTipReceived;
+	// boooleans to aid keypad in entering correct textbox
+	private boolean amtTend = false;
+	private boolean amtTip = false;
+	private boolean amtDisc = false;
+	private boolean totalCalculated = false;
+	private JButton totalButon;
+	private JLabel totalLabel;
+	private JLabel totalLbl;
+	private double amountDue = 0;
+	private double amountTendered = 0;
 
 	// private NumberFormat fmt=new NumberFormat();.getCurrencyInstance();
 	/*
 	 * Launch the application.
 	 * 
-	 * Because this is in its own application, the dbAction is required to be final
-	 * 
+	 * Because this is in its own application, the dbAction is required to be
+	 * final
 	 */
 	public static void main(String[] args, final dbAction DBAction) {
 		EventQueue.invokeLater(new Runnable() {
@@ -76,17 +93,15 @@ public class registerinterface extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * 
 	 * @param dbAction
 	 */
 	public registerinterface(dbAction DBAction) {
-		//Create instance of DBAction (database interface)
+		// Create instance of DBAction (database interface)
 		this.DBAction = DBAction;
-		//Get all open orders from the database so that menu can be populated
-		
-		
-		
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// Get all open orders from the database so that menu can be populated
+
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(225, 0, 850, 800);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -97,10 +112,12 @@ public class registerinterface extends JFrame {
 		contentPane.add(panel);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(135, 193, 192, 258);
+		panel_1.setBounds(133, 313, 192, 258);
 		contentPane.add(panel_1);
 		panel_1.setLayout(new GridLayout(4, 3, 0, 0));
 		mb = new JButton[12];
+
+		// /create keypad buttons
 		for (int i = 1; i < mb.length + 1; i++) {
 			mb[i - 1] = new JButton("" + i);
 			switch (i) {
@@ -131,7 +148,7 @@ public class registerinterface extends JFrame {
 		// o.setOrderTotal(i + 11);
 		// orders.add(o);
 		// }
-		
+
 		updateDropBox();
 		btnNewButton = new JButton("Apply Payment");
 
@@ -139,69 +156,89 @@ public class registerinterface extends JFrame {
 			// //////accept payment
 			public void actionPerformed(ActionEvent e) {
 				// check if there is an order to pay
-				if (openOrders.size()==0) {
+
+				if (openOrders.size() == 0) {
 					JOptionPane.showMessageDialog(null,
 							"There is no order to process.");
-					dispose();
+					// dispose();
 					return;
 				}
-				index = orderComboBox.getSelectedIndex();
-				double amountDue = openOrders.get(index).getOrderTotal();
-				double amountTendered = 0;
-				try {
-					amountTendered = Double.parseDouble(amountTendTxt.getText());
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(null,
-							"Enter numbers only! Try again.");
-					// e1.printStackTrace();
-					return;
-				}
-				double diff = amountDue - amountTendered;
-				
-				double change = 0.0;
-				if (diff <= 0) {
-					openOrders.get(index).setPaid(true);
-					change = diff;
-					changelbl.setText(NumberFormat.getCurrencyInstance()
-							.format(-change));
-				} else if (diff > 0) {
-					JOptionPane.showMessageDialog(null, "Payment is "
-							+ NumberFormat.getCurrencyInstance().format(diff)
-							+ " short! Try again.");
-				}
+				// /make sure total has been calculated
 
-			}
+				if (totalCalculated) {
+					index = orderComboBox.getSelectedIndex();
+					// get amount to apply
+					try {
+						amountTendered = Double.parseDouble(amountTendTxt
+								.getText());
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(null,
+								"Enter numbers only! Try again.");
+						// e1.printStackTrace();
+						return;
+					}
+					double diff = amountDue - amountTendered;
+					double change = 0.0;
+					// if payment is short
+					if (diff <= 0) {
+						openOrders.get(index).setPaid(true);
+						change = diff;
+						changelbl.setText(NumberFormat.getCurrencyInstance()
+								.format(-change));
+					} else if (diff > 0) {
+						JOptionPane.showMessageDialog(null,
+								"Payment is "
+										+ NumberFormat.getCurrencyInstance()
+												.format(diff)
+										+ " short! Try again.");
+					}
+					// reset flag for total calculation
+					totalCalculated = false;
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"Please Calculate Total First.");
+				}
+			}// endevent
 		});
-		btnNewButton.setBounds(135, 462, 192, 23);
+		btnNewButton.setBounds(133, 582, 192, 23);
 		contentPane.add(btnNewButton);
 
-		lblNewLabel.setBounds(187, 75, 100, 17);
+		lblNewLabel.setBounds(185, 38, 100, 17);
 		contentPane.add(lblNewLabel);
 		lblNewLabel.setText("Select Order");
 
 		lblEnterAmountTendered = new JLabel("Enter Amount tendered");
-		lblEnterAmountTendered.setBounds(168, 131, 200, 14);
+		lblEnterAmountTendered.setBounds(125, 225, 200, 14);
 		contentPane.add(lblEnterAmountTendered);
 
 		amountTendTxt = new JTextField();
-		amountTendTxt.setBounds(168, 156, 117, 20);
+		amountTendTxt.setText("0.0");
+		amountTendTxt.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				amtTend = true;
+				amtTip = false;
+				amtDisc = false;
+			}
+		});
+		amountTendTxt.setBounds(125, 250, 117, 20);
 		contentPane.add(amountTendTxt);
 		amountTendTxt.setColumns(10);
 
 		lblChange = new JLabel("Change");
-		lblChange.setBounds(157, 504, 80, 20);
+		lblChange.setBounds(155, 624, 80, 20);
 		contentPane.add(lblChange);
 
 		changelbl = new JLabel("$0");
-		changelbl.setBounds(270, 508, 46, 14);
+		changelbl.setBounds(268, 628, 46, 14);
 		contentPane.add(changelbl);
 
 		JButton btnNewButton_1 = new JButton("Close Order");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//check if there is an order to close
-				if (openOrders.size()==0) {
+				// check if there is an order to close
+				if (openOrders.size() == 0) {
 					JOptionPane.showMessageDialog(null,
 							"There is no order to process.");
 					dispose();
@@ -209,21 +246,23 @@ public class registerinterface extends JFrame {
 				}
 				index = orderComboBox.getSelectedIndex();
 				boolean paid = openOrders.get(index).isPaid();
-				
+
 				// if order is paid then we can close order and send to db etc
 				if (paid) {
 					// ////////reset combo box etc
 					// orderComboBox.remove(index);
-					
+
 					/**
-					 * TODO: close order in database prior to removing it from the ArrayList
-					 * This functionality does not exist yet, but we will need to send a String
-					 * representation of the current date to the database in the following format: "YYYY-DD-MM hh:mm:ss"
-					 * Along with the order number (also in string format)
-					 * Below will probably be the method that will be created
-					 * DBAction.closeOpenOrder(int orderNumber, String date)
+					 * TODO: close order in database prior to removing it from
+					 * the ArrayList This functionality does not exist yet, but
+					 * we will need to send a String representation of the
+					 * current date to the database in the following format:
+					 * "YYYY-DD-MM hh:mm:ss" Along with the order number (also
+					 * in string format) Below will probably be the method that
+					 * will be created DBAction.closeOpenOrder(int orderNumber,
+					 * String date)
 					 */
-					
+
 					openOrders.remove(index);
 					// ////////////////
 					dispose();
@@ -239,9 +278,9 @@ public class registerinterface extends JFrame {
 
 			}
 		});
-		btnNewButton_1.setBounds(168, 547, 117, 23);
+		btnNewButton_1.setBounds(166, 667, 117, 23);
 		contentPane.add(btnNewButton_1);
-		
+
 		JButton closeBtn = new JButton("Close");
 		closeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -250,90 +289,233 @@ public class registerinterface extends JFrame {
 		});
 		closeBtn.setBounds(735, 0, 89, 23);
 		contentPane.add(closeBtn);
-		/// add discount checkbox and text field and action listener
+		// / add discount checkbox and text field and action listener
 		discountTextBox = new JTextField();
+		discountTextBox.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				amtTend = false;
+				amtTip = false;
+				amtDisc = true;
+			}
+		});
 		discountTextBox.setText("Enter Discount percentage");
 		discountTextBox.setEnabled(false);
-		discountTextBox.setBounds(436, 128, 86, 20);
+		discountTextBox.setBounds(227, 97, 173, 20);
 		contentPane.add(discountTextBox);
 		discountTextBox.setColumns(10);
-		discountTextBox.setVisible(false);
 		final JCheckBox discountCheckBox = new JCheckBox("Apply Discount");
 		discountCheckBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (discountCheckBox.isSelected()) {
-					//discountTextBox.setVisible(true);
+					// discountTextBox.setVisible(true);
 					discountTextBox.setEnabled(true);
-					
-				}else {
-					//discountTextBox.setVisible(false);
+
+				} else {
+					// discountTextBox.setVisible(false);
 					discountTextBox.setEnabled(false);
 				}
 			}
 		});
-		discountCheckBox.setBounds(426, 99, 97, 23);
+		discountCheckBox.setBounds(50, 93, 138, 23);
 		contentPane.add(discountCheckBox);
 
-	}//close constructor
-	
+		tipAmountTxtBox = new JTextField();
+		tipAmountTxtBox.setText("0.0");
+		tipAmountTxtBox.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				amtTend = false;
+				amtTip = true;
+				amtDisc = false;
+			}
+		});
+		tipAmountTxtBox.setBounds(228, 128, 172, 20);
+		contentPane.add(tipAmountTxtBox);
+		tipAmountTxtBox.setColumns(10);
+
+		lblEnterTipReceived = new JLabel("Enter Tip Received");
+		lblEnterTipReceived.setBounds(50, 131, 158, 14);
+		contentPane.add(lblEnterTipReceived);
+
+		totalButon = new JButton("Calculate Total");
+		totalButon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				// check if there is an order to pay
+				if (openOrders.size() == 0) {
+					JOptionPane.showMessageDialog(null,
+							"There is no order to process.");
+					// dispose();
+					return;
+				}
+				index = orderComboBox.getSelectedIndex();
+				double amountDue = openOrders.get(index).getOrderTotal();
+				double discountPercent = 0.0;
+				double tip = 0.0;
+				// if there is a discount, try to parse the value
+				// also add tip amount to order and total
+				if (discountCheckBox.isSelected()) {
+
+					try {
+						discountPercent = (Double.parseDouble(discountTextBox
+								.getText())) / 100;
+						amountDue = (1 - discountPercent) * amountDue;
+
+						// openOrders.get(index).
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(null,
+								"Enter numbers only! Try again.");
+						// e1.printStackTrace();
+						return;
+					}
+				}// endif
+					// get tip and add to total
+				try {
+					tip = Double.parseDouble(tipAmountTxtBox.getText());
+					amountDue += tip;
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				// set flag so that pay,ent can be applied
+				totalCalculated = true;
+				// display total
+				totalLbl.setText(""
+						+ NumberFormat.getCurrencyInstance().format(amountDue));
+			}
+		});
+		totalButon.setBounds(50, 169, 158, 23);
+		contentPane.add(totalButon);
+
+		totalLabel = new JLabel("Total");
+		totalLabel.setBounds(227, 173, 46, 14);
+		contentPane.add(totalLabel);
+
+		totalLbl = new JLabel("");
+		totalLbl.setBounds(342, 173, 46, 14);
+		contentPane.add(totalLbl);
+
+	}// close constructor
+
 	public void updateDropBox() {
-		
+
 		openOrders = DBAction.getOpenOrders();
 		String[] itm = new String[openOrders.size()];
 		// line;
 		for (int i = 0; i < openOrders.size(); i++) {
-			String line = "ServerID: "+openOrders.get(i).getEmpID()+"      Order number:  "
+			String line = "ServerID: "
+					+ openOrders.get(i).getEmpID()
+					+ "      Order number:  "
 					+ openOrders.get(i).getOrderNumber()
-					+ "      Total Due:   "
+					+ "      SubTotal:   "
 					+ NumberFormat.getCurrencyInstance().format(
 							openOrders.get(i).getOrderTotal()) + "";
 			// comboBox.add(orders.get(i));
 			itm[i] = line;
 		}
 		orderComboBox = new JComboBox(itm);
-		
-		orderComboBox.setMaximumRowCount(100);
-		orderComboBox.setBounds(55, 100, 350, 20);
-		contentPane.add(orderComboBox);
-		
-	}
-	
-	
-	
 
-//	public void pullThePlug() {
-//		WindowEvent wev = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
-//		Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
-//	}
+		orderComboBox.setMaximumRowCount(100);
+		orderComboBox.setBounds(50, 66, 350, 20);
+		contentPane.add(orderComboBox);
+
+	}
+
+	// public void pullThePlug() {
+	// WindowEvent wev = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+	// Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
+	// }
 
 	private class buttonListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-			if (event.getSource() == mb[0]) {
-				amountTendTxt.setText(amountTendTxt.getText() + "1");
-			} else if (event.getSource() == mb[1]) {
-				amountTendTxt.setText(amountTendTxt.getText() + "2");
-			} else if (event.getSource() == mb[2]) {
-				amountTendTxt.setText(amountTendTxt.getText() + "3");
-			} else if (event.getSource() == mb[3]) {
-				amountTendTxt.setText(amountTendTxt.getText() + "4");
-			} else if (event.getSource() == mb[4]) {
-				amountTendTxt.setText(amountTendTxt.getText() + "5");
-			} else if (event.getSource() == mb[5]) {
-				amountTendTxt.setText(amountTendTxt.getText() + "6");
-			} else if (event.getSource() == mb[6]) {
-				amountTendTxt.setText(amountTendTxt.getText() + "7");
-			} else if (event.getSource() == mb[7]) {
-				amountTendTxt.setText(amountTendTxt.getText() + "8");
-			} else if (event.getSource() == mb[8]) {
-				amountTendTxt.setText(amountTendTxt.getText() + "9");
-			} else if (event.getSource() == mb[9]) {
-				amountTendTxt.setText(amountTendTxt.getText() + ".");
-			} else if (event.getSource() == mb[10]) {
-				amountTendTxt.setText(amountTendTxt.getText() + "0");
-			} else if (event.getSource() == mb[11]) {
-				amountTendTxt.setText("");
-			}
 
+			if (amtTend) { // enter into amt tendered
+
+				if (event.getSource() == mb[0]) {
+					amountTendTxt.setText(amountTendTxt.getText() + "1");
+				} else if (event.getSource() == mb[1]) {
+					amountTendTxt.setText(amountTendTxt.getText() + "2");
+				} else if (event.getSource() == mb[2]) {
+					amountTendTxt.setText(amountTendTxt.getText() + "3");
+				} else if (event.getSource() == mb[3]) {
+					amountTendTxt.setText(amountTendTxt.getText() + "4");
+				} else if (event.getSource() == mb[4]) {
+					amountTendTxt.setText(amountTendTxt.getText() + "5");
+				} else if (event.getSource() == mb[5]) {
+					amountTendTxt.setText(amountTendTxt.getText() + "6");
+				} else if (event.getSource() == mb[6]) {
+					amountTendTxt.setText(amountTendTxt.getText() + "7");
+				} else if (event.getSource() == mb[7]) {
+					amountTendTxt.setText(amountTendTxt.getText() + "8");
+				} else if (event.getSource() == mb[8]) {
+					amountTendTxt.setText(amountTendTxt.getText() + "9");
+				} else if (event.getSource() == mb[9]) {
+					amountTendTxt.setText(amountTendTxt.getText() + ".");
+				} else if (event.getSource() == mb[10]) {
+					amountTendTxt.setText(amountTendTxt.getText() + "0");
+				} else if (event.getSource() == mb[11]) {
+					amountTendTxt.setText("");
+				}
+
+			}// end amt tendtxt
+			else if (amtTip) { // enter into tip box
+				if (event.getSource() == mb[0]) {
+					tipAmountTxtBox.setText(tipAmountTxtBox.getText() + "1");
+				} else if (event.getSource() == mb[1]) {
+					tipAmountTxtBox.setText(tipAmountTxtBox.getText() + "2");
+				} else if (event.getSource() == mb[2]) {
+					tipAmountTxtBox.setText(tipAmountTxtBox.getText() + "3");
+				} else if (event.getSource() == mb[3]) {
+					tipAmountTxtBox.setText(tipAmountTxtBox.getText() + "4");
+				} else if (event.getSource() == mb[4]) {
+					tipAmountTxtBox.setText(tipAmountTxtBox.getText() + "5");
+				} else if (event.getSource() == mb[5]) {
+					tipAmountTxtBox.setText(tipAmountTxtBox.getText() + "6");
+				} else if (event.getSource() == mb[6]) {
+					tipAmountTxtBox.setText(tipAmountTxtBox.getText() + "7");
+				} else if (event.getSource() == mb[7]) {
+					tipAmountTxtBox.setText(tipAmountTxtBox.getText() + "8");
+				} else if (event.getSource() == mb[8]) {
+					tipAmountTxtBox.setText(tipAmountTxtBox.getText() + "9");
+				} else if (event.getSource() == mb[9]) {
+					tipAmountTxtBox.setText(tipAmountTxtBox.getText() + ".");
+				} else if (event.getSource() == mb[10]) {
+					tipAmountTxtBox.setText(tipAmountTxtBox.getText() + "0");
+				} else if (event.getSource() == mb[11]) {
+					tipAmountTxtBox.setText("");
+				}
+
+			}// end tip box
+			else if (amtDisc) {
+				if (event.getSource() == mb[0]) {
+					discountTextBox.setText(discountTextBox.getText() + "1");
+				} else if (event.getSource() == mb[1]) {
+					discountTextBox.setText(discountTextBox.getText() + "2");
+				} else if (event.getSource() == mb[2]) {
+					discountTextBox.setText(discountTextBox.getText() + "3");
+				} else if (event.getSource() == mb[3]) {
+					discountTextBox.setText(discountTextBox.getText() + "4");
+				} else if (event.getSource() == mb[4]) {
+					discountTextBox.setText(discountTextBox.getText() + "5");
+				} else if (event.getSource() == mb[5]) {
+					discountTextBox.setText(discountTextBox.getText() + "6");
+				} else if (event.getSource() == mb[6]) {
+					discountTextBox.setText(discountTextBox.getText() + "7");
+				} else if (event.getSource() == mb[7]) {
+					discountTextBox.setText(discountTextBox.getText() + "8");
+				} else if (event.getSource() == mb[8]) {
+					discountTextBox.setText(discountTextBox.getText() + "9");
+				} else if (event.getSource() == mb[9]) {
+					discountTextBox.setText(discountTextBox.getText() + ".");
+				} else if (event.getSource() == mb[10]) {
+					discountTextBox.setText(discountTextBox.getText() + "0");
+				} else if (event.getSource() == mb[11]) {
+					discountTextBox.setText("");
+				}
+
+			}
 			// What ever button does
 		}
 	}
