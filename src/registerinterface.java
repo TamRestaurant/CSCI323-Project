@@ -50,7 +50,7 @@ public class registerinterface extends JFrame {
 	@SuppressWarnings("rawtypes")
 	private JComboBox orderComboBox;
 	private ArrayList<Order> openOrders;
-	private JButton btnNewButton;
+	private JButton applyPymtButton;
 	private JLabel lblEnterAmountTendered;
 	private JLabel lblChange, changelbl;
 	private JButton[] mb;
@@ -71,6 +71,9 @@ public class registerinterface extends JFrame {
 	private double amountTendered = 0;
 	private double tip;
 	double discountPercent = 0.0;
+	private JButton closeOrderButton;
+	private JLabel percentlbl;
+	
 
 	// private NumberFormat fmt=new NumberFormat();.getCurrencyInstance();
 	/*
@@ -152,9 +155,10 @@ public class registerinterface extends JFrame {
 		// }
 
 		updateDropBox();
-		btnNewButton = new JButton("Apply Payment");
+		applyPymtButton = new JButton("Apply Payment");
+		applyPymtButton.setEnabled(false);
 
-		btnNewButton.addActionListener(new ActionListener() {
+		applyPymtButton.addActionListener(new ActionListener() {
 			// //////accept payment
 			public void actionPerformed(ActionEvent e) {
 				// check if there is an order to pay
@@ -186,6 +190,7 @@ public class registerinterface extends JFrame {
 					if (diff <= 0) {
 						openOrders.get(index).setPaid(true);
 						change = diff;
+						openOrders.get(index).setTipPaid(tip);
 						changelbl.setText(NumberFormat.getCurrencyInstance()
 								.format(-change));
 					} else if (diff > 0) {
@@ -197,14 +202,17 @@ public class registerinterface extends JFrame {
 					}
 					// reset flag for total calculation
 					totalCalculated = false;
+					applyPymtButton.setEnabled(false);
+					closeOrderButton.setEnabled(true);
+					//closeOrderButton.setEnabled(false);
 				} else {
 					JOptionPane.showMessageDialog(null,
 							"Please Calculate Total First.");
 				}
 			}// endevent
 		});
-		btnNewButton.setBounds(133, 582, 192, 23);
-		contentPane.add(btnNewButton);
+		applyPymtButton.setBounds(133, 582, 192, 23);
+		contentPane.add(applyPymtButton);
 
 		lblNewLabel.setBounds(185, 38, 100, 17);
 		contentPane.add(lblNewLabel);
@@ -215,7 +223,7 @@ public class registerinterface extends JFrame {
 		contentPane.add(lblEnterAmountTendered);
 
 		amountTendTxt = new JTextField();
-		amountTendTxt.setText("0.0");
+		amountTendTxt.setText("0");
 		amountTendTxt.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
@@ -236,8 +244,9 @@ public class registerinterface extends JFrame {
 		changelbl.setBounds(268, 628, 46, 14);
 		contentPane.add(changelbl);
 
-		JButton btnNewButton_1 = new JButton("Close Order");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		closeOrderButton = new JButton("Close Order");
+		closeOrderButton.setEnabled(false);
+		closeOrderButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// check if there is an order to close
 				if (openOrders.size() == 0) {
@@ -280,8 +289,8 @@ public class registerinterface extends JFrame {
 
 			}
 		});
-		btnNewButton_1.setBounds(166, 667, 117, 23);
-		contentPane.add(btnNewButton_1);
+		closeOrderButton.setBounds(166, 667, 117, 23);
+		contentPane.add(closeOrderButton);
 
 		JButton closeBtn = new JButton("Close");
 		closeBtn.addActionListener(new ActionListener() {
@@ -293,6 +302,7 @@ public class registerinterface extends JFrame {
 		contentPane.add(closeBtn);
 		// / add discount checkbox and text field and action listener
 		discountTextBox = new JTextField();
+		discountTextBox.setText("0");
 		discountTextBox.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -301,7 +311,6 @@ public class registerinterface extends JFrame {
 				amtDisc = true;
 			}
 		});
-		discountTextBox.setText("Enter Discount percentage");
 		discountTextBox.setEnabled(false);
 		discountTextBox.setBounds(227, 97, 173, 20);
 		contentPane.add(discountTextBox);
@@ -323,7 +332,7 @@ public class registerinterface extends JFrame {
 		contentPane.add(discountCheckBox);
 
 		tipAmountTxtBox = new JTextField();
-		tipAmountTxtBox.setText("0.0");
+		tipAmountTxtBox.setText("0");
 		tipAmountTxtBox.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -383,6 +392,7 @@ public class registerinterface extends JFrame {
 				}
 				// set flag so that pay,ent can be applied
 				totalCalculated = true;
+				applyPymtButton.setEnabled(true);
 				// display total
 				totalLbl.setText(""
 						+ NumberFormat.getCurrencyInstance().format(amountDue));
@@ -398,6 +408,10 @@ public class registerinterface extends JFrame {
 		totalLbl = new JLabel("");
 		totalLbl.setBounds(342, 173, 46, 14);
 		contentPane.add(totalLbl);
+		
+		percentlbl = new JLabel("%");
+		percentlbl.setBounds(402, 100, 46, 14);
+		contentPane.add(percentlbl);
 
 	}// close constructor
 
