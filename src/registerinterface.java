@@ -73,7 +73,6 @@ public class registerinterface extends JFrame {
 	double discountPercent = 0.0;
 	private JButton closeOrderButton;
 	private JLabel percentlbl;
-	
 
 	// private NumberFormat fmt=new NumberFormat();.getCurrencyInstance();
 	/*
@@ -204,7 +203,7 @@ public class registerinterface extends JFrame {
 					totalCalculated = false;
 					applyPymtButton.setEnabled(false);
 					closeOrderButton.setEnabled(true);
-					//closeOrderButton.setEnabled(false);
+					// closeOrderButton.setEnabled(false);
 				} else {
 					JOptionPane.showMessageDialog(null,
 							"Please Calculate Total First.");
@@ -252,41 +251,46 @@ public class registerinterface extends JFrame {
 				if (openOrders.size() == 0) {
 					JOptionPane.showMessageDialog(null,
 							"There is no order to process.");
-					dispose();
+					// dispose();
 					return;
-				}
-				index = orderComboBox.getSelectedIndex();
-				boolean paid = openOrders.get(index).isPaid();
-
-				// if order is paid then we can close order and send to db etc
-				if (paid) {
-					// ////////reset combo box etc
-					// orderComboBox.remove(index);
-
-					/**
-					 * TODO: close order in database prior to removing it from
-					 * the ArrayList This functionality does not exist yet, but
-					 * we will need to send a String representation of the
-					 * current date to the database in the following format:
-					 * "YYYY-DD-MM hh:mm:ss" Along with the order number (also
-					 * in string format) Below will probably be the method that
-					 * will be created DBAction.closeOpenOrder(int orderNumber,
-					 * String date)
-					 */
-
-					openOrders.remove(index);
-					// ////////////////
-					dispose();
-					// changelbl.setText(NumberFormat.getCurrencyInstance()
-					// .format(0));
-					// orderComboBox.revalidate();
-					// orderComboBox.repaint();
 				} else {
-					JOptionPane.showMessageDialog(null,
-							"Order must be paid before it can be closed.");
-					dispose();
-				}
+					index = orderComboBox.getSelectedIndex();
+					boolean paid = openOrders.get(index).isPaid();
 
+					// if order is paid then we can close order and send to db
+					// etc
+					if (paid) {
+						// ////////reset combo box etc
+						// orderComboBox.remove(index);
+
+						/**
+						 * TODO: close order in database prior to removing it
+						 * from the ArrayList This functionality does not exist
+						 * yet, but we will need to send a String representation
+						 * of the current date to the database in the following
+						 * format: "YYYY-DD-MM hh:mm:ss" Along with the order
+						 * number (also in string format) Below will probably be
+						 * the method that will be created
+						 * DBAction.closeOpenOrder(int orderNumber, String date)
+						 */
+						//this is not yet implemented... wait for austin 
+						closeOrder();
+						//this needs to be removed when above method is implemented
+						openOrders.remove(index);
+						// ////////////////
+						dispose();
+						// changelbl.setText(NumberFormat.getCurrencyInstance()
+						// .format(0));
+						// orderComboBox.revalidate();
+						// orderComboBox.repaint();
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Order must be paid before it can be closed.");
+						//dispose();
+						return;
+					}
+
+				}
 			}
 		});
 		closeOrderButton.setBounds(166, 667, 117, 23);
@@ -295,6 +299,7 @@ public class registerinterface extends JFrame {
 		JButton closeBtn = new JButton("Close");
 		closeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+
 				dispose();
 			}
 		});
@@ -362,8 +367,7 @@ public class registerinterface extends JFrame {
 				}
 				index = orderComboBox.getSelectedIndex();
 				amountDue = openOrders.get(index).getOrderTotal();
-			
-			
+
 				// if there is a discount, try to parse the value
 				// also add tip amount to order and total
 				if (discountCheckBox.isSelected()) {
@@ -408,12 +412,23 @@ public class registerinterface extends JFrame {
 		totalLbl = new JLabel("");
 		totalLbl.setBounds(342, 173, 46, 14);
 		contentPane.add(totalLbl);
-		
+
 		percentlbl = new JLabel("%");
 		percentlbl.setBounds(402, 100, 46, 14);
 		contentPane.add(percentlbl);
 
 	}// close constructor
+
+	public void closeOrder() {
+
+		/*
+		 * this can be method that will close order and send it to the closed
+		 * order part of the database. when that is implemented, the method
+		 * updateDropBox() should be called to update the openOrder array list
+		 * and repopulate the combo box
+		 */
+
+	}
 
 	public void updateDropBox() {
 
