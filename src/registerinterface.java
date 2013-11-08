@@ -307,7 +307,7 @@ public class registerinterface extends JFrame {
 		contentPane.add(closeBtn);
 		// / add discount checkbox and text field and action listener
 		discountTextBox = new JTextField();
-		discountTextBox.setText("0");
+		discountTextBox.setText("10");
 		discountTextBox.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
