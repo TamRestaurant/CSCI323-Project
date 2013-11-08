@@ -69,6 +69,8 @@ public class registerinterface extends JFrame {
 	private JLabel totalLbl;
 	private double amountDue = 0;
 	private double amountTendered = 0;
+	private double tip;
+	double discountPercent = 0.0;
 
 	// private NumberFormat fmt=new NumberFormat();.getCurrencyInstance();
 	/*
@@ -350,9 +352,9 @@ public class registerinterface extends JFrame {
 					return;
 				}
 				index = orderComboBox.getSelectedIndex();
-				double amountDue = openOrders.get(index).getOrderTotal();
-				double discountPercent = 0.0;
-				double tip = 0.0;
+				amountDue = openOrders.get(index).getOrderTotal();
+			
+			
 				// if there is a discount, try to parse the value
 				// also add tip amount to order and total
 				if (discountCheckBox.isSelected()) {
