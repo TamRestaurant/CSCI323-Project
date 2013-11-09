@@ -69,7 +69,7 @@ public class Order {
 	
 	//need this to poplate combobox w correct string
 	public String toString() {
-		return "ServerID: "
+		return "    ServerID: "
 				+ empID
 				+ "      Order number:  "
 				+ orderNumber

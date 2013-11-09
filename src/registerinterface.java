@@ -123,12 +123,12 @@ public class registerinterface extends JFrame {
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
 		JLabel lblNewLabel = new JLabel("Order");
-		lblNewLabel.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		lblNewLabel.setFont(new Font("Calibri", Font.PLAIN, 12));
 		JPanel panel = new JPanel();
 		contentPane.add(panel);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(242, 301, 350, 258);
+		panel_1.setBounds(241, 266, 350, 305);
 		contentPane.add(panel_1);
 		panel_1.setLayout(new GridLayout(4, 3, 0, 0));
 		mb = new JButton[12];
@@ -165,29 +165,31 @@ public class registerinterface extends JFrame {
 		// orders.add(o);
 		// }
 		orderComboBox = new JComboBox<Order>(openOrdersVector);
+		orderComboBox.setFont(new Font("Calibri", Font.PLAIN, 12));
 		orderComboBox.setMaximumRowCount(100);
-		orderComboBox.setBounds(242, 102, 350, 20);
+		orderComboBox.setBounds(241, 67, 350, 20);
 		contentPane.add(orderComboBox);
 		// updateDropBox();
 		applyPymtButton = new JButton("Apply Payment");
-		applyPymtButton.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		applyPymtButton.setFont(new Font("Calibri", Font.PLAIN, 12));
 		applyPymtButton.setEnabled(false);
 
 		applyPymtButton.addActionListener(new applyPaymentAction());
 
-		applyPymtButton.setBounds(242, 579, 350, 23);
+		applyPymtButton.setBounds(241, 594, 350, 23);
 		contentPane.add(applyPymtButton);
 
-		lblNewLabel.setBounds(367, 74, 100, 17);
+		lblNewLabel.setBounds(366, 39, 100, 17);
 		contentPane.add(lblNewLabel);
 		lblNewLabel.setText("Select Order");
 
 		lblEnterAmountTendered = new JLabel("Enter Amount tendered");
-		lblEnterAmountTendered.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		lblEnterAmountTendered.setBounds(242, 261, 138, 14);
+		lblEnterAmountTendered.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblEnterAmountTendered.setBounds(241, 226, 138, 14);
 		contentPane.add(lblEnterAmountTendered);
 
 		amountTendTxt = new JTextField();
+		amountTendTxt.setFont(new Font("Calibri", Font.PLAIN, 12));
 		amountTendTxt.setText("0");
 		amountTendTxt.addFocusListener(new FocusAdapter() {
 			@Override
@@ -198,31 +200,31 @@ public class registerinterface extends JFrame {
 				amtDisc = false;
 			}
 		});
-		amountTendTxt.setBounds(419, 258, 173, 20);
+		amountTendTxt.setBounds(418, 223, 173, 20);
 		contentPane.add(amountTendTxt);
 		amountTendTxt.setColumns(10);
 
 		lblChange = new JLabel("Change");
-		lblChange.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		lblChange.setBounds(320, 613, 80, 20);
+		lblChange.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblChange.setBounds(319, 628, 80, 20);
 		contentPane.add(lblChange);
 
 		changelbl = new JLabel("$0");
-		changelbl.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		changelbl.setFont(new Font("Calibri", Font.PLAIN, 12));
 		changelbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		changelbl.setBounds(419, 616, 94, 14);
+		changelbl.setBounds(418, 631, 94, 14);
 		contentPane.add(changelbl);
 
 		closeOrderButton = new JButton("Close Order");
-		closeOrderButton.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		closeOrderButton.setFont(new Font("Calibri", Font.PLAIN, 12));
 		closeOrderButton.setEnabled(false);
 		closeOrderButton.addActionListener(new closeOrderAction());
-		closeOrderButton.setBounds(242, 644, 350, 23);
+		closeOrderButton.setBounds(241, 659, 350, 23);
 		contentPane.add(closeOrderButton);
 
 		// /////close button
 		JButton closeBtn = new JButton("Close");
-		closeBtn.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		closeBtn.setFont(new Font("Calibri", Font.PLAIN, 12));
 		closeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
@@ -230,6 +232,7 @@ public class registerinterface extends JFrame {
 		});
 		closeBtn.setBounds(700, 11, 74, 23);
 		contentPane.add(closeBtn);
+		discountTextBox.setFont(new Font("Calibri", Font.PLAIN, 12));
 		// / add discount checkbox and text field and action listener
 
 		discountTextBox.setText("10");
@@ -243,16 +246,17 @@ public class registerinterface extends JFrame {
 			}
 		});
 		discountTextBox.setEnabled(false);
-		discountTextBox.setBounds(419, 137, 173, 20);
+		discountTextBox.setBounds(418, 102, 173, 20);
 		contentPane.add(discountTextBox);
 		discountTextBox.setColumns(10);
-		discountCheckBox.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		discountCheckBox.setFont(new Font("Calibri", Font.PLAIN, 12));
 
 		discountCheckBox.addActionListener(new discountCheckBoxAction());
-		discountCheckBox.setBounds(242, 133, 138, 23);
+		discountCheckBox.setBounds(241, 98, 138, 23);
 		contentPane.add(discountCheckBox);
 
 		tipAmountTxtBox = new JTextField();
+		tipAmountTxtBox.setFont(new Font("Calibri", Font.PLAIN, 12));
 		tipAmountTxtBox.setText("0");
 		tipAmountTxtBox.addFocusListener(new FocusAdapter() {
 			@Override
@@ -263,47 +267,47 @@ public class registerinterface extends JFrame {
 				amtDisc = false;
 			}
 		});
-		tipAmountTxtBox.setBounds(420, 168, 172, 20);
+		tipAmountTxtBox.setBounds(419, 133, 172, 20);
 		contentPane.add(tipAmountTxtBox);
 		tipAmountTxtBox.setColumns(10);
 
 		lblEnterTipReceived = new JLabel("Enter Tip Received");
-		lblEnterTipReceived.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		lblEnterTipReceived.setBounds(242, 170, 151, 14);
+		lblEnterTipReceived.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblEnterTipReceived.setBounds(241, 135, 151, 14);
 		contentPane.add(lblEnterTipReceived);
 
 		totalButon = new JButton("Calculate Total");
-		totalButon.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		totalButon.setFont(new Font("Calibri", Font.PLAIN, 12));
 		totalButon.addActionListener(new calculateTotalAction());
-		totalButon.setBounds(242, 199, 350, 23);
+		totalButon.setBounds(241, 164, 350, 23);
 		contentPane.add(totalButon);
 
 		totalLabel = new JLabel("Total Due");
-		totalLabel.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		totalLabel.setFont(new Font("Calibri", Font.PLAIN, 12));
 		totalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		totalLabel.setBounds(242, 236, 138, 14);
+		totalLabel.setBounds(241, 201, 138, 14);
 		contentPane.add(totalLabel);
 
 		totalLbl = new JLabel("$ 0");
-		totalLbl.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		totalLbl.setBounds(419, 236, 173, 14);
+		totalLbl.setFont(new Font("Calibri", Font.PLAIN, 12));
+		totalLbl.setBounds(418, 201, 173, 14);
 		contentPane.add(totalLbl);
 
 		percentlbl = new JLabel("%");
-		percentlbl.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		percentlbl.setBounds(594, 140, 46, 14);
+		percentlbl.setFont(new Font("Calibri", Font.PLAIN, 12));
+		percentlbl.setBounds(593, 105, 46, 14);
 		contentPane.add(percentlbl);
 
 		label = new JLabel("$");
-		label.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		label.setFont(new Font("Calibri", Font.PLAIN, 12));
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
-		label.setBounds(395, 171, 18, 14);
+		label.setBounds(394, 136, 18, 14);
 		contentPane.add(label);
 
 		label_1 = new JLabel("$");
 		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_1.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		label_1.setBounds(395, 262, 18, 14);
+		label_1.setFont(new Font("Calibri", Font.PLAIN, 12));
+		label_1.setBounds(394, 227, 18, 14);
 		contentPane.add(label_1);
 
 	}// close constructor
