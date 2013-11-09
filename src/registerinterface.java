@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,6 +43,8 @@ import javax.swing.JFormattedTextField;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class registerinterface extends JFrame {
 
@@ -56,7 +59,7 @@ public class registerinterface extends JFrame {
 	private JButton[] mb;
 	private int index = 0;
 	private dbAction DBAction;
-	private JTextField discountTextBox;
+	// private JTextField discountTextBox;
 	private JTextField tipAmountTxtBox;
 	private JLabel lblEnterTipReceived;
 	// boooleans to aid keypad in entering correct textbox
@@ -73,6 +76,12 @@ public class registerinterface extends JFrame {
 	double discountPercent = 0.0;
 	private JButton closeOrderButton;
 	private JLabel percentlbl;
+	private Vector<Order> openOrdersVector = new Vector<Order>();
+	private JTextField discountTextBox = new JTextField();
+	private JCheckBox discountCheckBox = new JCheckBox("Apply Discount");
+	private int ordernum = 0;
+	private JLabel label;
+	private JLabel label_1;
 
 	// private NumberFormat fmt=new NumberFormat();.getCurrencyInstance();
 	/*
@@ -81,11 +90,11 @@ public class registerinterface extends JFrame {
 	 * Because this is in its own application, the dbAction is required to be
 	 * final
 	 */
-	public static void main(String[] args, final dbAction DBAction) {
+	public static void main(String[] args, final dbAction DBAct) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					registerinterface frame = new registerinterface(DBAction);
+					registerinterface frame = new registerinterface(DBAct);
 					frame.setVisible(true);
 					// frame.pack();
 				} catch (Exception e) {
@@ -100,23 +109,26 @@ public class registerinterface extends JFrame {
 	 * 
 	 * @param dbAction
 	 */
-	public registerinterface(dbAction DBAction) {
+	public registerinterface(dbAction DBAct) {
 		// Create instance of DBAction (database interface)
-		this.DBAction = DBAction;
+		DBAction = DBAct;
 		// Get all open orders from the database so that menu can be populated
-
+		openOrders = DBAction.getOpenOrders();
+		// get vector of orders
+		listToVector();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(225, 0, 850, 800);
+		setBounds(185, 0, 800, 767);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
 		JLabel lblNewLabel = new JLabel("Order");
+		lblNewLabel.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		JPanel panel = new JPanel();
 		contentPane.add(panel);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(133, 313, 192, 258);
+		panel_1.setBounds(242, 301, 350, 258);
 		contentPane.add(panel_1);
 		panel_1.setLayout(new GridLayout(4, 3, 0, 0));
 		mb = new JButton[12];
@@ -152,73 +164,27 @@ public class registerinterface extends JFrame {
 		// o.setOrderTotal(i + 11);
 		// orders.add(o);
 		// }
-
-		updateDropBox();
+		orderComboBox = new JComboBox<Order>(openOrdersVector);
+		orderComboBox.setMaximumRowCount(100);
+		orderComboBox.setBounds(242, 102, 350, 20);
+		contentPane.add(orderComboBox);
+		// updateDropBox();
 		applyPymtButton = new JButton("Apply Payment");
+		applyPymtButton.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		applyPymtButton.setEnabled(false);
 
-		applyPymtButton.addActionListener(new ActionListener() {
-			// //////accept payment
-			public void actionPerformed(ActionEvent e) {
-				// check if there is an order to pay
+		applyPymtButton.addActionListener(new applyPaymentAction());
 
-				if (openOrders.size() == 0) {
-					JOptionPane.showMessageDialog(null,
-							"There is no order to process.");
-					// dispose();
-					return;
-				}
-				// /make sure total has been calculated
-
-				if (totalCalculated) {
-					index = orderComboBox.getSelectedIndex();
-					// get amount to apply
-					try {
-						amountTendered = Double.parseDouble(amountTendTxt
-								.getText());
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null,
-								"Enter numbers only! Try again.");
-						// e1.printStackTrace();
-						return;
-					}
-					double diff = amountDue - amountTendered;
-					double change = 0.0;
-					// if payment is short
-					if (diff <= 0) {
-						openOrders.get(index).setPaid(true);
-						change = diff;
-						openOrders.get(index).setTipPaid(tip);
-						changelbl.setText(NumberFormat.getCurrencyInstance()
-								.format(-change));
-					} else if (diff > 0) {
-						JOptionPane.showMessageDialog(null,
-								"Payment is "
-										+ NumberFormat.getCurrencyInstance()
-												.format(diff)
-										+ " short! Try again.");
-					}
-					// reset flag for total calculation
-					totalCalculated = false;
-					applyPymtButton.setEnabled(false);
-					closeOrderButton.setEnabled(true);
-					// closeOrderButton.setEnabled(false);
-				} else {
-					JOptionPane.showMessageDialog(null,
-							"Please Calculate Total First.");
-				}
-			}// endevent
-		});
-		applyPymtButton.setBounds(133, 582, 192, 23);
+		applyPymtButton.setBounds(242, 579, 350, 23);
 		contentPane.add(applyPymtButton);
 
-		lblNewLabel.setBounds(185, 38, 100, 17);
+		lblNewLabel.setBounds(367, 74, 100, 17);
 		contentPane.add(lblNewLabel);
 		lblNewLabel.setText("Select Order");
 
 		lblEnterAmountTendered = new JLabel("Enter Amount tendered");
-		lblEnterAmountTendered.setBounds(125, 225, 200, 14);
+		lblEnterAmountTendered.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		lblEnterAmountTendered.setBounds(242, 261, 138, 14);
 		contentPane.add(lblEnterAmountTendered);
 
 		amountTendTxt = new JTextField();
@@ -226,114 +192,64 @@ public class registerinterface extends JFrame {
 		amountTendTxt.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
+				amountTendTxt.setText("");
 				amtTend = true;
 				amtTip = false;
 				amtDisc = false;
 			}
 		});
-		amountTendTxt.setBounds(125, 250, 117, 20);
+		amountTendTxt.setBounds(419, 258, 173, 20);
 		contentPane.add(amountTendTxt);
 		amountTendTxt.setColumns(10);
 
 		lblChange = new JLabel("Change");
-		lblChange.setBounds(155, 624, 80, 20);
+		lblChange.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		lblChange.setBounds(320, 613, 80, 20);
 		contentPane.add(lblChange);
 
 		changelbl = new JLabel("$0");
-		changelbl.setBounds(268, 628, 46, 14);
+		changelbl.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		changelbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		changelbl.setBounds(419, 616, 94, 14);
 		contentPane.add(changelbl);
 
 		closeOrderButton = new JButton("Close Order");
+		closeOrderButton.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		closeOrderButton.setEnabled(false);
-		closeOrderButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// check if there is an order to close
-				if (openOrders.size() == 0) {
-					JOptionPane.showMessageDialog(null,
-							"There is no order to process.");
-					// dispose();
-					return;
-				} else {
-					index = orderComboBox.getSelectedIndex();
-					boolean paid = openOrders.get(index).isPaid();
-
-					// if order is paid then we can close order and send to db
-					// etc
-					if (paid) {
-						// ////////reset combo box etc
-						// orderComboBox.remove(index);
-
-						/**
-						 * TODO: close order in database prior to removing it
-						 * from the ArrayList This functionality does not exist
-						 * yet, but we will need to send a String representation
-						 * of the current date to the database in the following
-						 * format: "YYYY-DD-MM hh:mm:ss" Along with the order
-						 * number (also in string format) Below will probably be
-						 * the method that will be created
-						 * DBAction.closeOpenOrder(int orderNumber, String date)
-						 */
-						//this is not yet implemented... wait for austin 
-						closeOrder();
-						//this needs to be removed when above method is implemented
-						openOrders.remove(index);
-						// ////////////////
-						dispose();
-						// changelbl.setText(NumberFormat.getCurrencyInstance()
-						// .format(0));
-						// orderComboBox.revalidate();
-						// orderComboBox.repaint();
-					} else {
-						JOptionPane.showMessageDialog(null,
-								"Order must be paid before it can be closed.");
-						//dispose();
-						return;
-					}
-
-				}
-			}
-		});
-		closeOrderButton.setBounds(166, 667, 117, 23);
+		closeOrderButton.addActionListener(new closeOrderAction());
+		closeOrderButton.setBounds(242, 644, 350, 23);
 		contentPane.add(closeOrderButton);
 
+		// /////close button
 		JButton closeBtn = new JButton("Close");
+		closeBtn.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		closeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
 				dispose();
 			}
 		});
-		closeBtn.setBounds(735, 0, 89, 23);
+		closeBtn.setBounds(700, 11, 74, 23);
 		contentPane.add(closeBtn);
 		// / add discount checkbox and text field and action listener
-		discountTextBox = new JTextField();
+
 		discountTextBox.setText("10");
 		discountTextBox.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
+				discountTextBox.setText("");
 				amtTend = false;
 				amtTip = false;
 				amtDisc = true;
 			}
 		});
 		discountTextBox.setEnabled(false);
-		discountTextBox.setBounds(227, 97, 173, 20);
+		discountTextBox.setBounds(419, 137, 173, 20);
 		contentPane.add(discountTextBox);
 		discountTextBox.setColumns(10);
-		final JCheckBox discountCheckBox = new JCheckBox("Apply Discount");
-		discountCheckBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (discountCheckBox.isSelected()) {
-					// discountTextBox.setVisible(true);
-					discountTextBox.setEnabled(true);
+		discountCheckBox.setFont(new Font("Arial Black", Font.PLAIN, 11));
 
-				} else {
-					// discountTextBox.setVisible(false);
-					discountTextBox.setEnabled(false);
-				}
-			}
-		});
-		discountCheckBox.setBounds(50, 93, 138, 23);
+		discountCheckBox.addActionListener(new discountCheckBoxAction());
+		discountCheckBox.setBounds(242, 133, 138, 23);
 		contentPane.add(discountCheckBox);
 
 		tipAmountTxtBox = new JTextField();
@@ -341,42 +257,100 @@ public class registerinterface extends JFrame {
 		tipAmountTxtBox.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
+				tipAmountTxtBox.setText("");
 				amtTend = false;
 				amtTip = true;
 				amtDisc = false;
 			}
 		});
-		tipAmountTxtBox.setBounds(228, 128, 172, 20);
+		tipAmountTxtBox.setBounds(420, 168, 172, 20);
 		contentPane.add(tipAmountTxtBox);
 		tipAmountTxtBox.setColumns(10);
 
 		lblEnterTipReceived = new JLabel("Enter Tip Received");
-		lblEnterTipReceived.setBounds(50, 131, 158, 14);
+		lblEnterTipReceived.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		lblEnterTipReceived.setBounds(242, 170, 151, 14);
 		contentPane.add(lblEnterTipReceived);
 
 		totalButon = new JButton("Calculate Total");
-		totalButon.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		totalButon.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		totalButon.addActionListener(new calculateTotalAction());
+		totalButon.setBounds(242, 199, 350, 23);
+		contentPane.add(totalButon);
 
-				// check if there is an order to pay
-				if (openOrders.size() == 0) {
-					JOptionPane.showMessageDialog(null,
-							"There is no order to process.");
-					// dispose();
-					return;
-				}
+		totalLabel = new JLabel("Total Due");
+		totalLabel.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		totalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		totalLabel.setBounds(242, 236, 138, 14);
+		contentPane.add(totalLabel);
+
+		totalLbl = new JLabel("$ 0");
+		totalLbl.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		totalLbl.setBounds(419, 236, 173, 14);
+		contentPane.add(totalLbl);
+
+		percentlbl = new JLabel("%");
+		percentlbl.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		percentlbl.setBounds(594, 140, 46, 14);
+		contentPane.add(percentlbl);
+
+		label = new JLabel("$");
+		label.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		label.setHorizontalAlignment(SwingConstants.RIGHT);
+		label.setBounds(395, 171, 18, 14);
+		contentPane.add(label);
+
+		label_1 = new JLabel("$");
+		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_1.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		label_1.setBounds(395, 262, 18, 14);
+		contentPane.add(label_1);
+
+	}// close constructor
+
+	// //create open order vector from openorder arraylist
+	public void listToVector() {
+		openOrdersVector.clear();// = new Vector<Order>();
+		for (Order o : openOrders) {
+			openOrdersVector.add(o);
+		}
+	}
+
+	public class discountCheckBoxAction implements ActionListener {
+
+		public void actionPerformed(ActionEvent arg0) {
+			if (discountCheckBox.isSelected()) {
+				// discountTextBox.setVisible(true);
+				discountTextBox.setEnabled(true);
+
+			} else {
+				// discountTextBox.setVisible(false);
+				discountTextBox.setEnabled(false);
+			}
+		}
+
+	}
+
+	public class calculateTotalAction implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+
+			// check if there is an order to pay
+			if (openOrders.size() == 0) {
+				JOptionPane.showMessageDialog(null,
+						"There is no order to process.");
+				// dispose();
+				return;
+			} else {
 				index = orderComboBox.getSelectedIndex();
 				amountDue = openOrders.get(index).getOrderTotal();
 
 				// if there is a discount, try to parse the value
 				// also add tip amount to order and total
 				if (discountCheckBox.isSelected()) {
-
 					try {
 						discountPercent = (Double.parseDouble(discountTextBox
 								.getText())) / 100;
 						amountDue = (1 - discountPercent) * amountDue;
-
 						// openOrders.get(index).
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
@@ -401,58 +375,144 @@ public class registerinterface extends JFrame {
 				totalLbl.setText(""
 						+ NumberFormat.getCurrencyInstance().format(amountDue));
 			}
-		});
-		totalButon.setBounds(50, 169, 158, 23);
-		contentPane.add(totalButon);
+		}
+	}
 
-		totalLabel = new JLabel("Total");
-		totalLabel.setBounds(227, 173, 46, 14);
-		contentPane.add(totalLabel);
+	public class applyPaymentAction implements ActionListener {
+		// //////accept payment
+		public void actionPerformed(ActionEvent e) {
+			// check if there is an order to pay
+			if (openOrders.size() == 0) {
+				JOptionPane.showMessageDialog(null,
+						"There is no order to process.");
+				// dispose();
+				return;
+			}
+			// /make sure total has been calculated
+			if (totalCalculated) {
+				index = orderComboBox.getSelectedIndex();
+				// get amount to apply
+				try {
+					amountTendered = Double
+							.parseDouble(amountTendTxt.getText());
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null,
+							"Enter numbers only! Try again.");
+					// e1.printStackTrace();
+					return;
+				}
+				double diff = amountDue - amountTendered;
+				double change = 0.0;
+				// if payment is short
+				// //get order #
+				ordernum = openOrders.get(index).getOrderNumber();
+				if (diff <= 0) {
+					openOrders.get(index).setPaid(true);
+					change = diff;
+					openOrders.get(index).setTipPaid(tip);
+					changelbl.setText(NumberFormat.getCurrencyInstance()
+							.format(-change));
+				} else if (diff > 0) {
+					JOptionPane.showMessageDialog(null, "Payment is "
+							+ NumberFormat.getCurrencyInstance().format(diff)
+							+ " short! Try again.");
+				}
+				// reset flag for total calculation
+				totalCalculated = false;
+				applyPymtButton.setEnabled(false);
+				closeOrderButton.setEnabled(true);
+				// closeOrderButton.setEnabled(false);
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"Please Calculate Total First.");
+			}
+		}
+	}// endevent
 
-		totalLbl = new JLabel("");
-		totalLbl.setBounds(342, 173, 46, 14);
-		contentPane.add(totalLbl);
+	public class closeOrderAction implements ActionListener {
 
-		percentlbl = new JLabel("%");
-		percentlbl.setBounds(402, 100, 46, 14);
-		contentPane.add(percentlbl);
+		public void actionPerformed(ActionEvent e) {
+			// check if there is an order to close
+			if (openOrders.size() == 0) {
+				JOptionPane.showMessageDialog(null,
+						"There is no order to process.");
+				// dispose();
+				return;
+			} else {
+				index = orderComboBox.getSelectedIndex();
+				boolean paid = openOrders.get(index).isPaid();
+				// if order is paid then we can close order and send to db
+				// etc
+				if (paid) {
+					// ////////reset combo box etc
+					// orderComboBox.remove(index);
 
-	}// close constructor
+					/**
+					 * TODO: close order in database prior to removing it from
+					 * the ArrayList This functionality does not exist yet, but
+					 * we will need to send a String representation of the
+					 * current date to the database in the following format:
+					 * "YYYY-DD-MM hh:mm:ss" Along with the order number (also
+					 * in string format) Below will probably be the method that
+					 * will be created DBAction.closeOpenOrder(int orderNumber,
+					 * String date)
+					 */
+					// this is not yet implemented... wait for austin
+					closeOrder();
+					// this needs to be removed when above method is implemented
+					// listToVector();
+					// updateDropBox();
+					// ////////////////
+					// dispose();
+					// changelbl.setText(NumberFormat.getCurrencyInstance()
+					// .format(0));
+					// orderComboBox.revalidate();
+					// orderComboBox.repaint();
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"Order must be paid before it can be closed.");
+					// dispose();
+					return;
+				}
+				applyPymtButton.setEnabled(false);
+				closeOrderButton.setEnabled(false);
+			}
+		}
+	}
 
 	public void closeOrder() {
-
+		// index = orderComboBox.getSelectedIndex();
+		// int ordernum=openOrders.get(index).getOrderNumber();
+		openOrders.remove(index);
+		openOrdersVector.remove(index);
+		// orderComboBox.remove(index);
+		orderComboBox.validate();
+		// for(int i=0;i<openOrders.size();i++) {
+		// System.out.println("list    "+openOrders.get(i)+" \n  vector  "+openOrdersVector.get(i)+"\n    combo   "+orderComboBox.getItemAt(i)+"\n");
+		// }
+		//
 		/*
 		 * this can be method that will close order and send it to the closed
 		 * order part of the database. when that is implemented, the method
 		 * updateDropBox() should be called to update the openOrder array list
 		 * and repopulate the combo box
 		 */
-
+		JOptionPane.showMessageDialog(null, "Order number " + ordernum
+				+ " has been closed!\nSelect another order to process.");
 	}
 
-	public void updateDropBox() {
+	// public void updateDropBox() {
 
-		openOrders = DBAction.getOpenOrders();
-		String[] itm = new String[openOrders.size()];
-		// line;
-		for (int i = 0; i < openOrders.size(); i++) {
-			String line = "ServerID: "
-					+ openOrders.get(i).getEmpID()
-					+ "      Order number:  "
-					+ openOrders.get(i).getOrderNumber()
-					+ "      SubTotal:   "
-					+ NumberFormat.getCurrencyInstance().format(
-							openOrders.get(i).getOrderTotal()) + "";
-			// comboBox.add(orders.get(i));
-			itm[i] = line;
-		}
-		orderComboBox = new JComboBox(itm);
+	// openOrders = DBAction.getOpenOrders();
+	// listToVector();
+	// orderComboBox = new JComboBox<Order>(openOrdersVector);
 
-		orderComboBox.setMaximumRowCount(100);
-		orderComboBox.setBounds(50, 66, 350, 20);
-		contentPane.add(orderComboBox);
+	// orderComboBox.setMaximumRowCount(100);
+	// orderComboBox.setBounds(242, 102, 350, 20);
+	// contentPane.add(orderComboBox);
 
-	}
+	// }
 
 	// public void pullThePlug() {
 	// WindowEvent wev = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);

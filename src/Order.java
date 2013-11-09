@@ -1,4 +1,5 @@
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -54,7 +55,8 @@ public class Order {
 	}
 
 	// work on this later
-	public String toString() {
+	/// string representation of order
+	public String wholeOrderString() {
 		String ret = "Order number: " + orderNumber + " Table: " + tableNumber
 				+ "\n";
 
@@ -63,6 +65,17 @@ public class Order {
 		}
 
 		return ret;
+	}
+	
+	//need this to poplate combobox w correct string
+	public String toString() {
+		return "ServerID: "
+				+ empID
+				+ "      Order number:  "
+				+ orderNumber
+				+ "      SubTotal:   "
+				+ NumberFormat.getCurrencyInstance().format(
+						orderTotal) + "";
 	}
 
 	public String endOrder() {

@@ -100,7 +100,8 @@ public class restWinMake extends JFrame {
 		//------------- Change order of tabs and Panels at own risk --------------------------------
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1150, 1000);
+		
+		setBounds(0, 0, 1300, 750);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -127,7 +128,7 @@ public class restWinMake extends JFrame {
 		
 		lockscreen l = new lockscreen();
 		tabbedPane.addTab("Lockscreen", null, l.lock(), null);
-		String dah= "kdfds";
+		
 //----------------------ADD employee tab (for managing of menu/past orders/employees)----------------------		
 		admin a = new admin(DBAction);
 		tabbedPane.addTab("Administration", a.getAdminPanel());
