@@ -36,6 +36,8 @@ import javax.swing.JSeparator;
 
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class register extends JFrame {
 	private JTabbedPane reg = new JTabbedPane(JTabbedPane.TOP);
@@ -55,6 +57,12 @@ public class register extends JFrame {
 		this.DBAction = DBAction;
 		panel = new JPanel();
 		passwordBox = new JPasswordField("tam");
+		passwordBox.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				passwordBox.setText("");
+			}
+		});
 		passwordBox.setBounds(294, 196, 121, 20);
 		enterPassword = new JLabel("Enter Password");
 		enterPassword.setBounds(314, 160, 121, 14);
@@ -77,6 +85,9 @@ public class register extends JFrame {
 	// /////////invokes register frame
 	private class buttonListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
+			
+//			JOptionPane.
+			
 			String enteredpw = "";
 			char[] pw = passwordBox.getPassword();
 			for (char c : pw) {
