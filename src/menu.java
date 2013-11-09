@@ -54,6 +54,7 @@ import javax.swing.JSeparator;
 
 import java.awt.GridLayout;
 import java.awt.event.MouseListener;
+import javax.swing.JScrollBar;
 public class menu extends JFrame
 {
         private JTabbedPane menu;
@@ -382,7 +383,4 @@ public class menu extends JFrame
 			}
         	
         }
-        
-
-
 }

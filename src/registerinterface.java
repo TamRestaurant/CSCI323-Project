@@ -359,7 +359,7 @@ public class registerinterface extends JFrame {
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						JOptionPane.showMessageDialog(null,
-								"Enter numbers only! Try again.");
+								"Enter numbers only in discount percentage field!");
 						// e1.printStackTrace();
 						return;
 					}
@@ -369,8 +369,10 @@ public class registerinterface extends JFrame {
 					tip = Double.parseDouble(tipAmountTxtBox.getText());
 					amountDue += tip;
 				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					// TODO Auto-generated catch block					 
+					JOptionPane.showMessageDialog(null,
+							"Enter numbers only in tip field!");
+					return;
 				}
 				// set flag so that pay,ent can be applied
 				totalCalculated = true;
@@ -402,7 +404,7 @@ public class registerinterface extends JFrame {
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					JOptionPane.showMessageDialog(null,
-							"Enter numbers only! Try again.");
+							"Enter numbers only into amount tendered field!");
 					// e1.printStackTrace();
 					return;
 				}
@@ -503,7 +505,7 @@ public class registerinterface extends JFrame {
 		 * and repopulate the combo box
 		 */
 		JOptionPane.showMessageDialog(null, "Order number " + ordernum
-				+ " has been closed!\nSelect another order to process.");
+				+ " has been closed successfully.\nSelect a new order to process.");
 	}
 
 	// public void updateDropBox() {

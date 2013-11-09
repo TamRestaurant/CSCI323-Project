@@ -101,7 +101,7 @@ public class restWinMake extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		setBounds(0, 0, 1300, 750);
+		setBounds(0, 0, 1300, 767);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
