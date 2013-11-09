@@ -589,6 +589,34 @@ public class dbAction {
 	}
 	
 	
+	public boolean closeOrder(String orderNum, String discDollarAmount, String tipAmount){
+		boolean success = true;
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		String SQLcloseOrder = "UPDATE `csci_323_exp20140101`.`Order` SET `OrderClose`= \""+ dateFormat.format(date).toString() + "\""
+				+ ", `discountAmount`=\'"+ discDollarAmount +"\', `tipAmount`=\'"+ tipAmount +"\' "
+				+ "WHERE `idOrder`=\'"+ orderNum +"\'";
+		try{
+
+			PreparedStatement updateTimeRecord  = conn.prepareStatement(SQLcloseOrder);
+			updateTimeRecord.executeUpdate(SQLcloseOrder);
+
+			
+			
+		}
+		catch(SQLException ex){
+			//TODO print to console the exception if occurred
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+		    success = false;
+		}
+		
+		
+		return success;
+	}
+	
+	
 	
 	/***
 	 * This method prepares string for report depending on what options the user has selected

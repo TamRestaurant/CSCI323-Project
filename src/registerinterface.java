@@ -456,9 +456,7 @@ public class registerinterface extends JFrame {
 
 	public void closeOrder() {
 
-		openOrders.remove(index);
-		openOrdersVector.remove(index);
-		orderComboBox.validate();
+		
 		// for(int i=0;i<openOrders.size();i++) {
 		// System.out.println("list    "+openOrders.get(i)+" \n  vector  "+openOrdersVector.get(i)+"\n    combo   "+orderComboBox.getItemAt(i)+"\n");
 		// }
@@ -469,12 +467,33 @@ public class registerinterface extends JFrame {
 		 * updateDropBox() should be called to update the openOrder array list
 		 * and repopulate the combo box
 		 */
-		JOptionPane
-				.showMessageDialog(
-						null,
-						"Order number "
-								+ ordernum
-								+ " has been closed successfully.\nSelect a new order to process.");
+		boolean updateOrder = true;
+		
+		try{
+			//Get required fields and close the order in the database
+			String discountAmount = Double.toString(discountPercent * openOrders.get(index).getOrderTotal());
+			
+			//Close order
+			DBAction.closeOrder(Integer.toString(ordernum), discountAmount, Double.toString(tip));
+
+			JOptionPane.showMessageDialog(null, "Order number " + ordernum
+					+ " has been closed successfully.\nSelect a new order to process.");
+			
+			openOrders.remove(index);
+			openOrdersVector.remove(index);
+			orderComboBox.validate();
+			orderComboBox.setSelectedIndex(0);
+			
+
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			updateOrder = false;
+		
+		}
+		
+
 	}
 
 	private class buttonListener implements ActionListener {
