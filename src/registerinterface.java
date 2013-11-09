@@ -59,10 +59,8 @@ public class registerinterface extends JFrame {
 	private JButton[] mb;
 	private int index = 0;
 	private dbAction DBAction;
-	// private JTextField discountTextBox;
 	private JTextField tipAmountTxtBox;
 	private JLabel lblEnterTipReceived;
-	// boooleans to aid keypad in entering correct textbox
 	private boolean amtTend = false;
 	private boolean amtTip = false;
 	private boolean amtDisc = false;
@@ -150,26 +148,11 @@ public class registerinterface extends JFrame {
 			panel_1.add(mb[i - 1]);
 			mb[i - 1].addActionListener(new buttonListener());
 		}
-
-		// JTextArea list = new JTextArea();
-		// list.setBounds(15, 100, 170, 695);
-		// list.setEditable(false);
-		// JList<Order> list = new JList<Order>();
-
-		// orders = new ArrayList<Order>();
-		//
-		// for (int i = 0; i < 9; i++) {
-		// Order o = new Order();
-		// o.setOrderNumber(i * 325);
-		// o.setOrderTotal(i + 11);
-		// orders.add(o);
-		// }
 		orderComboBox = new JComboBox<Order>(openOrdersVector);
 		orderComboBox.setFont(new Font("Calibri", Font.PLAIN, 12));
 		orderComboBox.setMaximumRowCount(100);
 		orderComboBox.setBounds(241, 67, 350, 20);
 		contentPane.add(orderComboBox);
-		// updateDropBox();
 		applyPymtButton = new JButton("Apply Payment");
 		applyPymtButton.setFont(new Font("Calibri", Font.PLAIN, 12));
 		applyPymtButton.setEnabled(false);
@@ -189,6 +172,7 @@ public class registerinterface extends JFrame {
 		contentPane.add(lblEnterAmountTendered);
 
 		amountTendTxt = new JTextField();
+		amountTendTxt.setHorizontalAlignment(SwingConstants.TRAILING);
 		amountTendTxt.setFont(new Font("Calibri", Font.PLAIN, 12));
 		amountTendTxt.setText("0");
 		amountTendTxt.addFocusListener(new FocusAdapter() {
@@ -232,6 +216,7 @@ public class registerinterface extends JFrame {
 		});
 		closeBtn.setBounds(700, 11, 74, 23);
 		contentPane.add(closeBtn);
+		discountTextBox.setHorizontalAlignment(SwingConstants.TRAILING);
 		discountTextBox.setFont(new Font("Calibri", Font.PLAIN, 12));
 		// / add discount checkbox and text field and action listener
 
@@ -256,6 +241,7 @@ public class registerinterface extends JFrame {
 		contentPane.add(discountCheckBox);
 
 		tipAmountTxtBox = new JTextField();
+		tipAmountTxtBox.setHorizontalAlignment(SwingConstants.TRAILING);
 		tipAmountTxtBox.setFont(new Font("Calibri", Font.PLAIN, 12));
 		tipAmountTxtBox.setText("0");
 		tipAmountTxtBox.addFocusListener(new FocusAdapter() {
@@ -309,30 +295,24 @@ public class registerinterface extends JFrame {
 		label_1.setFont(new Font("Calibri", Font.PLAIN, 12));
 		label_1.setBounds(394, 227, 18, 14);
 		contentPane.add(label_1);
-
 	}// close constructor
+		// //create open order vector from openorder arraylist
 
-	// //create open order vector from openorder arraylist
 	public void listToVector() {
-		openOrdersVector.clear();// = new Vector<Order>();
+		openOrdersVector.clear();
 		for (Order o : openOrders) {
 			openOrdersVector.add(o);
 		}
 	}
 
 	public class discountCheckBoxAction implements ActionListener {
-
 		public void actionPerformed(ActionEvent arg0) {
 			if (discountCheckBox.isSelected()) {
-				// discountTextBox.setVisible(true);
 				discountTextBox.setEnabled(true);
-
 			} else {
-				// discountTextBox.setVisible(false);
 				discountTextBox.setEnabled(false);
 			}
 		}
-
 	}
 
 	public class calculateTotalAction implements ActionListener {
@@ -342,7 +322,6 @@ public class registerinterface extends JFrame {
 			if (openOrders.size() == 0) {
 				JOptionPane.showMessageDialog(null,
 						"There is no order to process.");
-				// dispose();
 				return;
 			} else {
 				index = orderComboBox.getSelectedIndex();
@@ -355,12 +334,12 @@ public class registerinterface extends JFrame {
 						discountPercent = (Double.parseDouble(discountTextBox
 								.getText())) / 100;
 						amountDue = (1 - discountPercent) * amountDue;
-						// openOrders.get(index).
+
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null,
-								"Enter numbers only in discount percentage field!");
-						// e1.printStackTrace();
+						JOptionPane
+								.showMessageDialog(null,
+										"Enter numbers only in discount percentage field!");
 						return;
 					}
 				}// endif
@@ -369,12 +348,12 @@ public class registerinterface extends JFrame {
 					tip = Double.parseDouble(tipAmountTxtBox.getText());
 					amountDue += tip;
 				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block					 
+					// TODO Auto-generated catch block
 					JOptionPane.showMessageDialog(null,
 							"Enter numbers only in tip field!");
 					return;
 				}
-				// set flag so that pay,ent can be applied
+				// set flag so that payment can be applied
 				totalCalculated = true;
 				applyPymtButton.setEnabled(true);
 				// display total
@@ -443,7 +422,6 @@ public class registerinterface extends JFrame {
 			if (openOrders.size() == 0) {
 				JOptionPane.showMessageDialog(null,
 						"There is no order to process.");
-				// dispose();
 				return;
 			} else {
 				index = orderComboBox.getSelectedIndex();
@@ -451,8 +429,6 @@ public class registerinterface extends JFrame {
 				// if order is paid then we can close order and send to db
 				// etc
 				if (paid) {
-					// ////////reset combo box etc
-					// orderComboBox.remove(index);
 
 					/**
 					 * TODO: close order in database prior to removing it from
@@ -466,19 +442,10 @@ public class registerinterface extends JFrame {
 					 */
 					// this is not yet implemented... wait for austin
 					closeOrder();
-					// this needs to be removed when above method is implemented
-					// listToVector();
-					// updateDropBox();
-					// ////////////////
-					// dispose();
-					// changelbl.setText(NumberFormat.getCurrencyInstance()
-					// .format(0));
-					// orderComboBox.revalidate();
-					// orderComboBox.repaint();
+
 				} else {
 					JOptionPane.showMessageDialog(null,
 							"Order must be paid before it can be closed.");
-					// dispose();
 					return;
 				}
 				applyPymtButton.setEnabled(false);
@@ -488,11 +455,9 @@ public class registerinterface extends JFrame {
 	}
 
 	public void closeOrder() {
-		// index = orderComboBox.getSelectedIndex();
-		// int ordernum=openOrders.get(index).getOrderNumber();
+
 		openOrders.remove(index);
 		openOrdersVector.remove(index);
-		// orderComboBox.remove(index);
 		orderComboBox.validate();
 		// for(int i=0;i<openOrders.size();i++) {
 		// System.out.println("list    "+openOrders.get(i)+" \n  vector  "+openOrdersVector.get(i)+"\n    combo   "+orderComboBox.getItemAt(i)+"\n");
@@ -504,26 +469,13 @@ public class registerinterface extends JFrame {
 		 * updateDropBox() should be called to update the openOrder array list
 		 * and repopulate the combo box
 		 */
-		JOptionPane.showMessageDialog(null, "Order number " + ordernum
-				+ " has been closed successfully.\nSelect a new order to process.");
+		JOptionPane
+				.showMessageDialog(
+						null,
+						"Order number "
+								+ ordernum
+								+ " has been closed successfully.\nSelect a new order to process.");
 	}
-
-	// public void updateDropBox() {
-
-	// openOrders = DBAction.getOpenOrders();
-	// listToVector();
-	// orderComboBox = new JComboBox<Order>(openOrdersVector);
-
-	// orderComboBox.setMaximumRowCount(100);
-	// orderComboBox.setBounds(242, 102, 350, 20);
-	// contentPane.add(orderComboBox);
-
-	// }
-
-	// public void pullThePlug() {
-	// WindowEvent wev = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
-	// Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
-	// }
 
 	private class buttonListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
