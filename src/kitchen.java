@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 
@@ -38,12 +39,12 @@ import javax.swing.JSeparator;
 
 //import RPSGui.buttonListener;
 
-
-
-
 import java.awt.GridLayout;
 
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.SwingConstants;
 
 public class kitchen extends JFrame {
 	private static JTabbedPane kitchen;// here
@@ -52,22 +53,50 @@ public class kitchen extends JFrame {
 	private JButton btnContact;
 	private JCheckBox orderUp;
 	private JTextField txtComment;
-	private JComboBox orderComboBox;
 	private JList list;
-	private dbAction DBAction;
-	private ArrayList<Order> openOrderArray;
-	private Vector orders = new Vector();
-	private DefaultComboBoxModel model = new DefaultComboBoxModel(orders);
+	private dbAction DBAct;
+	private ArrayList<Order> openOrdersArray;
+	private Vector<Order> openOrdersVector = new Vector();
+	private DefaultComboBoxModel model = new DefaultComboBoxModel(
+			openOrdersVector);
+	private Timer refresher;
+	private JLabel orderDetail;
+	private JTextArea orderDetailTextArea;
 
 	public kitchen(dbAction DBAction) {
 
-		//Connect to DB (passed in as parameter)
-		DBAction = DBAction;
+		// Connect to DB (passed in as parameter)
+		DBAct = DBAction;
+		// ---------------------------------------------------
+		openOrdersArray = DBAct.getOpenOrders();
+		listToVector();
+		// ////////timer to refresh kitchen order list every 30 secs
+		int delay = 10000; // milliseconds
+		ActionListener taskPerformer = new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				// Connect to DB (passed in as parameter)
+
+				// ---------------------------------------------------
+				/**
+				 * THIS GETS OPEN ORDERS FROM THE DB AND ADDS THEM TO THE
+				 * COMBOBOX
+				 * 
+				 */
+
+				openOrdersArray = DBAct.getOpenOrders();
+				listToVector();
+				list.setListData(openOrdersVector);
+				repaint();
+			}
+		};
+		new Timer(delay, taskPerformer).start();
+
 		// ---------------------------------------------------
 		kitchen = new JTabbedPane(JTabbedPane.TOP);
 		activeOrdersPanel = new JPanel();
 
 		kitchen.addTab("Active Orders", null, activeOrdersPanel, null);
+		kitchen.setEnabledAt(0, true);
 		activeOrdersPanel.setLayout(null);
 		activeOrdersPanel.setBounds(10, 10, 900, 900);
 		// ----------------------- instantiations ----------------------------
@@ -76,15 +105,13 @@ public class kitchen extends JFrame {
 		btnContact = new JButton("Send Notification");
 		orderUp = new JCheckBox("Order Up");
 		txtComment = new JTextField();
-		orderComboBox = new JComboBox(model);
 
 		// ----------------------- settings ----------------------------
-		lblSelectOrd.setBounds(15, 80, 170, 50);
+		lblSelectOrd.setBounds(225, 180, 99, 31);
 		lblComments.setBounds(15, 180, 170, 50);
 		btnContact.setBounds(15, 400, 170, 50);
 		orderUp.setBounds(15, 300, 170, 50);
 		txtComment.setBounds(15, 220, 170, 50);
-		orderComboBox.setBounds(15, 120, 170, 50);
 
 		// ---------------------- adds to panel -----------------------------
 
@@ -93,50 +120,71 @@ public class kitchen extends JFrame {
 		activeOrdersPanel.add(lblComments);
 		activeOrdersPanel.add(btnContact);
 		activeOrdersPanel.add(orderUp);
-		activeOrdersPanel.add(orderComboBox);
-		
-		list = new JList();
+
+		list = new JList<Order>(openOrdersVector);
+		list.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				///show order details for cooks
+				int index = list.getSelectedIndex();
+				if (index >= 0) {
+					orderDetailTextArea.setText(openOrdersVector.get(index)
+							.wholeOrderString());
+				}
+			}
+		});
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setBounds(311, 120, 298, 326);
+		list.setBounds(322, 180, 298, 326);
 		activeOrdersPanel.add(list);
 
+		orderDetail = new JLabel("Order Details");
+		orderDetail.setLabelFor(orderDetail);
+		orderDetail.setHorizontalAlignment(SwingConstants.CENTER);
+		orderDetail.setVerticalAlignment(SwingConstants.TOP);
+		orderDetail.setBounds(15, 11, 400, 14);
+		activeOrdersPanel.add(orderDetail);
 		
+		 orderDetailTextArea = new JTextArea();
+		orderDetailTextArea.setBounds(15, 41, 400, 128);
+		activeOrdersPanel.add(orderDetailTextArea);
+
 		btnContact.addActionListener(new buttonListener());
 
 		// ---------------------------------------------------
-		/**
-		 * THIS GETS OPEN ORDERS FROM THE DB AND ADDS THEM TO THE COMBOBOX
-		 * 
-		 */
-		
-		openOrderArray = DBAction.getOpenOrders();
-		
-		//This was used to iterate the openOrderArray when we just had order numbers
-		/**
-		 * WES, YOU CAN UNCOMMENT THE LINES BELOW TO SEE WHAT HAPPENS TO THE COMBOBOX, IT MIGHT HELP.
-		 * the .addElements can be anystring, and it just pulls to .tostring() from the Order class
-		 * 
-		 */
-		//for (Order s : openOrderArray){
-			
-		//	model.addElement(s);
-		//}
-	
 
-		// ---------------------------------------------------
+	}
 
+	public void listToVector() {
+		openOrdersVector.clear();
+		for (Order o : openOrdersArray) {
+			// add order to list if it has NOT been served
+			if (!o.isServed()) {
+				openOrdersVector.add(o);
+			}
+		}
 	}
 
 	public static JTabbedPane k()// here
 	{
 		return kitchen;
 	}
-	 ///////////invokes register frame
-	 private class buttonListener implements ActionListener
-	 {
-		 public void actionPerformed(ActionEvent event)
-	 {
-	 System.out.println("works");
-	 }
-	 }
+
+	// /////////invokes register frame
+	private class buttonListener implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			// set order to served and it will be removed from list
+			int index = list.getSelectedIndex();
+			if (index >= 0) {
+				openOrdersArray.get(index).setServed(true);
+				// list.remove(index);
+				listToVector();
+				list.setListData(openOrdersVector);
+			}
+			// //need to update order in DB so that it is not retrieved in new
+			// list
+			//
+			//
+			System.out.println("works");
+		}
+	}
 }
+

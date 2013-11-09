@@ -16,6 +16,7 @@ public class Order {
 	private Date orderDate;
 	private double tipPaid = 0.0;
 	private double amountDiscount = 0.0;
+	private boolean served=false;
 
 	public Order() {
 	}
@@ -218,6 +219,14 @@ public class Order {
 
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
+	}
+
+	public boolean isServed() {
+		return served;
+	}
+
+	public void setServed(boolean served) {
+		this.served = served;
 	}
 
 }
