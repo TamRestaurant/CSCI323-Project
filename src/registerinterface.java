@@ -474,21 +474,18 @@ public class registerinterface extends JFrame {
 			String discountAmount = Double.toString(discountPercent * openOrders.get(index).getOrderTotal());
 			
 			//Close order
-			DBAction.closeOrder(Integer.toString(ordernum), discountAmount, Double.toString(tip));
-
-			JOptionPane.showMessageDialog(null, "Order number " + ordernum
-					+ " has been closed successfully.\nSelect a new order to process.");
-			
+			DBAction.closeOrder(Integer.toString(ordernum), discountAmount, Double.toString(tip));					
 			openOrders.remove(index);
 			openOrdersVector.remove(index);
 			orderComboBox.validate();
 			orderComboBox.setSelectedIndex(0);
-			
+			JOptionPane.showMessageDialog(null, "Order number " + ordernum
+					+ " has been closed successfully.\nSelect a new order to process.");
 
 		}
 		catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 			updateOrder = false;
 		
 		}
