@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
@@ -39,6 +40,7 @@ import javax.swing.JSeparator;
 
 //import RPSGui.buttonListener;
 
+
 import java.awt.GridLayout;
 
 import javax.swing.ListSelectionModel;
@@ -49,6 +51,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
+
 import java.awt.Color;
 
 public class kitchen extends JFrame {
@@ -67,7 +70,8 @@ public class kitchen extends JFrame {
 	private Timer refresher;
 	private JLabel orderDetail;
 	private JTextArea orderDetailTextArea;
-	private JScrollPane scrollPane;
+	private JScrollPane scrollPane,orderScroll;
+	private JScrollPane scrollPane_1;
 
 	public kitchen(dbAction DBAction) {
 
@@ -110,16 +114,18 @@ public class kitchen extends JFrame {
 		lblSelectOrd = new JLabel("Select Order");
 		lblSelectOrd.setHorizontalAlignment(SwingConstants.CENTER);
 		lblComments = new JLabel("Type Comments to Wait Person");
+		lblComments.setHorizontalAlignment(SwingConstants.CENTER);
 		btnContact = new JButton("Send Notification");
 		orderUp = new JCheckBox("Order Up");
+		orderUp.setHorizontalAlignment(SwingConstants.CENTER);
 		txtComment = new JTextField();
 
 		// ----------------------- settings ----------------------------
-		lblSelectOrd.setBounds(315, 11, 298, 31);
-		lblComments.setBounds(28, 50, 202, 14);
-		btnContact.setBounds(264, 656, 400, 50);
-		orderUp.setBounds(0, 436, 170, 50);
-		txtComment.setBounds(28, 75, 170, 223);
+		lblSelectOrd.setBounds(313, 11, 298, 31);
+		lblComments.setBounds(72, 62, 193, 14);
+		btnContact.setBounds(84, 340, 170, 290);
+		orderUp.setBounds(84, 305, 170, 31);
+		txtComment.setBounds(84, 87, 170, 211);
 
 		// ---------------------- adds to panel -----------------------------
 
@@ -129,7 +135,13 @@ public class kitchen extends JFrame {
 		activeOrdersPanel.add(btnContact);
 		activeOrdersPanel.add(orderUp);
 		
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(262, 50, 400, 248);
+		activeOrdersPanel.add(scrollPane_1);
+		
 		orderListBox = new JList<Order>(openOrdersVector);
+		scrollPane_1.setViewportView(orderListBox);
+		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		orderListBox.setValueIsAdjusting(true);
 		orderListBox.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		orderListBox.addListSelectionListener(new ListSelectionListener() {
@@ -143,18 +155,18 @@ public class kitchen extends JFrame {
 			}
 		});
 		orderListBox.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		orderListBox.setBounds(264, 50, 400, 248);
-		activeOrdersPanel.add(orderListBox);
 
 		orderDetail = new JLabel("Order Details");
 		orderDetail.setLabelFor(orderDetail);
 		orderDetail.setHorizontalAlignment(SwingConstants.CENTER);
 		orderDetail.setVerticalAlignment(SwingConstants.TOP);
-		orderDetail.setBounds(264, 315, 400, 14);
+		orderDetail.setBounds(262, 315, 400, 14);
 		activeOrdersPanel.add(orderDetail);
 		 
+		orderScroll=new JScrollPane();
 		 scrollPane = new JScrollPane();
-		 scrollPane.setBounds(264, 340, 400, 290);
+		 scrollPane.setBounds(262, 340, 400, 290);
+		 scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		 activeOrdersPanel.add(scrollPane);
 		
 		 orderDetailTextArea = new JTextArea();

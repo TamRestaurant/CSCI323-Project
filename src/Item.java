@@ -40,12 +40,15 @@ public class Item {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	@Override
-	public String toString() {
+	 
+	public String toStringFull() {
 		return  itemName + ", item number: " + itemID
 				+ ", item price: " + formatMoney.format(itemPrice);
 	}
-
+	
+	public String toString() {
+		return itemName;
+	}
 
 	//Getter and Setters
 	

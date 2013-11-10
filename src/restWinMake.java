@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 
@@ -37,7 +38,10 @@ import javax.swing.JSeparator;
 
 
 
+
 import java.awt.GridLayout;
+
+import javax.swing.JScrollPane;
 
 public class restWinMake extends JFrame {
 	private JPanel contentPane;
@@ -96,56 +100,56 @@ public class restWinMake extends JFrame {
 	// -------------------------------- Main ------------------------------------
 
 	public restWinMake() {// Begin Main
-		//printorder for test purpose
-        ArrayList<Order> oo=DBAction.getOpenOrders();
-        for(Order o:oo)
-     	   System.out.println(o);
+        //printorder for test purpose
+ArrayList<Order> oo=DBAction.getOpenOrders();
+for(Order o:oo)
+        System.out.println(o);
+
+//ResultSet ii=DBAction.getMenuItems();
+////for(Item o:ii)
+//        System.out.println(ii);
+        //------------- Change order of tabs and Panels at own risk --------------------------------
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-//        ResultSet ii=DBAction.getMenuItems();
-////        for(Item o:ii)
-//     	   System.out.println(ii);
-		//------------- Change order of tabs and Panels at own risk --------------------------------
+        setBounds(0, 0, 1300, 767);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+        
+        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        tabbedPane.setBounds(25, 25, 1100, 950);
+        contentPane.add(tabbedPane);
+        //-----------------------ADD menu tab-----------------------------------
+        menu m = new menu(getMenuItems(),DBAction);
+        tabbedPane.addTab("menu", null, m.m(), null);
+        //-----------------------ADD wait station tab-----------------------------------
+//        waitStation w = new waitStation();
+//        tabbedPane.addTab("Wait Station", null, w.w(), null);
+        //-----------------------ADD register tab-----------------------------------
+        register r = new register(DBAction);
+        tabbedPane.addTab("Register", null, r.r(), null);
+        //-----------------------ADD kitchen tab-----------------------------------
+        kitchen k = new kitchen(DBAction);
+        tabbedPane.addTab("Kitchen", null, k.k(), null);
+        
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		setBounds(0, 0, 1300, 767);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(25, 25, 1100, 950);
-		contentPane.add(tabbedPane);
-		//-----------------------ADD menu tab-----------------------------------
-		menu m = new menu(getMenuItems(),DBAction);
-		tabbedPane.addTab("menu", null, m.m(), null);
-		//-----------------------ADD wait station tab-----------------------------------
-//		waitStation w = new waitStation();
-//		tabbedPane.addTab("Wait Station", null, w.w(), null);
-		//-----------------------ADD register tab-----------------------------------
-		register r = new register(DBAction);
-		tabbedPane.addTab("Register", null, r.r(), null);
-		//-----------------------ADD kitchen tab-----------------------------------
-		kitchen k = new kitchen(DBAction);
-		tabbedPane.addTab("Kitchen", null, k.k(), null);
-		
-
-		//locksreen tab
-		
-		lockscreen l = new lockscreen();
-		tabbedPane.addTab("Lockscreen", null, l.lock(), null);
-		
-//----------------------ADD employee tab (for managing of menu/past orders/employees)----------------------		
-		admin a = new admin(DBAction);
-		tabbedPane.addTab("Administration", a.getAdminPanel());
-		//TODO: Create dbConnector in one place and allow other classes to use it to avoid multiple connections
-		
-		
-		//Add employee clock in tab
-		clockInPanel c = new clockInPanel(DBAction);
-		tabbedPane.addTab("Employee Clock-in", c);
-		
+        //locksreen tab
+        
+        lockscreen l = new lockscreen();
+        tabbedPane.addTab("Lockscreen", null, l.lock(), null);
+        
+//----------------------ADD employee tab (for managing of menu/past orders/employees)----------------------                
+        admin a = new admin(DBAction);
+        tabbedPane.addTab("Administration", a.getAdminPanel());
+        //TODO: Create dbConnector in one place and allow other classes to use it to avoid multiple connections
+        
+        
+        //Add employee clock in tab
+        clockInPanel c = new clockInPanel(DBAction);
+        tabbedPane.addTab("Employee Clock-in", c);
+        
 		
 		/*
 		 * 

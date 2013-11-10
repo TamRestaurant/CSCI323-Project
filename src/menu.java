@@ -306,33 +306,43 @@ public class menu extends JFrame
                 	 * TODO: We need to know what employee is processing the order
                 	 */
                         public void actionPerformed(ActionEvent e) {
-                                //brings ticket up in window
-                        		//TODO: Replace this employeeNumber with the actual employee number of whoever is taking order
-                        		int employeeID = 1;
-                        		try {
-									employeeID=Integer.parseInt(serverIDTextBox.getText());
-								} catch (NumberFormatException e1) {
-									// TODO Auto-generated catch block
-									JOptionPane.showMessageDialog(null,
-											"Enter numbers only into server ID field.");
-									return;
+                                if (items!=null) {
+									//brings ticket up in window
+									//TODO: Replace this employeeNumber with the actual employee number of whoever is taking order
+									int employeeID = 1;
+									try {
+										employeeID = Integer
+												.parseInt(serverIDTextBox
+														.getText());
+									} catch (NumberFormatException e1) {
+										// TODO Auto-generated catch block
+										JOptionPane
+												.showMessageDialog(null,
+														"Enter numbers only into server ID field.");
+										return;
+									}
+									openTicket = true;
+									newOrder.setEnabled(openTicket);
+									closeOrder.setEnabled(!openTicket);
+									order = new Order(items, table, employeeID);
+									 // db.addOrder(order);
+									if (db.addOrder(order)) {
+										System.out.println("added" + order);
+									}
+									//refresh database connection
+									 //  db=new dbAction();
+									ArrayList<Order> oo = db.getOpenOrders();
+									for (Order o : oo) {
+										System.out.println(o);
+									}
+									orderNumber++;
 								}
-                                openTicket=true;
-                                newOrder.setEnabled(openTicket);
-                                closeOrder.setEnabled(!openTicket);
-                                order = new Order(items, table, employeeID);
-                               // db.addOrder(order);
                                 
-                                if(db.addOrder(order)) {
-                                	System.out.println("added"+order);}
-                                //refresh database connection
-                              //  db=new dbAction();
-                               ArrayList<Order> oo=db.getOpenOrders();
-                               for(Order o:oo) {
-                            	   System.out.println(o);}
-                                orderNumber++;
-                                
-                                
+                                else {
+                                	JOptionPane
+									.showMessageDialog(null,
+											"You must create an order first.");
+                                }
                                 
                         }
                 });
