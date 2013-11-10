@@ -39,6 +39,13 @@ import java.awt.GridBagLayout;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.SwingConstants;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.MatteBorder;
+import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 public class register extends JFrame {
 	private JTabbedPane reg = new JTabbedPane(JTabbedPane.TOP);
@@ -48,6 +55,7 @@ public class register extends JFrame {
 	private JLabel enterPassword;
 	private String registerPassword = "tam";
 	private JPasswordField passwordBox;
+	private JPanel panel_1;
 
 	// pwdYourPin.setText("xxxxxxxx");
 //
@@ -57,25 +65,37 @@ public class register extends JFrame {
 
 		this.DBAction = DBAction;
 		panel = new JPanel();
+		panel.setLayout(null);
+		
+		panel_1 = new JPanel();
+		panel_1.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
+		panel_1.setBounds(355, 128, 301, 221);
+		panel.add(panel_1);
+		panel_1.setLayout(null);
+		enterPassword = new JLabel("Enter Password");
+		enterPassword.setBounds(90, 61, 121, 14);
+		panel_1.add(enterPassword);
+		enterPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordBox = new JPasswordField("tam");
+		passwordBox.setBounds(90, 97, 121, 20);
+		panel_1.add(passwordBox);
 		passwordBox.setHorizontalAlignment(SwingConstants.CENTER);
+		JButton btnOpenRegister = new JButton("Open Register");
+//		btnOpenRegister.addKeyListener(new KeyAdapter() {
+//			@Override
+//			public void keyPressed(KeyEvent arg0) {
+//			}
+//		});
+		btnOpenRegister.setBounds(90, 139, 121, 23);
+		panel_1.add(btnOpenRegister);
+		panel_1.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{passwordBox, btnOpenRegister}));
+		btnOpenRegister.addActionListener(new buttonListener());
 		passwordBox.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
 				passwordBox.setText("");
 			}
 		});
-		passwordBox.setBounds(445, 196, 121, 20);
-		enterPassword = new JLabel("Enter Password");
-		enterPassword.setHorizontalAlignment(SwingConstants.CENTER);
-		enterPassword.setBounds(445, 160, 121, 14);
-		JButton btnOpenRegister = new JButton("Open Register");
-		btnOpenRegister.setBounds(445, 238, 121, 23);
-		btnOpenRegister.addActionListener(new buttonListener());
-		panel.setLayout(null);
-		panel.add(enterPassword);
-		panel.add(passwordBox);
-		panel.add(btnOpenRegister);
 		reg.add(panel);// , BorderLayout.NORTH);
 		// reg.add(btnOpenRegister, BorderLayout.CENTER);
 		// reg.add(btnOpenRegister, BorderLayout.SOUTH);
