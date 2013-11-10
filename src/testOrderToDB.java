@@ -21,6 +21,7 @@ public class testOrderToDB {
 		Order order = new Order(item, 5, 7);
 		
 		DBAction.addOrder(order);
+		System.out.println("Order was successfully added to database.  Program is terminated.");
 
 
 	}
