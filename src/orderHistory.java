@@ -314,7 +314,7 @@ public class orderHistory implements ActionListener {
 		String dateTo = comboToYear.getSelectedItem().toString() +"/" + Integer.toString((comboToMonth.getSelectedIndex()) + 1) + "/" + comboToDay.getSelectedItem().toString();
 		
 		if (allDates == 1){
-			resultSet = myDBconnection.getOrderReport(allDates, showEmpID, showQTY, itemDescription, openOrders, groupOrders);
+			resultSet = myDBconnection.getOrderReport(allDates, showEmpID, showQTY, itemDescription, groupOrders, openOrders);
 		}
 		else{
 			resultSet = myDBconnection.getOrderReport(allDates, showEmpID, showQTY, itemDescription, groupOrders, openOrders, dateFrom, dateTo);

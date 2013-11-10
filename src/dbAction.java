@@ -746,6 +746,7 @@ public class dbAction {
 				tempSQL[13] += "Order.OrderDate Between \"" + dateFrom +"\" And \""+ dateTo + "\"\n  ";
 			}
 		}
+
 		if (openOrders == 1){
 			tempSQL[13] += "Order.OrderClose is null\n  ";
 		}
