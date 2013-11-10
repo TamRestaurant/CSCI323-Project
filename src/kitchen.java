@@ -53,7 +53,7 @@ import java.awt.Color;
 
 public class kitchen extends JFrame {
 	private static JTabbedPane kitchen;// here
-	private JPanel activeOrdersPanel;
+	private static JPanel activeOrdersPanel;
 	private JLabel lblSelectOrd, lblComments;
 	private JButton btnContact;
 	private JCheckBox orderUp;
@@ -128,7 +128,7 @@ public class kitchen extends JFrame {
 		activeOrdersPanel.add(lblComments);
 		activeOrdersPanel.add(btnContact);
 		activeOrdersPanel.add(orderUp);
-
+		
 		orderListBox = new JList<Order>(openOrdersVector);
 		orderListBox.setValueIsAdjusting(true);
 		orderListBox.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -176,10 +176,24 @@ public class kitchen extends JFrame {
 		}
 	}
 
+	public static JPanel getKitchenPanel() {
+		return activeOrdersPanel;
+	}
+	
+	public static void setEnabledPanel(boolean is) {
+		
+		Component[]comps= activeOrdersPanel.getComponents();
+		for(Component c:comps) {
+			c.setEnabled(is);
+		}
+	}
+	
 	public static JTabbedPane k()// here
 	{
 		return kitchen;
 	}
+	
+
 
 	// /////////invokes register frame
 	private class buttonListener implements ActionListener {
@@ -199,8 +213,6 @@ public class kitchen extends JFrame {
 			System.out.println("works");
 		}
 	}
-	public JPanel getActiveOrdersPanel() {
-		return activeOrdersPanel;
-	}
+	
 }
 

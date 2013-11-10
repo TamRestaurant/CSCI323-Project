@@ -62,10 +62,10 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 public class menu extends JFrame
 {
-        private JTabbedPane menu;
+        private static JTabbedPane menu;
         private JPanel panel;
         private ImageIcon[] menuButtonsImage;
-        private JPanel menuPanel;
+        private static JPanel menuPanel;
         private JPanel subWaitTab,sidesButtonPanel,entreeButtonPanel,drinkButtonPanel,dessertButtonPanel;
         private JButton[] menuButtons;
         private JSeparator separator;
@@ -85,6 +85,7 @@ public class menu extends JFrame
         private int table;
         private JTextField serverIDTextBox;
         private dbAction db;
+        private static JPanel setOrderPanel,openOrders;
         
         public menu(ArrayList<Item> mItems,dbAction dba)
         {
@@ -104,11 +105,11 @@ public class menu extends JFrame
                 //-------------------Display Panel-----------------------------------
                 
                 JTabbedPane orderButtons = new JTabbedPane(JTabbedPane.TOP);
-                JPanel openOrders = new JPanel();
+                openOrders = new JPanel();
                 openOrders.setBounds(830, 6, 200, 810);
                 openOrders.setLayout(null);
                 orderButtons.setBounds(830, 6, 200, 810);
-                JPanel setOrderPanel = new JPanel();
+                 setOrderPanel = new JPanel();
                 setOrderPanel.setBounds(830, 6, 200, 810);
                 setOrderPanel.setBorder(BorderFactory.createLoweredBevelBorder());
                 orderButtons.addTab("New Order", null, setOrderPanel, null);
@@ -431,4 +432,22 @@ public class menu extends JFrame
 			}
         	
         }
+    	public static void setEnabledPanel(boolean is) {
+    		//get components and set value
+    		Component[]comps= menuPanel.getComponents();
+    		for(Component c:comps) {
+    			c.setEnabled(is);
+    		}
+    		comps= menu.getComponents();    		
+    		for(Component c:comps) {
+    			c.setEnabled(is);
+    		}
+    		comps= setOrderPanel.getComponents();    		
+    		for(Component c:comps) {
+    			c.setEnabled(is);
+    		} 	comps= openOrders.getComponents();    		
+    		for(Component c:comps) {
+    			c.setEnabled(is);
+    		} 
+    	}
 }

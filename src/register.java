@@ -41,7 +41,7 @@ import java.awt.event.FocusEvent;
 
 public class register extends JFrame {
 	private JTabbedPane reg = new JTabbedPane(JTabbedPane.TOP);
-	private JPanel panel;
+	private static JPanel panel;
 	private JButton[] cashierButtons;
 	private dbAction DBAction;
 	private JLabel enterPassword;
@@ -99,6 +99,13 @@ public class register extends JFrame {
 				JOptionPane.showMessageDialog(null, "Password incorrect!!");
 			}
 			// What ever button does
+		}
+	}
+	public static void setEnabledPanel(boolean is) {
+		
+		Component[]comps= panel.getComponents();
+		for(Component c:comps) {
+			c.setEnabled(is);
 		}
 	}
 }

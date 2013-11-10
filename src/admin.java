@@ -1,8 +1,13 @@
 import javax.swing.JPanel;
+
 import java.awt.Rectangle;
+
 import javax.swing.JDesktopPane;
+
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.SystemColor;
+
 import javax.swing.JTabbedPane;
 /***
  * Admin tab, brings in all the managerial functionality tabs
@@ -12,10 +17,10 @@ import javax.swing.JTabbedPane;
  */
 
 public class admin extends JPanel {
-	private JTabbedPane tabbedPane;
-	private employeeGui empGui;
-	private orderHistory orderHist;
-	private employeeTimeTrackingGui empTimeTracking;
+	private static JTabbedPane tabbedPane;
+	private static  employeeGui empGui;
+	private static orderHistory orderHist;
+	private static employeeTimeTrackingGui empTimeTracking;
 	/**
 	 * Create the panel.
 	 */
@@ -39,6 +44,22 @@ public class admin extends JPanel {
 		//tabbedPane.addTab("Order History", panelOrderHistory);
 		
 
+	}
+	
+	public static void setEnabledPanel(boolean is) {
+		
+		Component[]comps= empGui.getEmployeeGui().getComponents();
+		for(Component c:comps) {
+			c.setEnabled(is);
+		}
+		 comps= orderHist.getOrderHistory().getComponents();
+		for(Component c:comps) {
+			c.setEnabled(is);
+		}
+		 comps= empTimeTracking.getComponents();
+			for(Component c:comps) {
+				c.setEnabled(is);
+			}
 	}
 	
 	public JTabbedPane getAdminPanel(){

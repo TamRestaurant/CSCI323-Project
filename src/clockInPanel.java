@@ -3,6 +3,7 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Component;
 import java.awt.Font;
 
 import javax.swing.border.TitledBorder;
@@ -42,7 +43,7 @@ public class clockInPanel extends JPanel implements ActionListener, ItemListener
 	private JButton btnKey7;
 	private JButton btnKey8;
 	private JButton btnKey9;
-	private JPanel panel;
+	private static JPanel panel;
 	private JComboBox comboEmployee;
 	private JLabel lblNewLabel;
 	private JLabel lblEnterPin;
@@ -328,9 +329,15 @@ public class clockInPanel extends JPanel implements ActionListener, ItemListener
 			lblStatus.setText(fName + " " + lName + " is not clocked in.");
 		}
 	}
+	public static void setEnabledPanel(boolean is) {
+		
+		Component[]comps= panel.getComponents();
+		for(Component c:comps) {
+			c.setEnabled(is);
+		}}
+	}
 	
-	
-}
+
 
 
 

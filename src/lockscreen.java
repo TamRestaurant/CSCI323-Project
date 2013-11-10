@@ -37,6 +37,8 @@ import javax.swing.JSeparator;
 
 
 import java.awt.GridLayout;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 
 public class lockscreen extends JFrame 
@@ -51,9 +53,13 @@ public class lockscreen extends JFrame
                 JButton lockBtn=new JButton("Lock Workstation");
                 lockBtn.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
-                                kitchen.k().setEnabled(false);//here
+                                kitchen.setEnabledPanel(false);//here
+                                menu.setEnabledPanel(false);
+                                register.setEnabledPanel(false);
+                                admin.setEnabledPanel(false);
+                                clockInPanel.setEnabledPanel(false);
                         //menu.m().disable();//here
-                                 JOptionPane.showMessageDialog(null, "yay!!");
+                                 JOptionPane.showMessageDialog(null, "Locked!!");
                         }
                 });
                 lockBtn.setBounds(28, 75, 445, 23);
@@ -75,7 +81,13 @@ public class lockscreen extends JFrame
                 lockPanel.setBounds(275, 50, 500, 250);
                 
                 final JPasswordField pwdYourPin = new JPasswordField();
-                pwdYourPin.setText("xxxxxxxx");
+                pwdYourPin.addFocusListener(new FocusAdapter() {
+                	@Override
+                	public void focusGained(FocusEvent arg0) {
+                		 pwdYourPin.setText("");
+                	}
+                });
+                pwdYourPin.setText("tam");
                 pwdYourPin.setBounds(242, 122, 62, 29);
                 lockPanel.setLayout(null);
                 //subPanel1.add(displayText, BorderLayout.CENTER);
@@ -96,12 +108,17 @@ public class lockscreen extends JFrame
                         
 //                                  enteredStrPwd=pwdYourPin.getText();
 
-                                 if (enteredStrPwd.equals("rest")) {
+                                 if (enteredStrPwd.equals("tam")) {
                                          
-                                         kitchen.k().setVisible(false);
-                                JOptionPane.showMessageDialog(null, "yay!!");
+                                	 kitchen.setEnabledPanel(true);//here
+                                     menu.setEnabledPanel(true);
+                                     register.setEnabledPanel(true);
+                                     admin.setEnabledPanel(true);
+                                     clockInPanel.setEnabledPanel(true);
+                             //menu.m().disable();//here
+                                      JOptionPane.showMessageDialog(null, "UNLocked!!");
                                  }else {
-                                         JOptionPane.showMessageDialog(null, "nay");
+                                         JOptionPane.showMessageDialog(null, "Wrong Password.");
                                  }
                                 
                         }
