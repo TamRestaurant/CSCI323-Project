@@ -38,6 +38,7 @@ import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.SwingConstants;
 
 public class register extends JFrame {
 	private JTabbedPane reg = new JTabbedPane(JTabbedPane.TOP);
@@ -57,17 +58,19 @@ public class register extends JFrame {
 		this.DBAction = DBAction;
 		panel = new JPanel();
 		passwordBox = new JPasswordField("tam");
+		passwordBox.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordBox.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
 				passwordBox.setText("");
 			}
 		});
-		passwordBox.setBounds(294, 196, 121, 20);
+		passwordBox.setBounds(445, 196, 121, 20);
 		enterPassword = new JLabel("Enter Password");
-		enterPassword.setBounds(314, 160, 121, 14);
+		enterPassword.setHorizontalAlignment(SwingConstants.CENTER);
+		enterPassword.setBounds(445, 160, 121, 14);
 		JButton btnOpenRegister = new JButton("Open Register");
-		btnOpenRegister.setBounds(294, 238, 121, 23);
+		btnOpenRegister.setBounds(445, 238, 121, 23);
 		btnOpenRegister.addActionListener(new buttonListener());
 		panel.setLayout(null);
 		panel.add(enterPassword);
