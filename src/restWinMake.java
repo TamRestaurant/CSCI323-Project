@@ -96,7 +96,10 @@ public class restWinMake extends JFrame {
 	// -------------------------------- Main ------------------------------------
 
 	public restWinMake() {// Begin Main
-
+		//printorder for test purpose
+        ArrayList<Order> oo=DBAction.getOpenOrders();
+        for(Order o:oo)
+     	   System.out.println(o);
 		//------------- Change order of tabs and Panels at own risk --------------------------------
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -111,7 +114,7 @@ public class restWinMake extends JFrame {
 		tabbedPane.setBounds(25, 25, 1100, 950);
 		contentPane.add(tabbedPane);
 		//-----------------------ADD menu tab-----------------------------------
-		menu m = new menu(getMenuItems());
+		menu m = new menu(getMenuItems(),DBAction);
 		tabbedPane.addTab("menu", null, m.m(), null);
 		//-----------------------ADD wait station tab-----------------------------------
 //		waitStation w = new waitStation();

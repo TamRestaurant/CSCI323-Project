@@ -57,7 +57,7 @@ public class Order {
 	// work on this later
 	/// string representation of order
 	public String wholeOrderString() {
-		String ret = "Order number: " + orderNumber + " Table: " + tableNumber
+		String ret = "Order number: " + orderNumber + "\tTable: " + tableNumber
 				+ "\n";
 
 		for (Item i : items) {
@@ -69,11 +69,11 @@ public class Order {
 	
 	//need this to poplate combobox w correct string
 	public String toString() {
-		return "    ServerID: "
+		return "ServerID:  "
 				+ empID
-				+ "      Order number:  "
+				+ "     Order number:  "
 				+ orderNumber
-				+ "      SubTotal:   "
+				+ "     SubTotal:  "
 				+ NumberFormat.getCurrencyInstance().format(
 						orderTotal) + "";
 	}

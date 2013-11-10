@@ -82,8 +82,11 @@ public class menu extends JFrame
         private long time;
         private int table;
         private JTextField serverIDTextBox;
-        public menu(ArrayList<Item> mItems)
+        private dbAction db;
+        
+        public menu(ArrayList<Item> mItems,dbAction dba)
         {
+        		db=dba;
                 menu = new JTabbedPane(JTabbedPane.TOP);
                 menuItems = mItems;
                 panel = new JPanel();
@@ -315,7 +318,14 @@ public class menu extends JFrame
                                 newOrder.setEnabled(openTicket);
                                 closeOrder.setEnabled(!openTicket);
                                 order = new Order(items, table, employeeID);
-                                orders.add(order);
+                               // db.addOrder(order);
+                                
+                                if(db.addOrder(order))
+                                	System.out.println("added"+order);
+                                
+                               ArrayList<Order> oo=db.getOpenOrders();
+                               for(Order o:oo)
+                            	   System.out.println(o);
                                 orderNumber++;
                                 
                                 

@@ -42,7 +42,7 @@ public class Item {
 	 */
 	@Override
 	public String toString() {
-		return "Item: " + itemName + ", item number: " + itemID
+		return  itemName + ", item number: " + itemID
 				+ ", item price: " + formatMoney.format(itemPrice);
 	}
 
