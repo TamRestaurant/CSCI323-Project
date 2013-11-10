@@ -187,3 +187,4 @@ public class kitchen extends JFrame {
 		}
 	}
 }
+
