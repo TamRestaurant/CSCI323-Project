@@ -58,6 +58,8 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 public class menu extends JFrame
 {
         private JTabbedPane menu;
@@ -320,12 +322,13 @@ public class menu extends JFrame
                                 order = new Order(items, table, employeeID);
                                // db.addOrder(order);
                                 
-                                if(db.addOrder(order))
-                                	System.out.println("added"+order);
-                                
+                                if(db.addOrder(order)) {
+                                	System.out.println("added"+order);}
+                                //refresh database connection
+                              //  db=new dbAction();
                                ArrayList<Order> oo=db.getOpenOrders();
-                               for(Order o:oo)
-                            	   System.out.println(o);
+                               for(Order o:oo) {
+                            	   System.out.println(o);}
                                 orderNumber++;
                                 
                                 
@@ -336,7 +339,13 @@ public class menu extends JFrame
                 setOrderPanel.add(closeOrder);
                 
                 serverIDTextBox = new JTextField();
-                serverIDTextBox.setText("0");
+                serverIDTextBox.addFocusListener(new FocusAdapter() {
+                	@Override
+                	public void focusGained(FocusEvent arg0) {
+                		  serverIDTextBox.setText("");
+                	}
+                });
+                serverIDTextBox.setText("1");
                 serverIDTextBox.setBounds(10, 34, 86, 20);
                 setOrderPanel.add(serverIDTextBox);
                 serverIDTextBox.setColumns(10);

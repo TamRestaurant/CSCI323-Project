@@ -45,6 +45,11 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
+import javax.swing.JTextPane;
+import javax.swing.JScrollPane;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class kitchen extends JFrame {
 	private static JTabbedPane kitchen;// here
@@ -53,7 +58,7 @@ public class kitchen extends JFrame {
 	private JButton btnContact;
 	private JCheckBox orderUp;
 	private JTextField txtComment;
-	private JList list;
+	private JList orderListBox;
 	private dbAction DBAct;
 	private ArrayList<Order> openOrdersArray;
 	private Vector<Order> openOrdersVector = new Vector();
@@ -62,6 +67,7 @@ public class kitchen extends JFrame {
 	private Timer refresher;
 	private JLabel orderDetail;
 	private JTextArea orderDetailTextArea;
+	private JScrollPane scrollPane;
 
 	public kitchen(dbAction DBAction) {
 
@@ -85,7 +91,7 @@ public class kitchen extends JFrame {
 
 				openOrdersArray = DBAct.getOpenOrders();
 				listToVector();
-				list.setListData(openOrdersVector);
+				orderListBox.setListData(openOrdersVector);
 				repaint();
 			}
 		};
@@ -93,6 +99,7 @@ public class kitchen extends JFrame {
 
 		// ---------------------------------------------------
 		kitchen = new JTabbedPane(JTabbedPane.TOP);
+		kitchen.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		activeOrdersPanel = new JPanel();
 
 		kitchen.addTab("Active Orders", null, activeOrdersPanel, null);
@@ -101,17 +108,18 @@ public class kitchen extends JFrame {
 		activeOrdersPanel.setBounds(10, 10, 900, 900);
 		// ----------------------- instantiations ----------------------------
 		lblSelectOrd = new JLabel("Select Order");
+		lblSelectOrd.setHorizontalAlignment(SwingConstants.CENTER);
 		lblComments = new JLabel("Type Comments to Wait Person");
 		btnContact = new JButton("Send Notification");
 		orderUp = new JCheckBox("Order Up");
 		txtComment = new JTextField();
 
 		// ----------------------- settings ----------------------------
-		lblSelectOrd.setBounds(225, 180, 99, 31);
-		lblComments.setBounds(15, 180, 170, 50);
-		btnContact.setBounds(15, 400, 170, 50);
-		orderUp.setBounds(15, 300, 170, 50);
-		txtComment.setBounds(15, 220, 170, 50);
+		lblSelectOrd.setBounds(315, 11, 298, 31);
+		lblComments.setBounds(28, 50, 202, 14);
+		btnContact.setBounds(264, 656, 400, 50);
+		orderUp.setBounds(0, 436, 170, 50);
+		txtComment.setBounds(28, 75, 170, 223);
 
 		// ---------------------- adds to panel -----------------------------
 
@@ -121,31 +129,36 @@ public class kitchen extends JFrame {
 		activeOrdersPanel.add(btnContact);
 		activeOrdersPanel.add(orderUp);
 
-		list = new JList<Order>(openOrdersVector);
-		list.addListSelectionListener(new ListSelectionListener() {
+		orderListBox = new JList<Order>(openOrdersVector);
+		orderListBox.setValueIsAdjusting(true);
+		orderListBox.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		orderListBox.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
 				///show order details for cooks
-				int index = list.getSelectedIndex();
+				int index = orderListBox.getSelectedIndex();
 				if (index >= 0) {
 					orderDetailTextArea.setText(openOrdersVector.get(index)
 							.wholeOrderString());
 				}
 			}
 		});
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setBounds(322, 180, 298, 326);
-		activeOrdersPanel.add(list);
+		orderListBox.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		orderListBox.setBounds(264, 50, 400, 248);
+		activeOrdersPanel.add(orderListBox);
 
 		orderDetail = new JLabel("Order Details");
 		orderDetail.setLabelFor(orderDetail);
 		orderDetail.setHorizontalAlignment(SwingConstants.CENTER);
 		orderDetail.setVerticalAlignment(SwingConstants.TOP);
-		orderDetail.setBounds(15, 11, 400, 14);
+		orderDetail.setBounds(264, 315, 400, 14);
 		activeOrdersPanel.add(orderDetail);
+		 
+		 scrollPane = new JScrollPane();
+		 scrollPane.setBounds(264, 340, 400, 290);
+		 activeOrdersPanel.add(scrollPane);
 		
 		 orderDetailTextArea = new JTextArea();
-		orderDetailTextArea.setBounds(15, 41, 400, 128);
-		activeOrdersPanel.add(orderDetailTextArea);
+		 scrollPane.setViewportView(orderDetailTextArea);
 
 		btnContact.addActionListener(new buttonListener());
 
@@ -172,12 +185,12 @@ public class kitchen extends JFrame {
 	private class buttonListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			// set order to served and it will be removed from list
-			int index = list.getSelectedIndex();
+			int index = orderListBox.getSelectedIndex();
 			if (index >= 0) {
 				openOrdersArray.get(index).setServed(true);
 				// list.remove(index);
 				listToVector();
-				list.setListData(openOrdersVector);
+				orderListBox.setListData(openOrdersVector);
 			}
 			// //need to update order in DB so that it is not retrieved in new
 			// list
@@ -185,6 +198,9 @@ public class kitchen extends JFrame {
 			//
 			System.out.println("works");
 		}
+	}
+	public JPanel getActiveOrdersPanel() {
+		return activeOrdersPanel;
 	}
 }
 
