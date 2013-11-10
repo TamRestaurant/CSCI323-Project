@@ -49,7 +49,7 @@ public class register extends JFrame {
 	private JPasswordField passwordBox;
 
 	// pwdYourPin.setText("xxxxxxxx");
-
+//
 	public register(dbAction DBAction)
 
 	{
