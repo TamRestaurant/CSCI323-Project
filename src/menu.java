@@ -14,7 +14,9 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.ListModel;
+import javax.swing.ListSelectionModel;
 import javax.swing.Popup;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
@@ -83,10 +85,23 @@ public class menu extends JFrame
 		//private MouseListener mouseListener;
         private long time;
         private int table;
+      
         private JTextField serverIDTextBox;
         private dbAction db;
         private static JPanel setOrderPanel,openOrders;
         
+        private String message;
+    	private JTextField  messagesList;
+    	private JScrollPane scrollMessages;
+    	private JTextArea txtMessage;
+    	private kitchen myKitchen;
+    	private String fromKitchen;
+    	
+        
+    	 public menu(String messages)
+         {
+    		 String fromKitchen = messages;
+         }
         public menu(ArrayList<Item> mItems,dbAction dba)
         {
         		db=dba;
@@ -202,6 +217,43 @@ public class menu extends JFrame
                 sidesButtonPanel.setBorder(BorderFactory.createLoweredBevelBorder());
 
 //                
+            	// //---------------------------------- New to
+        		// add-----------------------------------------------------------
+        		JPanel MessagePanel = new JPanel();
+        		MessagePanel.setBounds(40, 680, 730, 100);
+        		subWaitTab.add(MessagePanel);
+        		MessagePanel.setLayout(null);
+        		MessagePanel.setBorder(BorderFactory.createLoweredBevelBorder());
+        		final JButton btnSend_mesage = new JButton("Send Message");
+        		final JButton btnClear_message = new JButton("Clear Messages");
+
+        		btnSend_mesage.setEnabled(true);
+        		btnSend_mesage.setBounds(15, 20, 110, 20);
+        		MessagePanel.add(btnSend_mesage);
+
+        		btnClear_message.setEnabled(true);
+        		btnClear_message.setBounds(15, 50, 110, 20);
+        		MessagePanel.add(btnClear_message);
+
+        		txtMessage = new JTextArea();
+        		txtMessage.setBounds(140, 10, 500, 20);
+        		MessagePanel.add(txtMessage);
+
+        		messagesList = new JTextField();
+        		messagesList.setBounds(140, 40, 500, 50);//lower
+        		messagesList.setEnabled(true);
+        		MessagePanel.add(messagesList);
+        		
+
+        		scrollMessages = new JScrollPane();
+        		scrollMessages.setBounds(311, 120, 398, 563);
+        		MessagePanel.add(scrollMessages);
+        		//
+//        		list = new JList();
+//        		scrollMessages.setViewportView(list);
+//        		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//        		list.setEnabled(true);
+
                 //---------------------------------------------------------------------------------------------                
 
                 JLabel lblMainEntree = new JLabel("Main Entree");
@@ -382,7 +434,16 @@ public class menu extends JFrame
                 //----------------------END order buttons-------------------------
                 
         }
-                public static ArrayList<Order> getOrders(){
+//                public String getMessagesList() {
+//			return messagesList.getText();
+//		}
+//		public void setMessagesList(String messagesList) {
+//			this.messagesList.setText(messagesList);
+//		}
+//		
+		
+		
+				public static ArrayList<Order> getOrders(){
                 
                 return orders;
         }
@@ -460,4 +521,18 @@ public class menu extends JFrame
     			c.setEnabled(is);
     		} 
     	}
+//    	public void setKitchenMassages(String m)
+//    	{
+//    		messagesList.setText(m);
+//    	}
+//    	public String getMessages()
+//    	{
+//    		return message;
+//    	}
+//		public String getFromKitchen() {
+//			return fromKitchen;
+//		}
+//		public void setFromKitchen(String fromKitchen) {
+//			this.fromKitchen = fromKitchen;
+//		}
 }
