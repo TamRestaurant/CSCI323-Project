@@ -52,9 +52,12 @@ import javax.swing.JSeparator;
 
 
 
+
 import java.awt.GridLayout;
 import java.awt.event.MouseListener;
+
 import javax.swing.JScrollBar;
+import javax.swing.JTextField;
 public class menu extends JFrame
 {
         private JTabbedPane menu;
@@ -78,6 +81,7 @@ public class menu extends JFrame
 		//private MouseListener mouseListener;
         private long time;
         private int table;
+        private JTextField serverIDTextBox;
         public menu(ArrayList<Item> mItems)
         {
                 menu = new JTabbedPane(JTabbedPane.TOP);
@@ -108,8 +112,8 @@ public class menu extends JFrame
                 setOrderPanel.setLayout(null);
                 
                 
-                currentOrder.setBounds(20, 80, 500, 20);
-                currentTable.setBounds(20, 65, 500, 20);
+                currentOrder.setBounds(20, 130, 500, 20);
+                currentTable.setBounds(20, 115, 500, 20);
                 setOrderPanel.add(currentOrder);
                 setOrderPanel.add(currentTable);
                 //----------------------END Display Panel---------------------------
@@ -124,7 +128,7 @@ public class menu extends JFrame
 //                mainTab.addTab("Wait Station", null, waitTab, null);
                 
                 JPanel subWaitTab = new JPanel();
-                menu.addTab("Ticket Maker", subWaitTab);
+               // menu.addTab("Ticket Maker", subWaitTab);
                 subWaitTab.setLayout(null);
                 //---------------------------------------------------------------------------------------------                
                      /*
@@ -140,14 +144,15 @@ public class menu extends JFrame
                  * 
                  * 
                  */
-                orders = new ArrayList<Order>();
-
-                        for (int i = 0; i < 9; i++) {
-                                Order o = new Order();
-                                o.setOrderNumber(i * 325);
-                                o.setOrderTotal(i + 11);
-                                orders.add(o);
-                        }/*
+//                orders = new ArrayList<Order>();
+//
+//                        for (int i = 0; i < 9; i++) {
+//                                Order o = new Order();
+//                                o.setOrderNumber(i * 325);
+//                                o.setOrderTotal(i + 11);
+//                                orders.add(o);
+//                        }
+                        /*
                         *
                         *
                         *
@@ -280,13 +285,13 @@ public class menu extends JFrame
                                 
                         }
                 });
-                list.setBounds(15, 100, 170, 300);
+                list.setBounds(15, 150, 170, 300);
                 list.setEnabled(true);
                 setOrderPanel.add(list);
-                newOrder.setBounds(10, 15, 117, 29);
+                newOrder.setBounds(10, 65, 117, 29);
                 setOrderPanel.add(newOrder);
                 remove.setEnabled(true);
-                remove.setBounds(15, 400, 117, 29);
+                remove.setBounds(15, 450, 117, 29);
                 closeOrder.setEnabled(!openTicket);
                 setOrderPanel.add(remove);
                 closeOrder.addActionListener(new ActionListener() {
@@ -298,6 +303,14 @@ public class menu extends JFrame
                                 //brings ticket up in window
                         		//TODO: Replace this employeeNumber with the actual employee number of whoever is taking order
                         		int employeeID = 1;
+                        		try {
+									employeeID=Integer.parseInt(serverIDTextBox.getText());
+								} catch (NumberFormatException e1) {
+									// TODO Auto-generated catch block
+									JOptionPane.showMessageDialog(null,
+											"Enter numbers only into server ID field.");
+									return;
+								}
                                 openTicket=true;
                                 newOrder.setEnabled(openTicket);
                                 closeOrder.setEnabled(!openTicket);
@@ -309,8 +322,18 @@ public class menu extends JFrame
                                 
                         }
                 });
-                closeOrder.setBounds(10, 40, 117, 29);
+                closeOrder.setBounds(10, 90, 117, 29);
                 setOrderPanel.add(closeOrder);
+                
+                serverIDTextBox = new JTextField();
+                serverIDTextBox.setText("0");
+                serverIDTextBox.setBounds(10, 34, 86, 20);
+                setOrderPanel.add(serverIDTextBox);
+                serverIDTextBox.setColumns(10);
+                
+                JLabel serverIDlbl = new JLabel("Server ID");
+                serverIDlbl.setBounds(10, 11, 67, 14);
+                setOrderPanel.add(serverIDlbl);
 
                 /**
                  * For soeme reason the list is re-ordered after this happens??
