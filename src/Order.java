@@ -16,19 +16,19 @@ public class Order {
 	private Date orderDate;
 	private double tipPaid = 0.0;
 	private double amountDiscount = 0.0;
+	private boolean served=false;
 
 	public Order() {
 	}
 
-	public Order(ArrayList<Item> items, int table, int num) {
-		setOrderNumber(num);
+	public Order(ArrayList<Item> items, int table, int employeeID) {
+		setEmpID(employeeID);
 		setTableNumber(table);
 		this.items = items;
 		orderTotal = total(items); // calculate order total
 		// Consider turning this into a a date and time instead of integer in
 		// milliseconds
-		orderDate = new Date(); // Gets current time in date format instead of
-								// integer format
+		orderDate = new Date();						// integer format
 		startTime = System.currentTimeMillis(); // get the system time at start
 												// of order
 	}
@@ -49,7 +49,7 @@ public class Order {
 		setTableNumber(table);
 		this.items = items;
 		this.setEmpID(empId);
-		this.orderDate = orderDate;
+		this.setOrderDate(orderDate);
 		orderTotal = total(items);
 
 	}
@@ -211,6 +211,22 @@ public class Order {
 
 	public void setAmountDiscount(double amountDiscount) {
 		this.amountDiscount = amountDiscount;
+	}
+
+	public Date getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
+
+	public boolean isServed() {
+		return served;
+	}
+
+	public void setServed(boolean served) {
+		this.served = served;
 	}
 
 }

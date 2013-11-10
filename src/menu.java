@@ -290,12 +290,18 @@ public class menu extends JFrame
                 closeOrder.setEnabled(!openTicket);
                 setOrderPanel.add(remove);
                 closeOrder.addActionListener(new ActionListener() {
+                	
+                	/**
+                	 * TODO: We need to know what employee is processing the order
+                	 */
                         public void actionPerformed(ActionEvent e) {
                                 //brings ticket up in window
+                        		//TODO: Replace this employeeNumber with the actual employee number of whoever is taking order
+                        		int employeeID = 1;
                                 openTicket=true;
                                 newOrder.setEnabled(openTicket);
                                 closeOrder.setEnabled(!openTicket);
-                                order = new Order(items, table, 1);
+                                order = new Order(items, table, employeeID);
                                 orders.add(order);
                                 orderNumber++;
                                 

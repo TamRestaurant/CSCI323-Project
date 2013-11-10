@@ -360,9 +360,84 @@ public class dbAction {
 		
 	} // close getRoles(String)
 	
-	
+	/**
+	 * This method creates an order in the database.
+	 * The order is created, and the new key is returned. Then orderMenuItems are added to the join table to link items to the order
+	 * @param order
+	 * @return
+	 */
+	public boolean addOrder(Order order){
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		int orderKey;
+		
+		String sqlOrder = "INSERT into csci_323_exp20140101.Order(OrderDate,Employee_idEmployee,seatingTable) VALUES (?,?,?)";
+		try{
+			
+			PreparedStatement addOrder = conn.prepareStatement(sqlOrder, Statement.RETURN_GENERATED_KEYS);
+			//Fill in order details to prepared statement
+			addOrder.setString(1, dateFormat.format(order.getOrderDate()).toString());
+			addOrder.setInt(2, order.getEmpID());
+			addOrder.setInt(3, order.getTableNumber());
+			addOrder.executeUpdate();
+			
+			//Get generated key from oder
+			ResultSet rs = addOrder.getGeneratedKeys();
+			rs.next();
+			orderKey = rs.getInt(1);
+			
+			//Add items to order through private method
+			addItemsToOrder(order.getItems(), orderKey);
+			
+			
+			
+		} catch(SQLException ex){
+			//TODO print to console the exception if occurred
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+			
+		}
+		
+		
+		
+		return true;
+	}
 	
 
+	/**
+	 * This method adds an array list of items to an order
+	 * @param item
+	 * @param orderKey
+	 */
+	private void addItemsToOrder(ArrayList<Item> item, int orderKey){
+		
+		int itemQty = 1; // TODO, this can be incorporated later if we choose, but for now qty will always be 1
+		
+		try{
+	
+			//Loop through item array and all all items to the db
+			for (int i = 0; i < item.size(); i++){
+				String sqlItem = "INSERT into csci_323_exp20140101.OrderMenuItem(OrderMenuItemQTY,ItemComments,Order_idOrder, MenuItem_idMenuItem) VALUES (?,?,?,?)";
+				PreparedStatement addItem = conn.prepareStatement(sqlItem);
+				addItem.setInt(1, itemQty);
+				addItem.setString(2, item.get(i).getItemComment());
+				addItem.setInt(3, orderKey);
+				addItem.setInt(4, item.get(i).getitemID());
+				
+				addItem.executeUpdate();
+				
+			}
+
+		
+		} catch(SQLException ex){
+			//TODO print to console the exception if occurred
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+			
+		}
+	}
 	
 	/***
 	 * This method adds an employee to the employee table (but also adds address to address table first, as this is required for employee)
@@ -588,7 +663,13 @@ public class dbAction {
 		
 	}
 	
-	
+	/**
+	 * This method closes the order
+	 * @param orderNum
+	 * @param discDollarAmount
+	 * @param tipAmount
+	 * @return
+	 */
 	public boolean closeOrder(String orderNum, String discDollarAmount, String tipAmount){
 		boolean success = true;
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
