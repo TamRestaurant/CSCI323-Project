@@ -87,7 +87,8 @@ public class menu extends JFrame
 		//private MouseListener mouseListener;
         private long time;
         private int table;
-      
+        private JList openList;
+        private Vector<Order> openFood;
         private JTextField serverIDTextBox;
         private dbAction db;
         private static JPanel setOrderPanel,openOrders;
@@ -99,6 +100,7 @@ public class menu extends JFrame
     	//private String fromKitchen;
     	private JButton btnSend_mesage;
     	private JButton btnClear_message;
+    	private JButton edit;
     	
         
     	 public menu(String messages)
@@ -128,17 +130,42 @@ public class menu extends JFrame
                 
                 JTabbedPane orderButtons = new JTabbedPane(JTabbedPane.TOP);
                 openOrders = new JPanel();
-                openOrders.setBounds(830, 6, 200, 810);
+                openOrders.setBounds(810, 6, 255, 810);
                 openOrders.setLayout(null);
-                orderButtons.setBounds(830, 6, 200, 810);
+                orderButtons.setBounds(810, 6, 255, 810);
                  setOrderPanel = new JPanel();
-                setOrderPanel.setBounds(830, 6, 200, 810);
+                setOrderPanel.setBounds(810, 6, 255, 810);
                 setOrderPanel.setBorder(BorderFactory.createLoweredBevelBorder());
                 orderButtons.addTab("New Order", null, setOrderPanel, null);
                 orderButtons.addTab("Open Orders", null, openOrders, null);
                 menuPanel.add(orderButtons);
                 setOrderPanel.setLayout(null);
-                
+                //---------------Open Orders Tab--------------------------
+                edit = new JButton("Edit");
+                openFood = new Vector<Order>();
+                ArrayList<Order> oo = db.getOpenOrders();
+				for (Order o : oo) {
+					openFood.add(o);
+				}
+                openList = new JList(openFood);
+                openList.setBounds(5, 20, 230, 300);
+                openList.setEnabled(true);
+                openOrders.add(openList);
+                edit.setBounds(50, 330, 117, 29);
+                openOrders.add(edit);
+                edit.addActionListener(new ActionListener()
+                {
+                	 public void actionPerformed(ActionEvent e) 
+                	 {
+                		 int[] sel = openList.getSelectedIndices();
+                		 if(sel.length >1)
+                		 {
+                			 JOptionPane.showMessageDialog(openOrders, "Please select one order."); 
+                		 }
+                        
+                	 }
+                });
+                //-------------------End Open Orders Tab--------------------
                 
                 currentOrder.setBounds(20, 130, 500, 20);
                 currentTable.setBounds(20, 115, 500, 20);
@@ -188,12 +215,7 @@ public class menu extends JFrame
                         *
                         *
                         */
-                menuButtonsImage = new ImageIcon[64];
-                for (int i = 0; i < menuButtonsImage.length; i++) 
-                {
-                        menuButtonsImage[i] = new ImageIcon("./src/Unknown.jpeg");
-
-                }
+               
 //---------------------------------------------------------------------------------------------                
                 subWaitTab.setBounds(6, 6, 810, 810);
                 menuPanel.add(subWaitTab);
@@ -358,7 +380,7 @@ public class menu extends JFrame
                                 
                         }
                 });
-                list.setBounds(15, 150, 170, 300);
+                list.setBounds(5, 150, 230, 300);
                 list.setEnabled(true);
                 setOrderPanel.add(list);
                 newOrder.setBounds(10, 65, 117, 29);
@@ -397,7 +419,7 @@ public class menu extends JFrame
 										System.out.println("added" + order);
 									}
 									//refresh database connection
-									 //  db=new dbAction();
+									//db=new dbAction();
 									ArrayList<Order> oo = db.getOpenOrders();
 									for (Order o : oo) {
 										System.out.println(o);
