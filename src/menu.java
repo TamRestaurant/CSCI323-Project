@@ -62,6 +62,8 @@ import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+
+
 public class menu extends JFrame
 {
         private static JTabbedPane menu;
@@ -91,11 +93,12 @@ public class menu extends JFrame
         private static JPanel setOrderPanel,openOrders;
         
         private String message;
-    	private JTextField  messagesList;
+    	private static JTextArea  messagesList;
     	private JScrollPane scrollMessages;
     	private JTextArea txtMessage;
-    	private kitchen myKitchen;
-    	private String fromKitchen;
+    	//private String fromKitchen;
+    	private JButton btnSend_mesage;
+    	private JButton btnClear_message;
     	
         
     	 public menu(String messages)
@@ -224,8 +227,12 @@ public class menu extends JFrame
         		subWaitTab.add(MessagePanel);
         		MessagePanel.setLayout(null);
         		MessagePanel.setBorder(BorderFactory.createLoweredBevelBorder());
-        		final JButton btnSend_mesage = new JButton("Send Message");
-        		final JButton btnClear_message = new JButton("Clear Messages");
+        		 //---------------------------------------------------------------------------------------------                
+                //---------------------------------------------------------------------------------------------  
+        		 btnSend_mesage = new JButton("Send Message");
+        		 btnClear_message = new JButton("Clear Messages");
+        		 //---------------------------------------------------------------------------------------------                
+                 //---------------------------------------------------------------------------------------------  
 
         		btnSend_mesage.setEnabled(true);
         		btnSend_mesage.setBounds(15, 20, 110, 20);
@@ -239,21 +246,24 @@ public class menu extends JFrame
         		txtMessage.setBounds(140, 10, 500, 20);
         		MessagePanel.add(txtMessage);
 
-        		messagesList = new JTextField();
-        		messagesList.setBounds(140, 40, 500, 50);//lower
-        		messagesList.setEnabled(true);
-        		MessagePanel.add(messagesList);
-        		
+        		 //---------------------------------------------------------------------------------------------                
+                //---------------------------------------------------------------------------------------------                
+
+        		btnSend_mesage.addActionListener(new buttonListener());
+        		btnClear_message.addActionListener(new buttonListener());
 
         		scrollMessages = new JScrollPane();
-        		scrollMessages.setBounds(311, 120, 398, 563);
+        		scrollMessages.setBounds(140, 40, 500, 50);//lower
         		MessagePanel.add(scrollMessages);
-        		//
-//        		list = new JList();
-//        		scrollMessages.setViewportView(list);
-//        		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//        		list.setEnabled(true);
+        		messagesList = new JTextArea();
+        		MessagePanel.add(messagesList);
+        		scrollMessages.setViewportView(messagesList);
+        		messagesList.setEnabled(true);
+                //---------------------------------------------------------------------------------------------                
+                //---------------------------------------------------------------------------------------------                
 
+        		
+        		
                 //---------------------------------------------------------------------------------------------                
 
                 JLabel lblMainEntree = new JLabel("Main Entree");
@@ -310,10 +320,10 @@ public class menu extends JFrame
                                 //---------------------------------------------------------------------------------------------                
         
                 
-                
+                             
                 //-----------------------------Order buttons-------------------------------
                 
-                
+                             
                 final JButton closeOrder = new JButton("End Order");
                 final JButton newOrder = new JButton("New Order");
                 final JButton remove = new JButton("Remove");
@@ -434,14 +444,31 @@ public class menu extends JFrame
                 //----------------------END order buttons-------------------------
                 
         }
-//                public String getMessagesList() {
-//			return messagesList.getText();
-//		}
-//		public void setMessagesList(String messagesList) {
-//			this.messagesList.setText(messagesList);
-//		}
-//		
-		
+        
+//---------------------------------------------------------------------------------------------------------------
+      //---------------------------------------------------------------------------------------------------------------
+
+        private class buttonListener implements ActionListener {
+    		public void actionPerformed(ActionEvent event) {
+    			
+    			if (event.getSource() == btnSend_mesage) {
+    				String temp="";
+    				temp=messagesList.getText()+"\n";
+    				temp = temp +txtMessage.getText();
+    				messagesList.setText(temp);
+    				setKitchenMassages(temp);
+    				sendToKitchen();
+    			}
+    			else if (event.getSource() == btnClear_message)
+    			{
+    				messagesList.setText("");
+    				txtMessage.setText("");
+    			}
+    		}
+    		}
+      //---------------------------------------------------------------------------------------------------------------
+      //---------------------------------------------------------------------------------------------------------------
+
 		
 				public static ArrayList<Order> getOrders(){
                 
@@ -521,18 +548,22 @@ public class menu extends JFrame
     			c.setEnabled(is);
     		} 
     	}
-//    	public void setKitchenMassages(String m)
-//    	{
-//    		messagesList.setText(m);
-//    	}
-//    	public String getMessages()
-//    	{
-//    		return message;
-//    	}
-//		public String getFromKitchen() {
-//			return fromKitchen;
-//		}
-//		public void setFromKitchen(String fromKitchen) {
-//			this.fromKitchen = fromKitchen;
-//		}
+    	
+    	//---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+
+    	public static void setKitchenMassages(String m)
+    	{
+    		messagesList.setText(m);
+    	}
+    	public void sendToKitchen()
+    	{
+    		String m ="";
+    		m=messagesList.getText();
+    		kitchen.setMenuMassages(m+"\n");
+    	}
+    	//---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+
+
 }
