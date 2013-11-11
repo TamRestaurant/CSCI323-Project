@@ -105,6 +105,10 @@ public class menu extends JFrame
          {
     		 String fromKitchen = messages;
          }
+    	 
+    	 /**
+ 		 * @wbp.parser.constructor
+ 		 */
         public menu(ArrayList<Item> mItems,dbAction dba)
         {
         		db=dba;
@@ -256,7 +260,8 @@ public class menu extends JFrame
         		scrollMessages.setBounds(140, 40, 500, 50);//lower
         		MessagePanel.add(scrollMessages);
         		messagesList = new JTextArea();
-        		MessagePanel.add(messagesList);
+        		//MessagePanel.add(messagesList);
+        		MessagePanel.add(scrollMessages);
         		scrollMessages.setViewportView(messagesList);
         		messagesList.setEnabled(true);
                 //---------------------------------------------------------------------------------------------                
