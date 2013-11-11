@@ -118,7 +118,7 @@ public class kitchen extends JFrame {
 
 		activeOrdersPanel.setBounds(10, 10, 900, 900);
 		messagePanel.setBounds(10, 10, 400, 800);
-		subActiveOrderPanel.setBounds(550, 10, 400, 800);
+		subActiveOrderPanel.setBounds(550, 10, 423, 800);
 		// ----------------------- instantiations ----------------------------
 		lblSelectOrd = new JLabel("Select Order");
 		lblSelectOrd.setHorizontalAlignment(SwingConstants.CENTER);
@@ -162,7 +162,8 @@ public class kitchen extends JFrame {
 		scrollPane_2.setBounds(20, 500, 400, 150);
 		messagePanel.add(scrollPane_2);
 		massageCenter = new JTextArea();
-		messagePanel.add(massageCenter);
+		//messagePanel.add(massageCenter);
+		messagePanel.add(scrollPane_2);
 		scrollPane_2.setViewportView(massageCenter);
 		massageCenter.setEnabled(true);
 
