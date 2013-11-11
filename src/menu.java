@@ -413,7 +413,7 @@ public class menu extends JFrame
 									openTicket = true;
 									newOrder.setEnabled(openTicket);
 									closeOrder.setEnabled(!openTicket);
-									order = new Order(items, table, employeeID);
+									order = new Order(items, table, employeeID, orderNumber);
 									 // db.addOrder(order);
 									if (db.addOrder(order)) {
 										System.out.println("added" + order);
