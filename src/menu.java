@@ -71,7 +71,7 @@ public class menu extends JFrame
         private ImageIcon[] menuButtonsImage;
         private static JPanel menuPanel;
         private JPanel subWaitTab,sidesButtonPanel,entreeButtonPanel,drinkButtonPanel,dessertButtonPanel;
-        private JButton[] menuButtons;
+        private static JButton[] menuButtons;
         private JSeparator separator;
         private boolean openTicket = true;
         private Order order;
@@ -547,6 +547,9 @@ public class menu extends JFrame
     		for(Component c:comps) {
     			c.setEnabled(is);
     		} 
+    		for(JButton b:menuButtons) {
+    			b.setEnabled(is);
+    		}
     	}
     	
     	//---------------------------------------------------------------------------------------------------------------
