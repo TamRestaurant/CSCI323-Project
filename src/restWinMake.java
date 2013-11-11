@@ -36,9 +36,6 @@ import javax.swing.JSeparator;
 
 //import RPSGui.buttonListener;
 
-
-
-
 import java.awt.GridLayout;
 
 import javax.swing.JScrollPane;
@@ -46,11 +43,13 @@ import javax.swing.JScrollPane;
 public class restWinMake extends JFrame {
 	private JPanel contentPane;
 	private JPasswordField pwdYourPin;
-	
-	//This connects to DB and can be passed into any class that needs to connect to DB 
-	//(best to config constructor initialization, refer to admin tab for example)
+
+	// This connects to DB and can be passed into any class that needs to
+	// connect to DB
+	// (best to config constructor initialization, refer to admin tab for
+	// example)
 	private dbAction DBAction = new dbAction();
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -71,16 +70,14 @@ public class restWinMake extends JFrame {
 	 * Create the frame.
 	 */
 
-
-
-	// ------------------------------- Declarations ---------------------------------
-
+	// ------------------------------- Declarations
+	// ---------------------------------
 
 	private char[] pWord;
-//	private String Fooditems[] = { "", "Burger", "Fry", "hotDog" };
-//	private String Drinkitems[] = { "", "Water", "Coffee", "Pepsi" };
-//	private String Desertitems[] = { "", "Cake", "Pie", "IceCream" };
-//	private String Sides[] = { "", "baccon", "CheeseFries", "Fries" };
+	// private String Fooditems[] = { "", "Burger", "Fry", "hotDog" };
+	// private String Drinkitems[] = { "", "Water", "Coffee", "Pepsi" };
+	// private String Desertitems[] = { "", "Cake", "Pie", "IceCream" };
+	// private String Sides[] = { "", "baccon", "CheeseFries", "Fries" };
 	private String Tickets[] = { "", "Table 1", "Table 2", "Table 3" };
 	private ArrayList<Object> ticketObject = new ArrayList<Object>();
 	private String current_orders = "";
@@ -93,93 +90,89 @@ public class restWinMake extends JFrame {
 			btnPrintTicket, btnEnter;
 
 	private JComboBox ticketCombo;
-    JPanel panel_1, panel_2, panel_3panel_4, panel_5, Passwordpanel;
-    
+	JPanel panel_1, panel_2, panel_3panel_4, panel_5, Passwordpanel;
 
-
-	// -------------------------------- Main ------------------------------------
+	// -------------------------------- Main
+	// ------------------------------------
 
 	public restWinMake() {// Begin Main
-        //printorder for test purpose
-ArrayList<Order> oo=DBAction.getOpenOrders();
-for(Order o:oo)
-        System.out.println(o);
+		// printorder for test purpose
+		ArrayList<Order> oo = DBAction.getOpenOrders();
+		for (Order o : oo)
+			System.out.println(o);
 
-//ResultSet ii=DBAction.getMenuItems();
-////for(Item o:ii)
-//        System.out.println(ii);
-        //------------- Change order of tabs and Panels at own risk --------------------------------
+		// ResultSet ii=DBAction.getMenuItems();
+		// //for(Item o:ii)
+		// System.out.println(ii);
+		// ------------- Change order of tabs and Panels at own risk
+		// --------------------------------
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        setBounds(0, 0, 1300, 767);
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
-        contentPane.setLayout(null);
-        
-        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-        tabbedPane.setBounds(25, 25, 1100, 950);
-        contentPane.add(tabbedPane);
-        //-----------------------ADD menu tab-----------------------------------
-        menu m = new menu(getMenuItems(),DBAction);
-        tabbedPane.addTab("menu", null, m.m(), null);
-        //-----------------------ADD wait station tab-----------------------------------
-//        waitStation w = new waitStation();
-//        tabbedPane.addTab("Wait Station", null, w.w(), null);
-        //-----------------------ADD register tab-----------------------------------
-        register r = new register(DBAction);
-        tabbedPane.addTab("Register", null, r.r(), null);
-        //-----------------------ADD kitchen tab-----------------------------------
-        kitchen k = new kitchen(DBAction);
-        tabbedPane.addTab("Kitchen", null, k.k(), null);
-        
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //locksreen tab
-        
-        lockscreen l = new lockscreen();
-        tabbedPane.addTab("Lockscreen", null, l.lock(), null);
-        
-//----------------------ADD employee tab (for managing of menu/past orders/employees)----------------------                
-        admin a = new admin(DBAction);
-        tabbedPane.addTab("Administration", a.getAdminPanel());
-        //TODO: Create dbConnector in one place and allow other classes to use it to avoid multiple connections
-        
-        
-        //Add employee clock in tab
-        clockInPanel c = new clockInPanel(DBAction);
-        tabbedPane.addTab("Employee Clock-in", c);
-        
-		
+		setBounds(0, 0, 1300, 767);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(25, 25, 1100, 950);
+		contentPane.add(tabbedPane);
+		// -----------------------ADD menu
+		// tab-----------------------------------
+		menu m = new menu(getMenuItems(), DBAction);
+		tabbedPane.addTab("menu", null, m.m(), null);
+		// -----------------------ADD wait station
+		// tab-----------------------------------
+		// waitStation w = new waitStation();
+		// tabbedPane.addTab("Wait Station", null, w.w(), null);
+		// -----------------------ADD register
+		// tab-----------------------------------
+		register r = new register(DBAction);
+		tabbedPane.addTab("Register", null, r.r(), null);
+		// -----------------------ADD kitchen
+		// tab-----------------------------------
+		kitchen k = new kitchen(DBAction);
+		tabbedPane.addTab("Kitchen", null, k.k(), null);
+
+		// locksreen tab
+
+		lockscreen l = new lockscreen();
+		tabbedPane.addTab("Lockscreen", null, l.lock(), null);
+
+		// ----------------------ADD employee tab (for managing of menu/past
+		// orders/employees)----------------------
+		admin a = new admin(DBAction);
+		tabbedPane.addTab("Administration", a.getAdminPanel());
+		// TODO: Create dbConnector in one place and allow other classes to use
+		// it to avoid multiple connections
+
+		// Add employee clock in tab
+		clockInPanel c = new clockInPanel(DBAction);
+		tabbedPane.addTab("Employee Clock-in", c);
+
 		/*
 		 * 
 		 * 
 		 * 
 		 * 
 		 * Everything below here is not implemented but I didnt want to erase it
-		 * 
-		 * 
-		 * 
-		 * 
 		 */
-		
+
 		pwdYourPin = new JPasswordField();
 		pwdYourPin.setText("xxxxxxxx");
 		pwdYourPin.setBounds(145, 62, 117, 20);
-		//panel.add(pwdYourPin);
+		// panel.add(pwdYourPin);
 
-		
-		
-
-		 JLabel lblTicket = new JLabel("Orders appear here");
+		JLabel lblTicket = new JLabel("Orders appear here");
 		JLabel lblOrders = new JLabel("Orders");
 
-
-		//------------------------------------------- Labels //-------------------------------------------
-//		 JLabel lblTicket = new JLabel("Orders appear here");
-//		JLabel lblOrders = new JLabel("Orders");
-		//------------------------------------------- Buttons //-------------------------------------------
-
+		// ------------------------------------------- Labels
+		// //-------------------------------------------
+		// JLabel lblTicket = new JLabel("Orders appear here");
+		// JLabel lblOrders = new JLabel("Orders");
+		// ------------------------------------------- Buttons
+		// //-------------------------------------------
 
 		JButton btnGetIt = new JButton("Add to current Ticket");
 		JButton btnNewTicket = new JButton("New Ticket");
@@ -190,8 +183,7 @@ for(Order o:oo)
 		JButton btnPrintTicket = new JButton("Print Ticket");
 		JButton btnEnter = new JButton("Enter");
 
-		//------------------------------------------- ActionListeners
-
+		// ------------------------------------------- ActionListeners
 
 		btnGetIt.addActionListener(new buttonListener());
 		btnNewTicket.addActionListener(new buttonListener());
@@ -202,77 +194,69 @@ for(Order o:oo)
 		btnPrintTicket.addActionListener(new buttonListener());
 		btnEnter.addActionListener(new buttonListener());
 
-		
-		
 	}// End of Main
 
+	// ------------------------------------------- End of
+	// main//-------------------------------------------
 
-	//------------------------------------------- End of main//-------------------------------------------
-
-	//------------------------------------------- methods //-------------------------------------------
-	
-
+	// ------------------------------------------- methods
+	// //-------------------------------------------
 
 	public void refreshKitchen() {
 		System.out.println("weeewefsd");
 		lblOrders.setText(current_orders);
 	}
-	
-	private ArrayList<Item> getMenuItems(){
-		
+
+	private ArrayList<Item> getMenuItems() {
+
 		ResultSet rs = DBAction.getMenuItems();
 		ArrayList<Item> myMenuItems = new ArrayList();
 		ArrayList<Item> beverages = new ArrayList();
 		ArrayList<Item> sides = new ArrayList();
 		ArrayList<Item> desserts = new ArrayList();
 		ArrayList<Item> entrees = new ArrayList();
-		
-		//Populate arrayList of menuItems from ResultSet
-		try{
 
-		while (rs.next()){
-			//Have option of using rs.getString(1) for column numbers or can use names. Opted for names for readability
-			String name = rs.getString("ItemName");
-			String descr = rs.getString("ItemDescription");
-			String category = rs.getString("CategoryName");
-			int itemID = rs.getInt("idMenuItem");
-			Double price = rs.getDouble("ItemPrice");
-			
-			//depending on category, put into array that will hold that specific category
-			if (category.equals("Beverage")){
-				beverages.add(new  Item(name, descr, category, itemID, price));
-			}
-			else if (category.equals("Entree")){
-				entrees.add(new  Item(name, descr, category, itemID, price));
-			}
-			else if (category.equals("Side")){
-				sides.add(new  Item(name, descr, category, itemID, price));	
-			}
-			else if (category.equals("Dessert")){
-				desserts.add(new  Item(name, descr, category, itemID, price));
-			}
+		// Populate arrayList of menuItems from ResultSet
+		try {
 
+			while (rs.next()) {
+				// Have option of using rs.getString(1) for column numbers or
+				// can use names. Opted for names for readability
+				String name = rs.getString("ItemName");
+				String descr = rs.getString("ItemDescription");
+				String category = rs.getString("CategoryName");
+				int itemID = rs.getInt("idMenuItem");
+				Double price = rs.getDouble("ItemPrice");
+
+				// depending on category, put into array that will hold that
+				// specific category
+				if (category.equals("Beverage")) {
+					beverages
+							.add(new Item(name, descr, category, itemID, price));
+				} else if (category.equals("Entree")) {
+					entrees.add(new Item(name, descr, category, itemID, price));
+				} else if (category.equals("Side")) {
+					sides.add(new Item(name, descr, category, itemID, price));
+				} else if (category.equals("Dessert")) {
+					desserts.add(new Item(name, descr, category, itemID, price));
+				}
+
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
 		}
-		}
-		catch (SQLException e ) {
-	        System.out.println(e);
-		}
-		
+
 		myMenuItems.addAll(entrees);
 		myMenuItems.addAll(beverages);
 		myMenuItems.addAll(desserts);
 		myMenuItems.addAll(sides);
-		
-		
+
 		return myMenuItems;
-		
-		
-	}//close getMenuItems()
 
+	}// close getMenuItems()
 
-	//------------------------------------------- start button listener //-------------------------------------------
-	
-
+	// ------------------------------------------- start button listener
+	// //-------------------------------------------
 
 	private class buttonListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
@@ -287,7 +271,7 @@ for(Order o:oo)
 				}
 				System.out.println("btnGetIt worked");
 			} else if (event.getSource() == btnEnter) {
-				
+
 				pWord = (pwdYourPin.getPassword());
 				String SpWord = "";
 				for (int i = 0; i < pWord.length; i++) {
@@ -317,7 +301,6 @@ for(Order o:oo)
 				System.out.println("btnPlaceOrder");// btnGetIt
 			}
 
-			
 		}
 
 	}// end listener

@@ -40,6 +40,7 @@ import javax.swing.JSeparator;
 
 //import RPSGui.buttonListener;
 
+
 import java.awt.GridLayout;
 
 import javax.swing.ListSelectionModel;
@@ -55,12 +56,11 @@ import java.awt.Color;
 
 public class kitchen extends JFrame {
 	private static JTabbedPane kitchen;// here
-	private static JPanel activeOrdersPanel, messagePanel, subActiveOrderPanel;
+	private static JPanel activeOrdersPanel;
 	private JLabel lblSelectOrd, lblComments;
 	private JButton btnContact;
 	private JCheckBox orderUp;
 	private JTextField txtComment;
-	private JTextArea massageCenter;
 	private JList orderListBox;
 	private dbAction DBAct;
 	private ArrayList<Order> openOrdersArray;
@@ -70,10 +70,8 @@ public class kitchen extends JFrame {
 	private Timer refresher;
 	private JLabel orderDetail;
 	private JTextArea orderDetailTextArea;
-	private JScrollPane scrollPane, orderScroll;
-	private JScrollPane scrollPane_1, scrollPane_2;
-	private int orderNum = 0;
-	public menu myMenu; 
+	private JScrollPane scrollPane,orderScroll;
+	private JScrollPane scrollPane_1;
 
 	public kitchen(dbAction DBAction) {
 
@@ -107,18 +105,11 @@ public class kitchen extends JFrame {
 		kitchen = new JTabbedPane(JTabbedPane.TOP);
 		kitchen.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		activeOrdersPanel = new JPanel();
-		messagePanel = new JPanel();
-		subActiveOrderPanel = new JPanel();
 
 		kitchen.addTab("Active Orders", null, activeOrdersPanel, null);
 		kitchen.setEnabledAt(0, true);
 		activeOrdersPanel.setLayout(null);
-		messagePanel.setLayout(null);
-		subActiveOrderPanel.setLayout(null);
-
 		activeOrdersPanel.setBounds(10, 10, 900, 900);
-		messagePanel.setBounds(10, 10, 400, 800);
-		subActiveOrderPanel.setBounds(550, 10, 400, 800);
 		// ----------------------- instantiations ----------------------------
 		lblSelectOrd = new JLabel("Select Order");
 		lblSelectOrd.setHorizontalAlignment(SwingConstants.CENTER);
@@ -131,54 +122,33 @@ public class kitchen extends JFrame {
 
 		// ----------------------- settings ----------------------------
 		lblSelectOrd.setBounds(313, 11, 298, 31);
-		lblComments.setBounds(72, 62, 250, 14);
-		btnContact.setBounds(84, 340, 170, 30);
+		lblComments.setBounds(72, 62, 193, 14);
+		btnContact.setBounds(84, 340, 170, 290);
 		orderUp.setBounds(84, 305, 170, 31);
-		txtComment.setBounds(20, 87, 300, 150);
+		txtComment.setBounds(84, 87, 170, 211);
 
 		// ---------------------- adds to panel -----------------------------
-		activeOrdersPanel.add(messagePanel);
-		activeOrdersPanel.add(subActiveOrderPanel);
 
-		subActiveOrderPanel.add(lblSelectOrd);
-		messagePanel.add(txtComment);
-		messagePanel.add(lblComments);
-		messagePanel.add(btnContact);
-		messagePanel.add(orderUp);
-
+		activeOrdersPanel.add(lblSelectOrd);
+		activeOrdersPanel.add(txtComment);
+		activeOrdersPanel.add(lblComments);
+		activeOrdersPanel.add(btnContact);
+		activeOrdersPanel.add(orderUp);
+		
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 400, 400, 248);
-		subActiveOrderPanel.add(scrollPane_1);
-
-		// ----------------------------------------------------------------
-
-		scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(20, 500, 400, 150);
-		messagePanel.add(scrollPane_2);
-		massageCenter = new JTextArea();
-		// massageCenter.setBounds(20, 100, 300, 150);
-		// massageCenter.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		messagePanel.add(massageCenter);
-		scrollPane_2.setViewportView(massageCenter);
-		massageCenter.setEnabled(true);
-
-		// ----------------------------------------------------------------
-
+		scrollPane_1.setBounds(262, 50, 400, 248);
+		activeOrdersPanel.add(scrollPane_1);
+		
 		orderListBox = new JList<Order>(openOrdersVector);
 		scrollPane_1.setViewportView(orderListBox);
-		scrollPane_1
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		orderListBox.setValueIsAdjusting(true);
-		orderListBox.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null,
-				null, null));
+		orderListBox.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		orderListBox.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				// /show order details for cooks
+				///show order details for cooks
 				int index = orderListBox.getSelectedIndex();
 				if (index >= 0) {
-					Order ord;
-					ord = openOrdersArray.get(index);
-					orderNum = ord.getOrderNumber();
 					orderDetailTextArea.setText(openOrdersVector.get(index)
 							.wholeOrderString());
 				}
@@ -191,18 +161,16 @@ public class kitchen extends JFrame {
 		orderDetail.setHorizontalAlignment(SwingConstants.CENTER);
 		orderDetail.setVerticalAlignment(SwingConstants.TOP);
 		orderDetail.setBounds(262, 315, 400, 14);
-		subActiveOrderPanel.add(orderDetail);
-
-		orderScroll = new JScrollPane();
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 20, 400, 290);
-		scrollPane
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		subActiveOrderPanel.add(scrollPane);
-
-		orderDetailTextArea = new JTextArea();
-		orderDetailTextArea.setBounds(10, 20, 400, 290);
-		scrollPane.setViewportView(orderDetailTextArea);
+		activeOrdersPanel.add(orderDetail);
+		 
+		orderScroll=new JScrollPane();
+		 scrollPane = new JScrollPane();
+		 scrollPane.setBounds(262, 340, 400, 290);
+		 scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		 activeOrdersPanel.add(scrollPane);
+		
+		 orderDetailTextArea = new JTextArea();
+		 scrollPane.setViewportView(orderDetailTextArea);
 
 		btnContact.addActionListener(new buttonListener());
 
@@ -221,101 +189,42 @@ public class kitchen extends JFrame {
 	}
 
 	public static JPanel getKitchenPanel() {
-		return subActiveOrderPanel;// subActiveOrderPanel
+		return activeOrdersPanel;
 	}
-
+	
 	public static void setEnabledPanel(boolean is) {
-
-		Component[] comps = subActiveOrderPanel.getComponents();// subActiveOrderPanel
-		for (Component c : comps) {
+		
+		Component[]comps= activeOrdersPanel.getComponents();
+		for(Component c:comps) {
 			c.setEnabled(is);
 		}
 	}
-
+	
 	public static JTabbedPane k()// here
 	{
 		return kitchen;
 	}
+	
+
 
 	// /////////invokes register frame
 	private class buttonListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-			
-			if (event.getSource() == orderListBox) {
-
-				int index = orderListBox.getSelectedIndex();
-				if (index >= 0) {
-
-					openOrdersArray.get(index).setServed(true);
-					// list.remove(index);
-					listToVector();
-					orderListBox.setListData(openOrdersVector);
-				}
-				// //need to update order in DB so that it is not retrieved in
-				// new
-				// list
-				//
-				//
-
-			} else if (event.getSource() == btnContact) {
-				if (orderUp.isSelected()) {
-					orderUp();
-					sendTowait();
-				} else {
-					setMessages();
-					sendTowait();
-				}
+			// set order to served and it will be removed from list
+			int index = orderListBox.getSelectedIndex();
+			if (index >= 0) {
+				openOrdersArray.get(index).setServed(true);
+				// list.remove(index);
+				listToVector();
+				orderListBox.setListData(openOrdersVector);
 			}
+			// //need to update order in DB so that it is not retrieved in new
+			// list
+			//
+			//
+			System.out.println("works");
 		}
-
 	}
-public void sendTowait()
-{
-	String m ="";
-	m=massageCenter.getText();
-//	myMenu= new menu(m);
-//	myMenu.setMessagesList(m);
-	//return txtComment.getText();
 	
 }
 
-	public String getMassageCenter() {
-	return massageCenter.getText();
-}
-
-public void setMassageCenter(String massageCenter) {
-	this.massageCenter.setText( massageCenter);
-}
-
-	public void orderUp() {
-
-		String m;
-		m = "" + orderNum;
-		m = "Kitchen:Order " + m + " Your order is ready for pick up! ";
-		txtComment.setText("");
-		populate(m);
-
-	}
-
-	public void setMessages() {
-
-		String m;
-		m = "" + orderNum;
-		m = "Kitchen:Order " + m + " " + txtComment.getText();
-		txtComment.setText("");
-		populate(m);
-
-	}
-
-	public void clearJlist() {
-		txtComment.setText("");
-	}
-
-	public void populate(String m) {
-		String temp = "";
-		temp = massageCenter.getText();
-		temp = temp + "\n" + m;
-		massageCenter.setText(temp);
-	}
-
-}
