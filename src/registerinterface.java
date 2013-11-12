@@ -149,7 +149,7 @@ public class registerinterface extends JFrame {
 			panel_1.add(mb[i - 1]);
 			mb[i - 1].addActionListener(new buttonListener());
 		}
-		orderComboBox = new JComboBox<Order>(openOrdersVector);
+		orderComboBox = new JComboBox(openOrdersVector);
 		orderComboBox.setFont(new Font("Calibri", Font.PLAIN, 12));
 		orderComboBox.setMaximumRowCount(100);
 		orderComboBox.setBounds(241, 67, 350, 20);
