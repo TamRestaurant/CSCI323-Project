@@ -21,7 +21,7 @@ public class Order {
 	public Order() {
 	}
 
-	public Order(ArrayList<Item> items, int table, int employeeID) {
+	public Order(ArrayList<Item> items, int table, int employeeID, int order) {
 		setEmpID(employeeID);
 		setTableNumber(table);
 		this.items = items;
@@ -31,6 +31,7 @@ public class Order {
 		orderDate = new Date();						// integer format
 		startTime = System.currentTimeMillis(); // get the system time at start
 												// of order
+		orderNumber = order;
 	}
 
 	/**

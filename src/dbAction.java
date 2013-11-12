@@ -148,6 +148,7 @@ public class dbAction {
 	 * @return
 	 */
 	public ResultSet getTimeRecords(){
+
 		
 		String sqlGetTimeRecords = "Select\n  Employee.idEmployee As `Employee ID`,\n  Employee.FirstName,\n  Employee.LastName,\n  EmployeeRole.RoleName,\n  "
 				+ "EmployeeTimeRecord.idEmployeeTimeRecord As `Entry ID`,\n  EmployeeTimeRecord.ClockInDateTime,\n  EmployeeTimeRecord.ClockOutDateTime\n"
@@ -172,7 +173,10 @@ public class dbAction {
 		
 		return rs;
 	}
-	
+	/**
+	 * This method clockes employee out (adds clock-out date to db)
+	 * @param recordId
+	 */
 	public void clockOutEmployee(int recordId){
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
@@ -635,7 +639,7 @@ public class dbAction {
 		try {
 		    stmt = conn.createStatement();
 		    rs = stmt.executeQuery("Select\n  MenuItem.ItemName,\n  MenuItem.ItemDescription,\n  menuItemCategory.CategoryName,\n  MenuItem.idMenuItem,\n  MenuItem.ItemPrice,\n  "
-		    		+ "`Order`.idOrder,\n  `Order`.Employee_idEmployee,\n  `Order`.OrderDate,\n  `Order`.OrderClose,\n    `Order`.seatingTable\n"
+		    		+ "`Order`.idOrder,\n  `Order`.Employee_idEmployee,\n  `Order`.OrderDate,\n  `Order`.OrderClose,\n    `Order`.seatingTable\n, OrderMenuItem.idOrderMenuItem\n, OrderMenuItem.ItemComments\n"
 		    		+ "From\n  Menu Inner Join\n  MenuItem On MenuItem.Menu_idMenu = Menu.idMenu "
 		    		+ "Inner Join\n  menuItemCategory On MenuItem.MenuCategory_idCategory =\n    menuItemCategory.idmenuItemCategory "
 		    		+ "Inner Join\n  OrderMenuItem On OrderMenuItem.MenuItem_idMenuItem = MenuItem.idMenuItem\n  "
@@ -660,6 +664,61 @@ public class dbAction {
 		return prepareOpenOrders(rs);
 		
 		
+		
+	}
+	
+	/**
+	 * We don't need the order number because every menuOrderItem is unique and only applies to an existing order
+	 * ?Do we need to also adjust the existing order with the cancelled item (the object?)
+	 * @param menuOrderItemID
+	 */
+	public void cancelOrderItem(int menuOrderItemID){
+		
+		String sqlQuery = "DELETE FROM `csci_323_exp20140101`.`OrderMenuItem` WHERE `idOrderMenuItem`= ?";
+		
+		try {
+			PreparedStatement addItem = conn.prepareStatement(sqlQuery);
+			//Set prepared statement variables
+			addItem.setInt(1, menuOrderItemID);
+
+			//Execute Query
+			addItem.executeUpdate();
+			
+		} catch (SQLException ex) {
+			// TODO Auto-generated catch block
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		
+	}
+	
+	/**
+	 * This method adds an item to an existing order
+	 * @param orderNumber
+	 * @param itemNumber
+	 * @param itemComments
+	 */
+	public void addItemExistingOrder(int orderNumber, int itemID, String itemComments){
+		
+		String sqlQuery = "INSERT INTO `csci_323_exp20140101`.`OrderMenuItem` (`OrderMenuItemQTY`, `ItemComments`, `Order_idOrder`, `MenuItem_idMenuItem`) VALUES ('1', ?, ?, ?)";
+		
+		try {
+			PreparedStatement addItem = conn.prepareStatement(sqlQuery);
+			//Set prepared statement variables
+			addItem.setString(1, itemComments);
+			addItem.setInt(2, orderNumber);
+			addItem.setInt(3, itemID);
+			//Execute Query
+			addItem.executeUpdate();
+			
+		} catch (SQLException ex) {
+			// TODO Auto-generated catch block
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		 
 		
 	}
 	
@@ -815,13 +874,13 @@ public class dbAction {
 	 */
 	private ArrayList<Order> prepareOpenOrders(ResultSet rs){
 		ArrayList<Order> openOrders = new ArrayList();
-		
+		int OrderMenuItemID;
 		String itemName, itemDescription,categoryName;
 		int idMenuItem, itemPrice, idOrder, empId, table;
 		Date orderOpenDate = null;
 		int currOrderCounter = 0, currTable;
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:MM:SS");
-		
+		String itemComment = "";
 		int tempTable = 0, tempOrderNum = 0, tempEmpId = 0;
 		Date tempOpenOrderDate = null;
 		
@@ -841,6 +900,10 @@ public class dbAction {
 				String tempDate = rs.getString("OrderDate");
 				tempDate = tempDate.substring(0, tempDate.length() - 2);
 				table = rs.getInt("seatingTable");
+				OrderMenuItemID = rs.getInt("idOrderMenuItem");
+				itemComment = rs.getString("ItemComments");
+				if (itemComment == null)
+					{ itemComment = ""; }
 				
 				//Prep for first iteration
 				if (isFirstIteration){
@@ -850,7 +913,7 @@ public class dbAction {
 				}
 				//Check if item is on same order as previous item, if so init temp variables to hold order information for when order change is detected
 				if (tempOrderNum == idOrder){
-					currItems.add(new Item(itemName, itemDescription, categoryName, idMenuItem, itemPrice));
+					currItems.add(new Item(itemName, itemDescription, categoryName, idMenuItem, itemPrice, itemComment, OrderMenuItemID));
 					
 					tempTable = table;
 					orderOpenDate = dateFormat.parse(tempDate);

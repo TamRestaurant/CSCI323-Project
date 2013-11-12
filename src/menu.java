@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import javax.swing.BoxLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -18,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.Popup;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 
@@ -55,11 +57,13 @@ import javax.swing.JSeparator;
 
 
 
+
 import java.awt.GridLayout;
 import java.awt.event.MouseListener;
 
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -87,7 +91,8 @@ public class menu extends JFrame
 		//private MouseListener mouseListener;
         private long time;
         private int table;
-      
+        private JList openList;
+        private Vector<Order> openFood;
         private JTextField serverIDTextBox;
         private dbAction db;
         private static JPanel setOrderPanel,openOrders;
@@ -99,6 +104,7 @@ public class menu extends JFrame
     	//private String fromKitchen;
     	private JButton btnSend_mesage;
     	private JButton btnClear_message;
+    	private JButton edit;
     	
         
     	 public menu(String messages)
@@ -128,17 +134,55 @@ public class menu extends JFrame
                 
                 JTabbedPane orderButtons = new JTabbedPane(JTabbedPane.TOP);
                 openOrders = new JPanel();
-                openOrders.setBounds(830, 6, 200, 810);
+                openOrders.setBounds(810, 6, 255, 810);
                 openOrders.setLayout(null);
-                orderButtons.setBounds(830, 6, 200, 810);
+                orderButtons.setBounds(810, 6, 255, 810);
                  setOrderPanel = new JPanel();
-                setOrderPanel.setBounds(830, 6, 200, 810);
+                setOrderPanel.setBounds(810, 6, 255, 810);
                 setOrderPanel.setBorder(BorderFactory.createLoweredBevelBorder());
                 orderButtons.addTab("New Order", null, setOrderPanel, null);
                 orderButtons.addTab("Open Orders", null, openOrders, null);
                 menuPanel.add(orderButtons);
                 setOrderPanel.setLayout(null);
+                //---------------Open Orders Tab--------------------------
+                edit = new JButton("Edit");
+                openFood = orderToVector(db.getOpenOrders());
+                openList = new JList(openFood);
+                openList.setBounds(5, 20, 230, 300);
+                openList.setEnabled(true);
+                openOrders.add(openList);
+                edit.setBounds(50, 330, 117, 29);
+                openOrders.add(edit);
                 
+                edit.addActionListener(new ActionListener()
+                {
+                	 public void actionPerformed(ActionEvent e) 
+                	 {
+                		 int[] sel = openList.getSelectedIndices();
+                		 if(sel.length >1)
+                		 {
+                			 JOptionPane.showMessageDialog(openOrders, "Please select one order."); 
+                		 }
+                		 else
+                		 {
+                			 JFrame frame = new JFrame();
+                			 JPanel panel = new JPanel();
+                			 JButton add = new JButton("Add an item");
+                			 Vector<Item> v=itemToVector(openFood.get(sel[0]).getItems());
+                			 JList list= new JList(v);
+                			 list.setBounds(0,0,400,400);
+                			 add.setBounds(50, 450, 120, 20);
+                			 panel.setPreferredSize(new Dimension(400, 600));
+                			 panel.setLayout(null);
+                			 panel.add(list);
+                			 panel.add(add);
+                			 frame.setContentPane(panel);
+                			 frame.pack();
+                			 frame.setVisible(true);
+                		 }
+                	 }
+                });
+                //-------------------End Open Orders Tab--------------------
                 
                 currentOrder.setBounds(20, 130, 500, 20);
                 currentTable.setBounds(20, 115, 500, 20);
@@ -156,8 +200,8 @@ public class menu extends JFrame
 //                mainTab.addTab("Wait Station", null, waitTab, null);
                 
                 JPanel subWaitTab = new JPanel();
-               // menu.addTab("Ticket Maker", subWaitTab);
                 subWaitTab.setLayout(null);
+               
                 //---------------------------------------------------------------------------------------------                
                      /*
                  * 
@@ -188,15 +232,11 @@ public class menu extends JFrame
                         *
                         *
                         */
-                menuButtonsImage = new ImageIcon[64];
-                for (int i = 0; i < menuButtonsImage.length; i++) 
-                {
-                        menuButtonsImage[i] = new ImageIcon("./src/Unknown.jpeg");
-
-                }
+               
 //---------------------------------------------------------------------------------------------                
-                subWaitTab.setBounds(6, 6, 810, 810);
-                menuPanel.add(subWaitTab);
+               // subWaitTab.setBounds(6, 6, 810, 810);
+                
+                
                 
                 JPanel entreeButtonPanel = new JPanel();
                 entreeButtonPanel.setBounds(40, 32, 730, 199);
@@ -222,7 +262,11 @@ public class menu extends JFrame
                 subWaitTab.add(sidesButtonPanel);
                 sidesButtonPanel.setLayout(new GridLayout(1, 8, 2, 2));
                 sidesButtonPanel.setBorder(BorderFactory.createLoweredBevelBorder());
-
+                
+                JScrollPane scroll = new JScrollPane(subWaitTab, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+               // scroll.setLayout(null);
+                scroll.setBounds(6, 6, 810, 810);
+                menuPanel.add(scroll);
 //                
             	// //---------------------------------- New to
         		// add-----------------------------------------------------------
@@ -358,7 +402,7 @@ public class menu extends JFrame
                                 
                         }
                 });
-                list.setBounds(15, 150, 170, 300);
+                list.setBounds(5, 150, 230, 300);
                 list.setEnabled(true);
                 setOrderPanel.add(list);
                 newOrder.setBounds(10, 65, 117, 29);
@@ -391,13 +435,13 @@ public class menu extends JFrame
 									openTicket = true;
 									newOrder.setEnabled(openTicket);
 									closeOrder.setEnabled(!openTicket);
-									order = new Order(items, table, employeeID);
+									order = new Order(items, table, employeeID, orderNumber);
 									 // db.addOrder(order);
 									if (db.addOrder(order)) {
 										System.out.println("added" + order);
 									}
 									//refresh database connection
-									 //  db=new dbAction();
+									//db=new dbAction();
 									ArrayList<Order> oo = db.getOpenOrders();
 									for (Order o : oo) {
 										System.out.println(o);
@@ -483,7 +527,28 @@ public class menu extends JFrame
         {
                 return menu;
         }
-        
+        private Vector<Order> orderToVector(ArrayList<Order> array)
+        {
+        	 Vector<Order> v=new Vector<Order>();
+			 for(Order o : array)
+			 {
+				 v.add(o);
+			 }
+			 
+			 return v;
+        	
+        }
+        private Vector<Item> itemToVector(ArrayList<Item> array)
+        {
+        	 Vector<Item> v=new Vector<Item>();
+			 for(Item o : array)
+			 {
+				 v.add(o);
+			 }
+			 
+			 return v;
+        	
+        }
         private class mouseListener implements MouseListener
         {
         	
