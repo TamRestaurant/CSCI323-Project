@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import javax.swing.BoxLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -18,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.Popup;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 
@@ -55,11 +57,13 @@ import javax.swing.JSeparator;
 
 
 
+
 import java.awt.GridLayout;
 import java.awt.event.MouseListener;
 
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -183,8 +187,8 @@ public class menu extends JFrame
 //                mainTab.addTab("Wait Station", null, waitTab, null);
                 
                 JPanel subWaitTab = new JPanel();
-               // menu.addTab("Ticket Maker", subWaitTab);
                 subWaitTab.setLayout(null);
+               
                 //---------------------------------------------------------------------------------------------                
                      /*
                  * 
@@ -217,8 +221,9 @@ public class menu extends JFrame
                         */
                
 //---------------------------------------------------------------------------------------------                
-                subWaitTab.setBounds(6, 6, 810, 810);
-                menuPanel.add(subWaitTab);
+               // subWaitTab.setBounds(6, 6, 810, 810);
+                
+                
                 
                 JPanel entreeButtonPanel = new JPanel();
                 entreeButtonPanel.setBounds(40, 32, 730, 199);
@@ -244,7 +249,11 @@ public class menu extends JFrame
                 subWaitTab.add(sidesButtonPanel);
                 sidesButtonPanel.setLayout(new GridLayout(1, 8, 2, 2));
                 sidesButtonPanel.setBorder(BorderFactory.createLoweredBevelBorder());
-
+                
+                JScrollPane scroll = new JScrollPane(subWaitTab, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+               // scroll.setLayout(null);
+                scroll.setBounds(6, 6, 810, 810);
+                menuPanel.add(scroll);
 //                
             	// //---------------------------------- New to
         		// add-----------------------------------------------------------
