@@ -58,6 +58,8 @@ public class restWinMake extends JFrame {
 			public void run() {
 				try {
 					restWinMake frame = new restWinMake();
+					frame.pack();
+
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -109,9 +111,10 @@ public class restWinMake extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		setBounds(0, 0, 1300, 767);
+		//setBounds(0, 0, 1300, 767);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setPreferredSize(new Dimension(1200, 800));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
