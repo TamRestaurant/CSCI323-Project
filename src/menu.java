@@ -146,17 +146,14 @@ public class menu extends JFrame
                 setOrderPanel.setLayout(null);
                 //---------------Open Orders Tab--------------------------
                 edit = new JButton("Edit");
-                openFood = new Vector<Order>();
-                ArrayList<Order> oo = db.getOpenOrders();
-				for (Order o : oo) {
-					openFood.add(o);
-				}
+                openFood = orderToVector(db.getOpenOrders());
                 openList = new JList(openFood);
                 openList.setBounds(5, 20, 230, 300);
                 openList.setEnabled(true);
                 openOrders.add(openList);
                 edit.setBounds(50, 330, 117, 29);
                 openOrders.add(edit);
+                
                 edit.addActionListener(new ActionListener()
                 {
                 	 public void actionPerformed(ActionEvent e) 
@@ -166,7 +163,23 @@ public class menu extends JFrame
                 		 {
                 			 JOptionPane.showMessageDialog(openOrders, "Please select one order."); 
                 		 }
-                        
+                		 else
+                		 {
+                			 JFrame frame = new JFrame();
+                			 JPanel panel = new JPanel();
+                			 JButton add = new JButton("Add an item");
+                			 Vector<Item> v=itemToVector(openFood.get(sel[0]).getItems());
+                			 JList list= new JList(v);
+                			 list.setBounds(0,0,400,400);
+                			 add.setBounds(50, 450, 120, 20);
+                			 panel.setPreferredSize(new Dimension(400, 600));
+                			 panel.setLayout(null);
+                			 panel.add(list);
+                			 panel.add(add);
+                			 frame.setContentPane(panel);
+                			 frame.pack();
+                			 frame.setVisible(true);
+                		 }
                 	 }
                 });
                 //-------------------End Open Orders Tab--------------------
@@ -514,7 +527,28 @@ public class menu extends JFrame
         {
                 return menu;
         }
-        
+        private Vector<Order> orderToVector(ArrayList<Order> array)
+        {
+        	 Vector<Order> v=new Vector<Order>();
+			 for(Order o : array)
+			 {
+				 v.add(o);
+			 }
+			 
+			 return v;
+        	
+        }
+        private Vector<Item> itemToVector(ArrayList<Item> array)
+        {
+        	 Vector<Item> v=new Vector<Item>();
+			 for(Item o : array)
+			 {
+				 v.add(o);
+			 }
+			 
+			 return v;
+        	
+        }
         private class mouseListener implements MouseListener
         {
         	
