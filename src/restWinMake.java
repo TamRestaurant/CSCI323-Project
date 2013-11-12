@@ -43,6 +43,7 @@ import javax.swing.JScrollPane;
 public class restWinMake extends JFrame {
 	private JPanel contentPane;
 	private JPasswordField pwdYourPin;
+	private static JTabbedPane tabbedPane;
 
 	// This connects to DB and can be passed into any class that needs to
 	// connect to DB
@@ -118,7 +119,7 @@ public class restWinMake extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(25, 25, 1100, 950);
 		contentPane.add(tabbedPane);
 		// -----------------------ADD menu
@@ -307,6 +308,16 @@ public class restWinMake extends JFrame {
 		}
 
 	}// end listener
-
+	public static void setEnabledPanel(boolean is) {
+		//get components and set value
+		tabbedPane.setEnabled(is);
+		Component[]comps= tabbedPane.getComponents();
+		for(Component c:comps) {
+			c.setEnabled(is);
+		}
+		
+	}
+	
+	
 }// End
 

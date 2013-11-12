@@ -17,10 +17,10 @@ import javax.swing.JTabbedPane;
  */
 
 public class admin extends JPanel {
-	private static JTabbedPane tabbedPane;
-	private static  employeeGui empGui;
-	private static orderHistory orderHist;
-	private static employeeTimeTrackingGui empTimeTracking;
+	private  JTabbedPane tabbedPane;
+	private   employeeGui empGui;
+	private  orderHistory orderHist;
+	private  employeeTimeTrackingGui empTimeTracking;
 	/**
 	 * Create the panel.
 	 */
@@ -46,21 +46,7 @@ public class admin extends JPanel {
 
 	}
 	
-	public static void setEnabledPanel(boolean is) {
-		
-		Component[]comps= empGui.getEmployeeGui().getComponents();
-		for(Component c:comps) {
-			c.setEnabled(is);
-		}
-		 comps= orderHist.getOrderHistory().getComponents();
-		for(Component c:comps) {
-			c.setEnabled(is);
-		}
-		 comps= empTimeTracking.getComponents();
-			for(Component c:comps) {
-				c.setEnabled(is);
-			}
-	}
+
 	
 	public JTabbedPane getAdminPanel(){
 		return tabbedPane;

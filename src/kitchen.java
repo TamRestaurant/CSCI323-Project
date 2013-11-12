@@ -54,13 +54,13 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 
 public class kitchen extends JFrame {
-	private static JTabbedPane kitchen;// here
-	private static JPanel activeOrdersPanel, messagePanel, subActiveOrderPanel;
+	private  JTabbedPane kitchen;// here
+	private  JPanel activeOrdersPanel, messagePanel, subActiveOrderPanel;
 	private JLabel lblSelectOrd, lblComments;
 	private JButton btnContact,clearMessages;
 	private JCheckBox orderUp;
 	private JTextField txtComment;
-	private static JTextArea massageCenter;
+	private  JTextArea massageCenter;
 	private JList orderListBox;
 	private dbAction DBAct;
 	private ArrayList<Order> openOrdersArray;
@@ -225,19 +225,19 @@ public class kitchen extends JFrame {
 		}
 	}
 
-	public static JPanel getKitchenPanel() {
+	public  JPanel getKitchenPanel() {
 		return subActiveOrderPanel;// subActiveOrderPanel
 	}
 
-	public static void setEnabledPanel(boolean is) {
+//	public static void setEnabledPanel(boolean is) {
+//
+//		Component[] comps = subActiveOrderPanel.getComponents();// subActiveOrderPanel
+//		for (Component c : comps) {
+//			c.setEnabled(is);
+//		}
+//	}
 
-		Component[] comps = subActiveOrderPanel.getComponents();// subActiveOrderPanel
-		for (Component c : comps) {
-			c.setEnabled(is);
-		}
-	}
-
-	public static JTabbedPane k()// here
+	public  JTabbedPane k()// here
 	{
 		return kitchen;
 	}
@@ -287,7 +287,7 @@ public void sendTowait()
 //---------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
 
-public static void setMenuMassages(String m)
+public  void setMenuMassages(String m)
 {
 	massageCenter.setText(m);
 }

@@ -70,18 +70,18 @@ import java.awt.event.FocusEvent;
 
 public class menu extends JFrame
 {
-        private static JTabbedPane menu;
+        private   JTabbedPane menu;
         private JPanel panel;
         private ImageIcon[] menuButtonsImage;
-        private static JPanel menuPanel;
+        private  JPanel menuPanel;
         private JPanel subWaitTab,sidesButtonPanel,entreeButtonPanel,drinkButtonPanel,dessertButtonPanel;
-        private static JButton[] menuButtons;
+        private   JButton[] menuButtons;
         private JSeparator separator;
         private boolean openTicket = true;
         private Order order;
         private ArrayList<Item> items;
         private Item item;
-        public static ArrayList<Order> orders;
+        public   ArrayList<Order> orders;
         private int orderNumber;
         private JLabel currentOrder; 
         private JLabel currentTable;
@@ -95,7 +95,7 @@ public class menu extends JFrame
         private Vector<Order> openFood;
         private JTextField serverIDTextBox;
         private dbAction db;
-        private static JPanel setOrderPanel,openOrders;
+        private  JPanel setOrderPanel,openOrders;
         
         private String message;
     	private static JTextArea  messagesList;
@@ -367,9 +367,11 @@ public class menu extends JFrame
                                         menuButtons[j].addMouseListener(new mouseListener());
                                 }                        
                                 //---------------------------------------------------------------------------------------------                
-        
-                
-                             
+//        
+//                            	for(JButton b:menuButtons) {
+//                        			b.;
+//                        		}
+//                             
                 //-----------------------------Order buttons-------------------------------
                 
                              
@@ -519,10 +521,7 @@ public class menu extends JFrame
       //---------------------------------------------------------------------------------------------------------------
 
 		
-				public static ArrayList<Order> getOrders(){
-                
-                return orders;
-        }
+        
         public JTabbedPane m()
         {
                 return menu;
@@ -600,27 +599,7 @@ public class menu extends JFrame
 			}
         	
         }
-    	public static void setEnabledPanel(boolean is) {
-    		//get components and set value
-    		Component[]comps= menuPanel.getComponents();
-    		for(Component c:comps) {
-    			c.setEnabled(is);
-    		}
-    		comps= menu.getComponents();    		
-    		for(Component c:comps) {
-    			c.setEnabled(is);
-    		}
-    		comps= setOrderPanel.getComponents();    		
-    		for(Component c:comps) {
-    			c.setEnabled(is);
-    		} 	comps= openOrders.getComponents();    		
-    		for(Component c:comps) {
-    			c.setEnabled(is);
-    		} 
-    		for(JButton b:menuButtons) {
-    			b.setEnabled(is);
-    		}
-    	}
+    	
     	
     	//---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------

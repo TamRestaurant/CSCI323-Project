@@ -53,11 +53,8 @@ public class lockscreen extends JFrame
                 JButton lockBtn=new JButton("Lock Workstation");
                 lockBtn.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
-                                kitchen.setEnabledPanel(false);//here
-                                menu.setEnabledPanel(false);
-                                register.setEnabledPanel(false);
-                                admin.setEnabledPanel(false);
-                                clockInPanel.setEnabledPanel(false);
+                        		restWinMake.setEnabledPanel(false);
+                              
                         //menu.m().disable();//here
                                  JOptionPane.showMessageDialog(null, "Locked!!");
                         }
@@ -109,12 +106,8 @@ public class lockscreen extends JFrame
 //                                  enteredStrPwd=pwdYourPin.getText();
 
                                  if (enteredStrPwd.equals("tam")) {
-                                         
-                                	 kitchen.setEnabledPanel(true);//here
-                                     menu.setEnabledPanel(true);
-                                     register.setEnabledPanel(true);
-                                     admin.setEnabledPanel(true);
-                                     clockInPanel.setEnabledPanel(true);
+                                	 restWinMake.setEnabledPanel(true);
+                                	
                              //menu.m().disable();//here
                                       JOptionPane.showMessageDialog(null, "UNLocked!!");
                                  }else {
