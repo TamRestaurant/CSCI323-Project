@@ -169,7 +169,7 @@ public class kitchen extends JFrame {
 
 		// ----------------------------------------------------------------
 
-		orderListBox = new JList<Order>(openOrdersVector);
+		orderListBox = new JList(openOrdersVector);
 		scrollPane_1.setViewportView(orderListBox);
 		scrollPane_1
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
