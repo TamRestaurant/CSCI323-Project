@@ -39,6 +39,7 @@ import javax.swing.JSeparator;
 import java.awt.GridLayout;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.Font;
 
 
 public class lockscreen extends JFrame 
@@ -48,9 +49,11 @@ public class lockscreen extends JFrame
         public lockscreen()
         {
                 JButton unlockBtn=new JButton("Unlock Workstation");
+                unlockBtn.setFont(new Font("Calibri", Font.PLAIN, 11));
                 
                 unlockBtn.setBounds(28, 170, 445, 23);
                 JButton lockBtn=new JButton("Lock Workstation");
+                lockBtn.setFont(new Font("Calibri", Font.PLAIN, 11));
                 lockBtn.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
                         		restWinMake.setEnabledPanel(false);
@@ -60,8 +63,6 @@ public class lockscreen extends JFrame
                         }
                 });
                 lockBtn.setBounds(28, 75, 445, 23);
-                JLabel passwordLabel=new JLabel();
-                passwordLabel.setBounds(111, 23, 200, 226);
                 lockscreen = new JTabbedPane(JTabbedPane.TOP);
                 lockPanel = new JPanel();
                 subLockpanel = new JPanel();
@@ -87,9 +88,6 @@ public class lockscreen extends JFrame
                 pwdYourPin.setText("tam");
                 pwdYourPin.setBounds(242, 122, 62, 29);
                 lockPanel.setLayout(null);
-                //subPanel1.add(displayText, BorderLayout.CENTER);
-                passwordLabel.setText("Enter unlock code");
-                lockPanel.add(passwordLabel);
                 lockPanel.add(pwdYourPin);
                 lockPanel.add(unlockBtn);
                 lockPanel.add(lockBtn);

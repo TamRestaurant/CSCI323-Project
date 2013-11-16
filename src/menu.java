@@ -367,11 +367,11 @@ public class menu extends JFrame
                                         menuButtons[j].addMouseListener(new mouseListener());
                                 }                        
                                 //---------------------------------------------------------------------------------------------                
-//        
-//                            	for(JButton b:menuButtons) {
-//                        			b.;
-//                        		}
-//                             
+  
+                             	for(JButton b:menuButtons) {
+                         			b.setFont(new Font("Calibri", Font.PLAIN, 9));
+                        		}
+                              
                 //-----------------------------Order buttons-------------------------------
                 
                              
@@ -604,7 +604,7 @@ public class menu extends JFrame
     	//---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
 
-    	public static void setKitchenMassages(String m)
+    	public static  void setKitchenMassages(String m)
     	{
     		messagesList.setText(m);
     	}

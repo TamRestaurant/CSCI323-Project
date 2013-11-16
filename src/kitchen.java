@@ -60,7 +60,7 @@ public class kitchen extends JFrame {
 	private JButton btnContact,clearMessages;
 	private JCheckBox orderUp;
 	private JTextField txtComment;
-	private  JTextArea massageCenter;
+	private static  JTextArea massageCenter;
 	private JList orderListBox;
 	private dbAction DBAct;
 	private ArrayList<Order> openOrdersArray;
@@ -287,7 +287,7 @@ public void sendTowait()
 //---------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
 
-public  void setMenuMassages(String m)
+public static  void setMenuMassages(String m)
 {
 	massageCenter.setText(m);
 }
