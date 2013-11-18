@@ -227,6 +227,7 @@ public class Order {
 	}
 
 	public void setServed(boolean served) {
+
 		this.served = served;
 	}
 

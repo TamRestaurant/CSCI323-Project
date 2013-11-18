@@ -585,6 +585,9 @@ public class dbAction {
 
 		String sqlQuery = prepareReportSQL(allDates, showEmpID, showQTY, itemDescription, groupOrders, openOrders, dateFrom, dateTo);
 		
+		
+		
+				
 				try {
 				    stmt = conn.createStatement();
 				    rs = stmt.executeQuery(sqlQuery);
@@ -662,9 +665,64 @@ public class dbAction {
 		
 		
 		return prepareOpenOrders(rs);
+
+	}
+	/**
+	 * This is for the kitchen orders, once an arder is marked as served, the kitchen food prep date is added
+	 * and will no longer return on the kitchens RS query
+	 * @return
+	 */
+	public ArrayList<Order> getOpenOrdersKitchen(){
+		try {
+		    stmt = conn.createStatement();
+		    rs = stmt.executeQuery("Select\n  MenuItem.ItemName,\n  MenuItem.ItemDescription,\n  menuItemCategory.CategoryName,\n  MenuItem.idMenuItem,\n  MenuItem.ItemPrice,\n  "
+		    		+ "`Order`.idOrder,\n  `Order`.Employee_idEmployee,\n  `Order`.OrderDate,\n  `Order`.OrderClose,\n    `Order`.seatingTable\n, OrderMenuItem.idOrderMenuItem\n, OrderMenuItem.ItemComments\n"
+		    		+ "From\n  Menu Inner Join\n  MenuItem On MenuItem.Menu_idMenu = Menu.idMenu "
+		    		+ "Inner Join\n  menuItemCategory On MenuItem.MenuCategory_idCategory =\n    menuItemCategory.idmenuItemCategory "
+		    		+ "Inner Join\n  OrderMenuItem On OrderMenuItem.MenuItem_idMenuItem = MenuItem.idMenuItem\n  "
+		    		+ "Inner Join\n  `Order` On OrderMenuItem.Order_idOrder = `Order`.idOrder\n"
+		    		+ "Where\n  `Order`.OrderClose Is Null And\n"
+		    		+ "`Order`.foodPreparedDate Is Null\n"
+		    		+ "Order By\n  `Order`.idOrder");
+
+		}
+		catch(SQLException ex){
+			//TODO print to console the exception if occurred
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		
+		
+		//Call method to turn RS into string[] and return vale
+		//TODO: possible concat table number to each item in array
 		
 		
 		
+		return prepareOpenOrders(rs);
+
+	}
+	
+	public void setFoodPreppedDate(int orderNum){
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+
+		try {
+			String sqlString = "UPDATE `csci_323_exp20140101`.`Order` SET `foodPreparedDate`="+ dateFormat.format(date).toString() +" WHERE `idOrder`='"+ Integer.toString(orderNum) +"'";
+			stmt = conn.createStatement();
+			stmt.execute(sqlString);
+			
+			
+		}
+		    
+		
+		catch(SQLException ex){
+			//TODO print to console the exception if occurred
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+		}
 	}
 	
 	/**

@@ -80,7 +80,7 @@ public class kitchen extends JFrame {
 		// Connect to DB (passed in as parameter)
 		DBAct = DBAction;
 		// ---------------------------------------------------
-		openOrdersArray = DBAct.getOpenOrders();
+		openOrdersArray = DBAct.getOpenOrdersKitchen();
 		listToVector();
 		// ////////timer to refresh kitchen order list every 30 secs
 		int delay = 10000; // milliseconds
@@ -95,7 +95,7 @@ public class kitchen extends JFrame {
 				 * 
 				 */
 
-				openOrdersArray = DBAct.getOpenOrders();
+				openOrdersArray = DBAct.getOpenOrdersKitchen();
 				listToVector();
 				orderListBox.setListData(openOrdersVector);
 				repaint();
@@ -252,6 +252,10 @@ public class kitchen extends JFrame {
 				if (index >= 0) {
 
 					openOrdersArray.get(index).setServed(true);
+					//Set foodPreparedDate in database so that order shows as prepared from the kitchen
+					//TODO - THIS IS NOT WORKIGN YET FOR SOME REASON, NEED TO INVESTIGATE
+					DBAct.setFoodPreppedDate(openOrdersArray.get(index).getOrderNumber());
+					
 					// list.remove(index);
 					listToVector();
 					orderListBox.setListData(openOrdersVector);
