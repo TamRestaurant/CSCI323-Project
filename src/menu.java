@@ -119,6 +119,7 @@ public class menu extends JFrame
     	private JButton add, done;
     	private int oldSize;
     	private int editOrderNumber;
+    	private JScrollPane scrollPane;
     	
         
     	 public menu(String messages)
@@ -161,10 +162,13 @@ public class menu extends JFrame
                 //---------------Open Orders Tab--------------------------
                 edit = new JButton("Edit");
                 openFood = orderToVector(db.getOpenOrders());
+                
+                scrollPane = new JScrollPane();
+                scrollPane.setBounds(5, 20, 230, 300);
+                openOrders.add(scrollPane);
                 openList = new JList(openFood);
-                openList.setBounds(5, 20, 230, 300);
+                scrollPane.setViewportView(openList);
                 openList.setEnabled(true);
-                openOrders.add(openList);
                 edit.setBounds(50, 330, 117, 29);
                 openOrders.add(edit);
                 
@@ -512,6 +516,8 @@ public class menu extends JFrame
 										System.out.println(o);
 									}
 									orderNumber++;
+									food.clear();
+                                	list.setListData(food);
 									openFood = orderToVector(db.getOpenOrders());
 									openList.setListData(openFood);
 									repaint();
