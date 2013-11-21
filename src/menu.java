@@ -233,7 +233,9 @@ public class menu extends JFrame
                 		 }
                 		 frame.setVisible(false);
                 		 orderButtons.setEnabled(true);
-    					 edit.setEnabled(true);
+    					edit.setEnabled(true);
+    					editing = false;
+                			openTicket = true;
     					 v.clear();
                 		 
                 	 }
