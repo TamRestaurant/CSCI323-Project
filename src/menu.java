@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
+
 import javax.swing.BoxLayout;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -16,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
+import javax.swing.JWindow;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.Popup;
@@ -44,6 +47,7 @@ import javax.swing.JSeparator;
 //import restWinMake.buttonListener;
 
 //import RPSGui.buttonListener;
+
 
 
 
@@ -105,6 +109,16 @@ public class menu extends JFrame
     	private JButton btnSend_mesage;
     	private JButton btnClear_message;
     	private JButton edit;
+    	private JScrollPane scroll;
+    	private JWindow frame;
+    	private JTabbedPane orderButtons;
+    	boolean editing = false;
+    	private Vector<Item> v;
+    	private JList editList;
+    	private JPanel editPanel;
+    	private JButton add, done;
+    	private int oldSize;
+    	private int editOrderNumber;
     	
         
     	 public menu(String messages)
@@ -132,7 +146,7 @@ public class menu extends JFrame
                 menuPanel.add(separator);
                 //-------------------Display Panel-----------------------------------
                 
-                JTabbedPane orderButtons = new JTabbedPane(JTabbedPane.TOP);
+                orderButtons = new JTabbedPane(JTabbedPane.TOP);
                 openOrders = new JPanel();
                 openOrders.setBounds(810, 6, 255, 810);
                 openOrders.setLayout(null);
@@ -154,32 +168,74 @@ public class menu extends JFrame
                 edit.setBounds(50, 330, 117, 29);
                 openOrders.add(edit);
                 
+                frame = new JWindow();
+   			 	editPanel = new JPanel();
+   			 	add = new JButton("Add an item");
+   			 	done= new JButton("Done");
+   			 	v = new Vector<Item>();
+                editList= new JList(v);
+                editList.setBounds(0,0,400,400);
+                add.setBounds(50, 450, 120, 20);
+                done.setBounds(250, 450, 120, 20);
+                panel.setPreferredSize(new Dimension(400, 600));
+                panel.setLayout(null);
+   			 	panel.add(editList);
+   			 	panel.add(add);
+   			 	panel.add(done);
+   			 	frame.setContentPane(panel);
+   			 	frame.pack();
+   			 	frame.setVisible(false);
+   			 	frame.setLocationRelativeTo(null);
                 edit.addActionListener(new ActionListener()
                 {
                 	 public void actionPerformed(ActionEvent e) 
                 	 {
+                		 frame.setVisible(true);
+                		 orderButtons.setEnabled(false);
+                		 edit.setEnabled(false);
                 		 int[] sel = openList.getSelectedIndices();
-                		 if(sel.length >1)
+                		 if(sel.length >1 || sel.length<1)
                 		 {
                 			 JOptionPane.showMessageDialog(openOrders, "Please select one order."); 
                 		 }
                 		 else
                 		 {
-                			 JFrame frame = new JFrame();
-                			 JPanel panel = new JPanel();
-                			 JButton add = new JButton("Add an item");
-                			 Vector<Item> v=itemToVector(openFood.get(sel[0]).getItems());
-                			 JList list= new JList(v);
-                			 list.setBounds(0,0,400,400);
-                			 add.setBounds(50, 450, 120, 20);
-                			 panel.setPreferredSize(new Dimension(400, 600));
-                			 panel.setLayout(null);
-                			 panel.add(list);
-                			 panel.add(add);
-                			 frame.setContentPane(panel);
-                			 frame.pack();
-                			 frame.setVisible(true);
+     
+                			 editOrderNumber = openFood.get(sel[0]).getOrderNumber();
+                			 v.addAll(itemToVector(openFood.get(sel[0]).getItems()));
+                			 oldSize = v.size();
+                			 editList.setListData(v);
+                			 
+                	
+             
+                			 add.addActionListener(new ActionListener()
+                			 {
+                				 public void actionPerformed(ActionEvent e)
+                				 {
+                					 editing = true;
+                					 openTicket = false;
+                					 menuPanel.grabFocus();
+                					 frame.setVisible(false);
+                					 
+                					 
+                				 }
+                			 });
                 		 }
+                	 }
+                });
+                done.addActionListener(new ActionListener()
+                {
+                	 public void actionPerformed(ActionEvent e) 
+                	 {
+                		 for(;oldSize<v.size();oldSize++)
+                		 {
+                			 db.addItemExistingOrder(editOrderNumber, v.elementAt(oldSize).getOrderMenuItemID(), v.elementAt(oldSize).getItemComment()) ;
+                		 }
+                		 frame.setVisible(false);
+                		 orderButtons.setEnabled(true);
+    					 edit.setEnabled(true);
+    					 v.clear();
+                		 
                 	 }
                 });
                 //-------------------End Open Orders Tab--------------------
@@ -263,7 +319,7 @@ public class menu extends JFrame
                 sidesButtonPanel.setLayout(new GridLayout(1, 8, 2, 2));
                 sidesButtonPanel.setBorder(BorderFactory.createLoweredBevelBorder());
                 
-                JScrollPane scroll = new JScrollPane(subWaitTab, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+                scroll = new JScrollPane(subWaitTab, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
                // scroll.setLayout(null);
                 scroll.setBounds(6, 6, 810, 810);
                 menuPanel.add(scroll);
@@ -393,6 +449,7 @@ public class menu extends JFrame
                                 	openTicket=false;
                                 	newOrder.setEnabled(openTicket);
                                 	closeOrder.setEnabled(!openTicket);
+                                	orderButtons.setEnabled(false);
                                 	items = new ArrayList<Item>();
                                 	food.clear();
                                 	list.setListData(food);
@@ -437,6 +494,7 @@ public class menu extends JFrame
 									openTicket = true;
 									newOrder.setEnabled(openTicket);
 									closeOrder.setEnabled(!openTicket);
+									orderButtons.setEnabled(true);
 									order = new Order(items, table, employeeID, orderNumber);
 									 // db.addOrder(order);
 									if (db.addOrder(order)) {
@@ -577,6 +635,7 @@ public class menu extends JFrame
 
 			@Override
 			public void mouseReleased(MouseEvent event) {
+				
 				if(!openTicket)
 				{
 					String comments=null ;
@@ -589,12 +648,40 @@ public class menu extends JFrame
 					while(event.getSource()!=menuButtons[i])
 						i++;
 					if(comments != null)
+					{
 						item = new Item (menuItems.get(i).getItemName(),menuItems.get(i).getDescription(),menuItems.get(i).getCategory(),menuItems.get(i).getitemID(), menuItems.get(i).getItemPrice(), comments );
+						
+						if(editing == true)
+						{
+							v.add(item);
+							editList.setListData(v);
+							frame.setVisible(true);
+						}
+						else
+						{
+							items.add( item);
+							food.add(item.getItemName());
+							list.setListData(food);
+							
+						}
+					}
 					else
+					{
 						item = new Item (menuItems.get(i).getItemName(),menuItems.get(i).getDescription(),menuItems.get(i).getCategory(),menuItems.get(i).getitemID(), menuItems.get(i).getItemPrice() );
-					items.add( item);
-					food.add(item.getItemName());
-					list.setListData(food);
+						
+						if(editing == true)
+						{
+							v.add(item);
+							editList.setListData(v);
+							frame.setVisible(true);
+						}
+						else
+						{
+							items.add( item);
+							food.add(item.getItemName());
+							list.setListData(food);
+						}
+					}
 				}
 			}
         	
