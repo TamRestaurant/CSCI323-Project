@@ -479,9 +479,7 @@ public class menu extends JFrame
                 setOrderPanel.add(remove);
                 closeOrder.addActionListener(new ActionListener() {
                 	
-                	/**
-                	 * TODO: We need to know what employee is processing the order
-                	 */
+
                         public void actionPerformed(ActionEvent e) {
                                 if (items!=null) {
 									//brings ticket up in window
@@ -514,7 +512,12 @@ public class menu extends JFrame
 										System.out.println(o);
 									}
 									orderNumber++;
+									openFood = orderToVector(db.getOpenOrders());
+									openList.setListData(openFood);
+									repaint();
+									
 								}
+                                //TODO
                                 
                                 else {
                                 	JOptionPane

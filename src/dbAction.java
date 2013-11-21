@@ -997,6 +997,8 @@ public class dbAction {
 
 				}
 			}
+			//Do one last time to get most recent order added to array.  This is needed because the order number does not change the last time and it was skipping the most recent order.
+			openOrders.add(new Order(currItems, tempTable, tempOrderNum, tempEmpId, tempOpenOrderDate));
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
