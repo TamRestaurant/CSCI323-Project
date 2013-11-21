@@ -638,7 +638,12 @@ public class menu extends JFrame
 			@Override
 			public void mouseReleased(MouseEvent event) {
 				
-				if(!openTicket)
+				if(openTicket && !editing)
+				{
+					frame.setVisible(true);
+				}
+				
+				else if(!openTicket)
 				{
 					String comments=null ;
 					//This checks to see if button was held down, if so message box will open to allow user to type in comments about item and add it to item
