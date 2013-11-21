@@ -229,7 +229,12 @@ public class menu extends JFrame
                 	 {
                 		 for(;oldSize<v.size();oldSize++)
                 		 {
+                			 //TODO find bug and fix it
+                			 int test = v.elementAt(oldSize).getOrderMenuItemID();
+                			 System.out.println("menuItemID: "+test); //This should not be zero, but it is.   Causing issue with the database query
+                			 
                 			 db.addItemExistingOrder(editOrderNumber, v.elementAt(oldSize).getOrderMenuItemID(), v.elementAt(oldSize).getItemComment()) ;
+                			
                 		 }
                 		 frame.setVisible(false);
                 		 orderButtons.setEnabled(true);
