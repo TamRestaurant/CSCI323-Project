@@ -194,6 +194,7 @@ public class menu extends JFrame
                 {
                 	 public void actionPerformed(ActionEvent e) 
                 	 {
+                		 editing = true;
                 		 frame.setVisible(true);
                 		 orderButtons.setEnabled(false);
                 		 edit.setEnabled(false);
@@ -216,7 +217,7 @@ public class menu extends JFrame
                 			 {
                 				 public void actionPerformed(ActionEvent e)
                 				 {
-                					 editing = true;
+                					 
                 					 openTicket = false;
                 					 menuPanel.grabFocus();
                 					 frame.setVisible(false);
@@ -234,10 +235,10 @@ public class menu extends JFrame
                 		 for(;oldSize<v.size();oldSize++)
                 		 {
                 			 //TODO find bug and fix it
-                			 int test = v.elementAt(oldSize).getOrderMenuItemID();
+                			 int test = v.elementAt(oldSize).getitemID();
                 			 System.out.println("menuItemID: "+test); //This should not be zero, but it is.   Causing issue with the database query
                 			 
-                			 db.addItemExistingOrder(editOrderNumber, v.elementAt(oldSize).getOrderMenuItemID(), v.elementAt(oldSize).getItemComment()) ;
+                			 db.addItemExistingOrder(editOrderNumber, v.elementAt(oldSize).getitemID(), v.elementAt(oldSize).getItemComment()) ;
                 			
                 		 }
                 		 frame.setVisible(false);
@@ -652,7 +653,7 @@ public class menu extends JFrame
 			@Override
 			public void mouseReleased(MouseEvent event) {
 				
-				if(openTicket && !editing)
+				if(openTicket && editing)
 				{
 					frame.setVisible(true);
 				}
@@ -689,7 +690,6 @@ public class menu extends JFrame
 					else
 					{
 						item = new Item (menuItems.get(i).getItemName(),menuItems.get(i).getDescription(),menuItems.get(i).getCategory(),menuItems.get(i).getitemID(), menuItems.get(i).getItemPrice() );
-						
 						if(editing == true)
 						{
 							v.add(item);
