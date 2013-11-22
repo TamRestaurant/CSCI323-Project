@@ -712,9 +712,31 @@ public class employeeGui implements ActionListener {
 	 * 
 	 */
 	public void actionPerformed(ActionEvent arg0) {
+		int Y = table_employee.getSelectedRow();
 		String[] employeeInfomation = new String[12];
+		int EID = 0, FNAME=1,LNAME=2,ADDR=3,CITY=4,ST=5,ZIP=6,PH=7,ACTIVE=8,ROLE=9,HDATE=10,TDATE=11;
+		employeeInfomation[EID]= table_employee.getValueAt(Y, EID).toString();
+		employeeInfomation[FNAME]= table_employee.getValueAt(Y, FNAME).toString();
+		employeeInfomation[LNAME]= table_employee.getValueAt(Y, LNAME).toString();
+		employeeInfomation[ADDR]= table_employee.getValueAt(Y, ADDR).toString();
+		employeeInfomation[CITY]= table_employee.getValueAt(Y, CITY).toString();
+		employeeInfomation[ST]= table_employee.getValueAt(Y, ST).toString();
+		employeeInfomation[ZIP]= table_employee.getValueAt(Y, ZIP).toString();
+		employeeInfomation[PH]= table_employee.getValueAt(Y, PH).toString();
+		employeeInfomation[ACTIVE]= table_employee.getValueAt(Y, ACTIVE).toString();
+		employeeInfomation[ROLE]= table_employee.getValueAt(Y, ROLE).toString();
+		employeeInfomation[HDATE]= table_employee.getValueAt(Y, HDATE).toString();
+		try{
+			employeeInfomation[TDATE]= table_employee.getValueAt(Y, TDATE).toString();
+		} catch (NullPointerException e){
+			employeeInfomation[TDATE]="0";
+		}
 		
-
+		
+		
+		
+		
+		
 		
 		
 	}
