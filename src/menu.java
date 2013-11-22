@@ -140,7 +140,7 @@ public class menu extends JFrame
                 menuButtons = new JButton[64];
                 separator = new JSeparator();
                 orders= new ArrayList<Order>();
-                orderNumber = 1;
+                orderNumber = db.getMostRecentOrderNum();
                 currentOrder = new JLabel("Current Order");
                 currentTable = new JLabel("Current Table");
                 separator.setBounds(432, 259, 1, 12);
