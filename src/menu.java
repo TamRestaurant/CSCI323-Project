@@ -187,6 +187,7 @@ public class menu extends JFrame
    			 	panel.add(add);
    			 	panel.add(done);
    			 	frame.setContentPane(panel);
+   			 	frame.setAlwaysOnTop (true);
    			 	frame.pack();
    			 	frame.setVisible(false);
    			 	frame.setLocationRelativeTo(null);
@@ -194,10 +195,7 @@ public class menu extends JFrame
                 {
                 	 public void actionPerformed(ActionEvent e) 
                 	 {
-                		 editing = true;
-                		 frame.setVisible(true);
-                		 orderButtons.setEnabled(false);
-                		 edit.setEnabled(false);
+                		 
                 		 int[] sel = openList.getSelectedIndices();
                 		 if(sel.length >1 || sel.length<1)
                 		 {
@@ -205,7 +203,10 @@ public class menu extends JFrame
                 		 }
                 		 else
                 		 {
-                			 
+                			editing = true;
+                		 	frame.setVisible(true);
+                		 	orderButtons.setEnabled(false);
+                		 	edit.setEnabled(false);
                 			 
                 			 editOrderNumber = openFood.get(sel[0]).getOrderNumber();
                 			 v.addAll(itemToVector(openFood.get(sel[0]).getItems()));
