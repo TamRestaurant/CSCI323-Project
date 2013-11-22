@@ -1016,7 +1016,7 @@ public class dbAction {
 		
 	}
 	
-	private int getMostRecentOrderNum(){
+	public int getMostRecentOrderNum(){
 		int orderNum = 0;
 		String sql = "Select\n  `Order`.idOrder\nFrom\n  `Order`\nOrder By\n  `Order`.idOrder Desc  \nLIMIT 1";
 		

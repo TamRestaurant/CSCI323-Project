@@ -2,11 +2,11 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import javax.swing.JTable;
 import javax.swing.table.*;
 import javax.swing.text.MaskFormatter;
 import javax.swing.ListSelectionModel;
+
 import java.awt.Color;
 
 import javax.swing.border.BevelBorder;
@@ -20,12 +20,14 @@ import java.util.ArrayList;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+
 import java.awt.Choice;
 
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
+import javax.swing.JWindow;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
@@ -33,12 +35,14 @@ import javax.swing.UIManager;
 import javax.swing.ScrollPaneConstants;
 
 import java.awt.ComponentOrientation;
-
 import java.util.Calendar;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DropMode;
+
 import java.awt.event.FocusListener;
 import java.awt.event.FocusEvent;
+
 import javax.swing.JToggleButton;
 
 
@@ -732,7 +736,8 @@ public class employeeGui implements ActionListener {
 			employeeInfomation[TDATE]="0";
 		}
 		
-		
+		JWindow window = new JWindow();
+		window.
 		
 		
 		
