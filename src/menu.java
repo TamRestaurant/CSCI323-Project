@@ -149,11 +149,11 @@ public class menu extends JFrame
                 
                 orderButtons = new JTabbedPane(JTabbedPane.TOP);
                 openOrders = new JPanel();
-                openOrders.setBounds(810, 6, 255, 810);
+                openOrders.setBounds(810, 5, 255, 800);//
                 openOrders.setLayout(null);
-                orderButtons.setBounds(810, 6, 255, 810);
+                orderButtons.setBounds(810, 5, 255, 712);//
                  setOrderPanel = new JPanel();
-                setOrderPanel.setBounds(810, 6, 255, 810);
+                setOrderPanel.setBounds(810, 5, 255, 815);//
                 setOrderPanel.setBorder(BorderFactory.createLoweredBevelBorder());
                 orderButtons.addTab("New Order", null, setOrderPanel, null);
                 orderButtons.addTab("Open Orders", null, openOrders, null);
@@ -274,86 +274,50 @@ public class menu extends JFrame
                 
                 JPanel subWaitTab = new JPanel();
                 subWaitTab.setLayout(null);
-               
-                //---------------------------------------------------------------------------------------------                
-                     /*
-                 * 
-                 * 
-                 * 
-                 * 
-                 * 
-                 * 
-                 * 
-                 * 
-                 * 
-                 * 
-                 * 
-                 */
-//                orders = new ArrayList<Order>();
-//
-//                        for (int i = 0; i < 9; i++) {
-//                                Order o = new Order();
-//                                o.setOrderNumber(i * 325);
-//                                o.setOrderTotal(i + 11);
-//                                orders.add(o);
-//                        }
-                        /*
-                        *
-                        *
-                        *
-                        *
-                        *
-                        *
-                        */
-               
-//---------------------------------------------------------------------------------------------                
-               // subWaitTab.setBounds(6, 6, 810, 810);
-                
+                subWaitTab.setBounds(5, 5, 800, 700);
                 
                 
                 JPanel entreeButtonPanel = new JPanel();
-                entreeButtonPanel.setBounds(40, 32, 730, 199);
+                entreeButtonPanel.setBounds(40, 50, 730, 124);
                 subWaitTab.setBorder(BorderFactory.createLoweredBevelBorder());
                 subWaitTab.add(entreeButtonPanel);
-                entreeButtonPanel.setLayout(new GridLayout(3, 8, 2, 2));
+             
+                entreeButtonPanel.setLayout(new GridLayout(3, 7, 2, 2));
                 entreeButtonPanel.setBorder(BorderFactory.createLoweredBevelBorder());
                 
                 JPanel drinkButtonPanel = new JPanel();
-                drinkButtonPanel.setBounds(40, 270, 730, 125);
+                drinkButtonPanel.setBounds(40, 217, 730, 80);
                 subWaitTab.add(drinkButtonPanel);
-                drinkButtonPanel.setLayout(new GridLayout(2, 8, 2, 2));
+                drinkButtonPanel.setLayout(new GridLayout(2, 7, 2, 2));
                 drinkButtonPanel.setBorder(BorderFactory.createLoweredBevelBorder());
 
                 JPanel dessertButtonPanel = new JPanel();
-                dessertButtonPanel.setBounds(40, 430, 730, 116);
+                dessertButtonPanel.setBounds(40, 346, 730, 40);
                 subWaitTab.add(dessertButtonPanel);
-                dessertButtonPanel.setLayout(new GridLayout(2, 8, 2, 2));
+                dessertButtonPanel.setLayout(new GridLayout(1, 7, 2, 2));
                 dessertButtonPanel.setBorder(BorderFactory.createLoweredBevelBorder());
 
                 JPanel sidesButtonPanel = new JPanel();
-                sidesButtonPanel.setBounds(40, 581, 730, 63);
+                sidesButtonPanel.setBounds(40, 435, 730, 40);
                 subWaitTab.add(sidesButtonPanel);
-                sidesButtonPanel.setLayout(new GridLayout(1, 8, 2, 2));
+                sidesButtonPanel.setLayout(new GridLayout(1, 7, 2, 2));
                 sidesButtonPanel.setBorder(BorderFactory.createLoweredBevelBorder());
                 
-                scroll = new JScrollPane(subWaitTab, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-               // scroll.setLayout(null);
-                scroll.setBounds(6, 6, 810, 810);
-                menuPanel.add(scroll);
-//                
-            	// //---------------------------------- New to
-        		// add-----------------------------------------------------------
+//                JScrollPane scroll = new JScrollPane(subWaitTab, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+//              
+//                scroll.setBounds(6, 6, 810, 701);
+//                menuPanel.add(scroll);
+////                
+                menuPanel.add(subWaitTab);
         		JPanel MessagePanel = new JPanel();
-        		MessagePanel.setBounds(40, 680, 730, 100);
+        		MessagePanel.setBounds(40, 524, 730, 153);
         		subWaitTab.add(MessagePanel);
         		MessagePanel.setLayout(null);
         		MessagePanel.setBorder(BorderFactory.createLoweredBevelBorder());
-        		 //---------------------------------------------------------------------------------------------                
-                //---------------------------------------------------------------------------------------------  
+        		
         		 btnSend_mesage = new JButton("Send Message");
         		 btnClear_message = new JButton("Clear Messages");
-        		 //---------------------------------------------------------------------------------------------                
-                 //---------------------------------------------------------------------------------------------  
+        		
 
         		btnSend_mesage.setEnabled(true);
         		btnSend_mesage.setBounds(15, 20, 110, 20);
@@ -365,86 +329,95 @@ public class menu extends JFrame
 
         		txtMessage = new JTextArea();
         		txtMessage.setBounds(140, 10, 500, 20);
-        		MessagePanel.add(txtMessage);
-
-        		 //---------------------------------------------------------------------------------------------                
-                //---------------------------------------------------------------------------------------------                
+        		MessagePanel.add(txtMessage);             
 
         		btnSend_mesage.addActionListener(new buttonListener());
         		btnClear_message.addActionListener(new buttonListener());
 
         		scrollMessages = new JScrollPane();
-        		scrollMessages.setBounds(140, 40, 500, 50);//lower
+        		scrollMessages.setBounds(140, 40, 500, 100);//lower
         		MessagePanel.add(scrollMessages);
         		messagesList = new JTextArea();
-        		//MessagePanel.add(messagesList);
-        		MessagePanel.add(scrollMessages);
+        	
         		scrollMessages.setViewportView(messagesList);
-        		messagesList.setEnabled(true);
-                //---------------------------------------------------------------------------------------------                
-                //---------------------------------------------------------------------------------------------                
+        		messagesList.setEnabled(false);
+                
 
         		
         		
                 //---------------------------------------------------------------------------------------------                
-
+        		int fontsize = 16;
+        		
                 JLabel lblMainEntree = new JLabel("Main Entree");
-                lblMainEntree.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-                lblMainEntree.setBounds(360, 6, 145, 25);
+                lblMainEntree.setFont(new Font("Lucida Grande", Font.PLAIN, fontsize));
+                lblMainEntree.setBounds(360, 20, 145, 25);
                 subWaitTab.add(lblMainEntree);
                 
                 JLabel lblBeverages = new JLabel("Beverages");
-                lblBeverages.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-                lblBeverages.setBounds(360, 243, 145, 25);
+                lblBeverages.setFont(new Font("Lucida Grande", Font.PLAIN, fontsize));
+                lblBeverages.setBounds(360, 180, 145, 25);
                 subWaitTab.add(lblBeverages);
                 
                 JLabel lblDesserts = new JLabel("Desserts");
-                lblDesserts.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-                lblDesserts.setBounds(360, 400, 145, 25);
+                lblDesserts.setFont(new Font("Lucida Grande", Font.PLAIN, fontsize));
+                lblDesserts.setBounds(360, 309, 145, 25);
                 subWaitTab.add(lblDesserts);
                 
                 JLabel lblSideOrders = new JLabel("Side Orders");
-                lblSideOrders.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-                lblSideOrders.setBounds(360, 555, 145, 25);
+                lblSideOrders.setFont(new Font("Lucida Grande", Font.PLAIN, fontsize));
+                lblSideOrders.setBounds(360, 398, 145, 25);
                 subWaitTab.add(lblSideOrders);
                 
+                JLabel lbmessages = new JLabel("Messages");
+                lbmessages.setFont(new Font("Lucida Grande", Font.PLAIN, fontsize));
+                lbmessages.setBounds(360, 487, 145, 25);
+                subWaitTab.add(lbmessages);
+                
                 JLabel lblTicketDisplay = new JLabel("Ticket Display");
-                lblTicketDisplay.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+                lblTicketDisplay.setFont(new Font("Lucida Grande", Font.PLAIN, fontsize));
                 lblTicketDisplay.setBounds(830, 6, 145, 25);
                 subWaitTab.add(lblTicketDisplay);
                 //---------------------------------------------------------------------------------------------                
-
+                	int fsize =12;
         
-                                for (int j = 0; j < 24; j++) {
+                                for (int j = 0; j < 21; j++) {
                                         menuButtons[j] = new JButton(menuItems.get(j).getItemName());
                                         
                                         entreeButtonPanel.add(menuButtons[j]);
                                         menuButtons[j].addMouseListener(new mouseListener());
+                                        menuButtons[j].setFont(new Font("Calibri", Font.PLAIN, fsize));
+                                        
                                 }
-                                for (int j = 24; j < 40; j++) {
+                                for (int j = 24; j < 38; j++) {
                                         menuButtons[j] = new JButton(menuItems.get(j).getItemName());
                                         
                                         drinkButtonPanel.add(menuButtons[j]);
                                         menuButtons[j].addMouseListener(new mouseListener());
+                                        menuButtons[j].setFont(new Font("Calibri", Font.PLAIN, fsize));
+                                       
                                 }
-                                for (int j = 40; j < 56; j++) {
+                                for (int j = 40; j < 47; j++) {
                                         menuButtons[j] = new JButton(menuItems.get(j).getItemName());
                                         
                                         dessertButtonPanel.add(menuButtons[j]);
                                         menuButtons[j].addMouseListener(new mouseListener());
+                                        menuButtons[j].setFont(new Font("Calibri", Font.PLAIN, fsize));
                                 }
-                                for (int j = 56; j < 64; j++) {
+                                for (int j = 56; j < 63; j++) {
                                         menuButtons[j] = new JButton(menuItems.get(j).getItemName());
                                         
                                         sidesButtonPanel.add(menuButtons[j]);
                                         menuButtons[j].addMouseListener(new mouseListener());
-                                }                        
+                                        menuButtons[j].setFont(new Font("Calibri", Font.PLAIN, fsize));
+                                }  
+                                //---------------------------------------------------------------------------------------------                
+                                //---------------------------------------------------------------------------------------------              
                                 //---------------------------------------------------------------------------------------------                
   
-                             	for(JButton b:menuButtons) {
-                         			b.setFont(new Font("Calibri", Font.PLAIN, 9));
-                        		}
-                              
+//                             	for(JButton b:menuButtons) {
+//                         			b.setFont(new Font("Calibri", Font.PLAIN, 9));
+//                        		}
+                               
                 //-----------------------------Order buttons-------------------------------
                 
                              
