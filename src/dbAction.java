@@ -1023,6 +1023,7 @@ public class dbAction {
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
+			rs.next();
 			orderNum = rs.getInt(1);
 
 		}

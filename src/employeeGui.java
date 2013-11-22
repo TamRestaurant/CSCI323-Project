@@ -97,7 +97,7 @@ public class employeeGui implements ActionListener {
 	private JPanel panelEmpGui;
 	
 	//Connect to database on load
-	private dbAction myDBconnection;
+	private dbAction DBAction;
 	private JLabel lblHireDate;
 	private JComboBox comboBoxMonth;
 	private JComboBox comboBoxDay;
@@ -147,7 +147,7 @@ public class employeeGui implements ActionListener {
 //		frmEmployeeManagement.setBounds(100, 100, 1093, 571);
 //		frmEmployeeManagement.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		frmEmployeeManagement.getContentPane().setLayout(null);
-		myDBconnection = DBAction;
+		this.DBAction = DBAction;
 		
 		panelEmpGui = new JPanel();
 
@@ -460,8 +460,8 @@ public class employeeGui implements ActionListener {
 	private void populateEmployees(){
 		
 		
-		//dbAction myDBconnection = new dbAction();
-		resultSet = myDBconnection.getEmployeesFull();
+		//dbAction DBAction = new dbAction();
+		resultSet = DBAction.getEmployeesFull();
 		
 		//I was using the to troubleshoot based off of: http://www.youtube.com/watch?v=hg1S3QHFNrE
 		//requires external jar
@@ -492,8 +492,8 @@ public class employeeGui implements ActionListener {
 	 */
 	private void populateRoles(){
 		
-		//dbAction myDBconnection = new dbAction();
-		resultSet = myDBconnection.getRoles();
+		//dbAction DBAction = new dbAction();
+		resultSet = DBAction.getRoles();
 		roleList = new ArrayList();
 		try {
 			while (resultSet.next()){
@@ -568,7 +568,7 @@ public class employeeGui implements ActionListener {
 							String[] addr = {address, city, state, zip, phone};
 							
 							//Try to add employee to database
-							boolean[] employeeOutput = myDBconnection.addEmployee(names, addr, role, isActive, hireDate);
+							boolean[] employeeOutput = DBAction.addEmployee(names, addr, role, isActive, hireDate);
 							
 							if (employeeOutput[0] == true && employeeOutput[1] == true){
 								populateEmployees();
@@ -717,27 +717,28 @@ public class employeeGui implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent arg0) {
 		int Y = table_employee.getSelectedRow();
-		String[] employeeInfomation = new String[12];
+		String[] employeeInfo = new String[12];
 		int EID = 0, FNAME=1,LNAME=2,ADDR=3,CITY=4,ST=5,ZIP=6,PH=7,ACTIVE=8,ROLE=9,HDATE=10,TDATE=11;
-		employeeInfomation[EID]= table_employee.getValueAt(Y, EID).toString();
-		employeeInfomation[FNAME]= table_employee.getValueAt(Y, FNAME).toString();
-		employeeInfomation[LNAME]= table_employee.getValueAt(Y, LNAME).toString();
-		employeeInfomation[ADDR]= table_employee.getValueAt(Y, ADDR).toString();
-		employeeInfomation[CITY]= table_employee.getValueAt(Y, CITY).toString();
-		employeeInfomation[ST]= table_employee.getValueAt(Y, ST).toString();
-		employeeInfomation[ZIP]= table_employee.getValueAt(Y, ZIP).toString();
-		employeeInfomation[PH]= table_employee.getValueAt(Y, PH).toString();
-		employeeInfomation[ACTIVE]= table_employee.getValueAt(Y, ACTIVE).toString();
-		employeeInfomation[ROLE]= table_employee.getValueAt(Y, ROLE).toString();
-		employeeInfomation[HDATE]= table_employee.getValueAt(Y, HDATE).toString();
+		employeeInfo[EID]= table_employee.getValueAt(Y, EID).toString();
+		employeeInfo[FNAME]= table_employee.getValueAt(Y, FNAME).toString();
+		employeeInfo[LNAME]= table_employee.getValueAt(Y, LNAME).toString();
+		employeeInfo[ADDR]= table_employee.getValueAt(Y, ADDR).toString();
+		employeeInfo[CITY]= table_employee.getValueAt(Y, CITY).toString();
+		employeeInfo[ST]= table_employee.getValueAt(Y, ST).toString();
+		employeeInfo[ZIP]= table_employee.getValueAt(Y, ZIP).toString();
+		employeeInfo[PH]= table_employee.getValueAt(Y, PH).toString();
+		employeeInfo[ACTIVE]= table_employee.getValueAt(Y, ACTIVE).toString();
+		employeeInfo[ROLE]= table_employee.getValueAt(Y, ROLE).toString();
+		employeeInfo[HDATE]= table_employee.getValueAt(Y, HDATE).toString();
 		try{
-			employeeInfomation[TDATE]= table_employee.getValueAt(Y, TDATE).toString();
+			employeeInfo[TDATE]= table_employee.getValueAt(Y, TDATE).toString();
 		} catch (NullPointerException e){
-			employeeInfomation[TDATE]="0";
+			employeeInfo[TDATE]="0";
 		}
 		
 		JWindow window = new JWindow();
-		window.
+		window.add(new editEmployeePanelGui(employeeInfo, DBAction));
+		window.setVisible(true);
 		
 		
 		
