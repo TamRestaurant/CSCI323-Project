@@ -934,7 +934,8 @@ public class dbAction {
 		ArrayList<Order> openOrders = new ArrayList();
 		int OrderMenuItemID;
 		String itemName, itemDescription,categoryName;
-		int idMenuItem, itemPrice, idOrder, empId, table;
+		int idMenuItem, idOrder, empId, table;
+		double itemPrice;
 		Date orderOpenDate = null;
 		int currOrderCounter = 0, currTable;
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:MM:SS");
@@ -952,7 +953,7 @@ public class dbAction {
 				itemDescription = rs.getString("ItemName");
 				categoryName = rs.getString("ItemName");
 				idMenuItem = rs.getInt("idMenuItem");
-				itemPrice = rs.getInt("ItemPrice");
+				itemPrice = rs.getDouble("ItemPrice");
 				idOrder = rs.getInt("idOrder");
 				empId = rs.getInt("Employee_idEmployee");
 				String tempDate = rs.getString("OrderDate");

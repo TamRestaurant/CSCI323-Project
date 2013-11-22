@@ -39,6 +39,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DropMode;
 import java.awt.event.FocusListener;
 import java.awt.event.FocusEvent;
+import javax.swing.JToggleButton;
 
 
 
@@ -65,7 +66,7 @@ http://production.shippingapis.com/ShippingAPITest.dll?API=CityStateLookup&XML=<
  * 
  * 
  */
-public class employeeGui {
+public class employeeGui implements ActionListener {
 
 	//private JFrame frmEmployeeManagement;
 	private JTable table_employee;
@@ -98,7 +99,8 @@ public class employeeGui {
 	private JComboBox comboBoxDay;
 	private JComboBox comboBoxYear;
 	private JPanel panel_1;
-	
+	private JButton btnEditEmployee;
+	private ListTableModel model;
 	
 	
 	/**
@@ -188,7 +190,6 @@ public class employeeGui {
 		table_employee.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table_employee.setFont(new Font("Calibri", Font.PLAIN, 14));
 		table_employee.setAutoCreateRowSorter(true);
-		table_employee.setColumnSelectionAllowed(true);
 		scrollPane.setViewportView(table_employee);
 		table_employee.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		table_employee.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -438,6 +439,12 @@ public class employeeGui {
 		labelError.setFont(new Font("Calibri", Font.PLAIN, 14));
 		labelError.setBounds(10, 302, 491, 24);
 		panelEmpGui.add(labelError);
+		
+		btnEditEmployee = new JButton("Edit selected employee");
+		btnEditEmployee.addActionListener(this);
+		btnEditEmployee.setFont(new Font("Calibri", Font.PLAIN, 16));
+		btnEditEmployee.setBounds(10, 394, 200, 51);
+		panelEmpGui.add(btnEditEmployee);
 	} // end initialize
 	
 	
@@ -459,7 +466,8 @@ public class employeeGui {
 		
 		try {
 			//create model from db result and add to table
-			ListTableModel model = ListTableModel.createModelFromResultSet(resultSet);
+			model = ListTableModel.createModelFromResultSet(resultSet);
+
 			table_employee.setModel(model);
 			populateRoles();
 			labelError.setForeground(Color.BLACK);
@@ -494,8 +502,7 @@ public class employeeGui {
 				roleList.add(resultSet.getInt(2));
 			}
 			
-			//This creates
-
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -700,5 +707,15 @@ public class employeeGui {
 		return temp;
 		
 	}
+	/**
+	 * This method allows edits to the table to specific rows
+	 * 
+	 */
+	public void actionPerformed(ActionEvent arg0) {
+		String[] employeeInfomation = new String[12];
+		
 
+		
+		
+	}
 }
