@@ -105,7 +105,7 @@ public class employeeGui implements ActionListener {
 	private JPanel panel_1;
 	private JButton btnEditEmployee;
 	private ListTableModel model;
-	
+	private JButton closeButton;
 	
 	/**
 	 * Launch the application.
@@ -148,6 +148,8 @@ public class employeeGui implements ActionListener {
 //		frmEmployeeManagement.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		frmEmployeeManagement.getContentPane().setLayout(null);
 		this.DBAction = DBAction;
+		closeButton = new JButton("Close");
+		closeButton.addActionListener(this);
 		
 		panelEmpGui = new JPanel();
 
@@ -716,6 +718,8 @@ public class employeeGui implements ActionListener {
 	 * 
 	 */
 	public void actionPerformed(ActionEvent arg0) {
+		JWindow window = new JWindow();
+
 		int Y = table_employee.getSelectedRow();
 		String[] employeeInfo = new String[12];
 		int EID = 0, FNAME=1,LNAME=2,ADDR=3,CITY=4,ST=5,ZIP=6,PH=7,ACTIVE=8,ROLE=9,HDATE=10,TDATE=11;
@@ -736,14 +740,16 @@ public class employeeGui implements ActionListener {
 			employeeInfo[TDATE]="0";
 		}
 		
-		JWindow window = new JWindow();
-		window.add(new editEmployeePanelGui(employeeInfo, DBAction));
+		//TODO- this all needs to be changed to a modal jdialog or something
+
+	 	window.setContentPane(new editEmployeePanelGui(employeeInfo, DBAction));
+	 	window.setAlwaysOnTop (true);
+	 	window.pack();
+	 	window.setVisible(false);
+	 	window.setLocationRelativeTo(null);
+		//window.add(new editEmployeePanelGui(employeeInfo, DBAction));
+		
 		window.setVisible(true);
-		
-		
-		
-		
-		
 		
 	}
 }

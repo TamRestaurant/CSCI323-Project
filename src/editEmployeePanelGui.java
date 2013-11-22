@@ -11,9 +11,6 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -29,15 +26,15 @@ import java.util.Date;
 import java.util.Calendar;
 
 import javax.swing.JComboBox;
-import javax.swing.JToggleButton;
 import javax.swing.JSlider;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-import java.awt.Choice;
 
-public class editEmployeePanelGui extends JPanel {
+public class editEmployeePanelGui extends JPanel implements ActionListener {
 	private JTextField textEmployeeID;
 	private JTextField textFName;
 	private JTextField textLName;
@@ -59,7 +56,7 @@ public class editEmployeePanelGui extends JPanel {
 	private JLabel lblHireDate;
 	private JLabel lblTerminationDate;
 	private JLabel lblNewLabel;
-	private JButton btnNewButton;
+	private JButton btnSubmit;
 	private JSpinner spinnerTerminate;
 	private JComboBox comboBoxRole;
 	private JSlider sliderActive;
@@ -68,11 +65,14 @@ public class editEmployeePanelGui extends JPanel {
 	private dbAction DBAction;
 	private ArrayList roleList;
 	private Date dateIn = null, dateOut = null;
+	private JButton button;
 	
 	/**
 	 * Create the panel.
+	 * @param closeButton 
 	 */
 	public editEmployeePanelGui(String[] employeeInfo, dbAction DBAction) {
+		this.DBAction = DBAction;
 		
 		lblNewLabel = new JLabel("Edit Employee");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -151,14 +151,18 @@ public class editEmployeePanelGui extends JPanel {
 		spinnerTerminate = new JSpinner();
 		spinnerTerminate.setModel(new SpinnerDateModel(new Date(1385017200000L), null, null, Calendar.DAY_OF_YEAR));
 		
-		btnNewButton = new JButton("Submit Changed");
-		btnNewButton.setFont(new Font("Calibri", Font.PLAIN, 14));
+		btnSubmit = new JButton("Submit Changes");
+		btnSubmit.setFont(new Font("Calibri", Font.PLAIN, 14));
 		
 		lblInactive = new JLabel("Inactive");
 		lblInactive.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		spinnerHire = new JSpinner();
 		spinnerHire.setModel(new SpinnerDateModel(new Date(1385017200000L), null, null, Calendar.DAY_OF_YEAR));
+		
+		button = new JButton("Submit Changed");
+		button.addActionListener(this);
+		button.setFont(new Font("Calibri", Font.PLAIN, 14));
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -230,7 +234,9 @@ public class editEmployeePanelGui extends JPanel {
 							.addComponent(spinnerTerminate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(193)
-							.addComponent(btnNewButton)))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(button, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnSubmit))))
 					.addGap(4)
 					.addComponent(lblInactive, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
 					.addGap(238))
@@ -312,8 +318,10 @@ public class editEmployeePanelGui extends JPanel {
 									.addComponent(lblTerminationDate))
 								.addComponent(spinnerTerminate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addGap(5)
-							.addComponent(btnNewButton)))
-					.addGap(67))
+							.addComponent(btnSubmit)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(button, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addGap(21))
 		);
 		setLayout(groupLayout);
 		
@@ -344,11 +352,11 @@ public class editEmployeePanelGui extends JPanel {
 		}
 		
 		try {
-			dateIn = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(employeeInfo[9]);
+			dateIn = new SimpleDateFormat("yyyy-MM-dd").parse(employeeInfo[10]);
 			spinnerHire.setModel(new SpinnerDateModel(dateIn, null, null, Calendar.MINUTE));
 			
-			if (employeeInfo[10].length() > arbitrarySmallishNumber){ // This "MUST" mean that there is no termination date, right? <wink>, <wink>
-				dateOut = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(employeeInfo[10]);
+			if (employeeInfo[11].length() > arbitrarySmallishNumber){ // This "MUST" mean that there is no termination date, right? <wink>, <wink>
+				dateOut = new SimpleDateFormat("yyyy-MM-dd").parse(employeeInfo[11]);
 				spinnerTerminate.setModel(new SpinnerDateModel(dateIn, null, null, Calendar.MINUTE));
 			}
 			
@@ -390,4 +398,7 @@ public class editEmployeePanelGui extends JPanel {
 	}
 	
 	
+	public void actionPerformed(ActionEvent e) {
+		
+	}
 }
