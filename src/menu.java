@@ -205,7 +205,8 @@ public class menu extends JFrame
                 		 }
                 		 else
                 		 {
-     
+                			 
+                			 
                 			 editOrderNumber = openFood.get(sel[0]).getOrderNumber();
                 			 v.addAll(itemToVector(openFood.get(sel[0]).getItems()));
                 			 oldSize = v.size();
@@ -239,7 +240,10 @@ public class menu extends JFrame
                 			 System.out.println("menuItemID: "+test); //This should not be zero, but it is.   Causing issue with the database query
                 			 
                 			 db.addItemExistingOrder(editOrderNumber, v.elementAt(oldSize).getitemID(), v.elementAt(oldSize).getItemComment()) ;
-                			
+                			 openFood = orderToVector(db.getOpenOrders()); // Added this line to re-populate orders from DB after edit is made
+                			 //Make sure that server list panel is populated with updated price
+                			 rePopulateOpenOrderList();
+                			 
                 		 }
                 		 frame.setVisible(false);
                 		 orderButtons.setEnabled(true);
@@ -463,8 +467,10 @@ public class menu extends JFrame
                                 	closeOrder.setEnabled(!openTicket);
                                 	orderButtons.setEnabled(false);
                                 	items = new ArrayList<Item>();
-                                	food.clear();
-                                	list.setListData(food);
+                                	
+                                	//food.clear();
+                                	//list.setListData(food);
+                                	rePopulateOpenOrderList();
                                 	currentOrder.setText("Current Order: "+orderNumber);
                                 	currentTable.setText("Current Table: "+table);
                                 }
@@ -517,11 +523,7 @@ public class menu extends JFrame
 										System.out.println(o);
 									}
 									orderNumber++;
-									food.clear();
-                                	list.setListData(food);
-									openFood = orderToVector(db.getOpenOrders());
-									openList.setListData(openFood);
-									repaint();
+									rePopulateOpenOrderList();
 									
 								}
                                 //TODO
@@ -568,7 +570,16 @@ public class menu extends JFrame
                         }
                 });
                 //----------------------END order buttons-------------------------
+         
                 
+        }
+        
+        public void rePopulateOpenOrderList(){
+        	food.clear();
+         	list.setListData(food);
+			openFood = orderToVector(db.getOpenOrders());
+			openList.setListData(openFood);
+			repaint();
         }
         
 //---------------------------------------------------------------------------------------------------------------
