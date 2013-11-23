@@ -116,12 +116,12 @@ public class RestWinMake extends JFrame {
 		//setBounds(0, 0, 1300, 767);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setPreferredSize(new Dimension(1200, 800));
+		contentPane.setPreferredSize(new Dimension(1125, 826));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(25, 25, 1100, 950);
+		tabbedPane.setBounds(10, 10, 1100, 810);
 		contentPane.add(tabbedPane);
 		// -----------------------ADD menu
 		// tab-----------------------------------
