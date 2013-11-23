@@ -42,11 +42,11 @@ import java.awt.event.FocusEvent;
 import java.awt.Font;
 
 
-public class lockscreen extends JFrame 
+public class Lockscreen extends JFrame 
 {
         private JTabbedPane lockscreen;
         private JPanel lockPanel,subLockpanel;
-        public lockscreen()
+        public Lockscreen()
         {
                 JButton unlockBtn=new JButton("Unlock Workstation");
                 unlockBtn.setFont(new Font("Calibri", Font.PLAIN, 11));
@@ -56,7 +56,7 @@ public class lockscreen extends JFrame
                 lockBtn.setFont(new Font("Calibri", Font.PLAIN, 11));
                 lockBtn.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
-                        		restWinMake.setEnabledPanel(false);
+                        		RestWinMake.setEnabledPanel(false);
                               
                         //menu.m().disable();//here
                                  JOptionPane.showMessageDialog(null, "Locked!!");
@@ -104,7 +104,7 @@ public class lockscreen extends JFrame
 //                                  enteredStrPwd=pwdYourPin.getText();
 
                                  if (enteredStrPwd.equals("tam")) {
-                                	 restWinMake.setEnabledPanel(true);
+                                	 RestWinMake.setEnabledPanel(true);
                                 	
                              //menu.m().disable();//here
                                       JOptionPane.showMessageDialog(null, "UNLocked!!");

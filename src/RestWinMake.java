@@ -40,11 +40,12 @@ import java.awt.GridLayout;
 
 import javax.swing.JScrollPane;
 
-public class restWinMake extends JFrame {
+public class RestWinMake extends JFrame {
 	private JPanel contentPane;
 	private JPasswordField pwdYourPin;
 	private static JTabbedPane tabbedPane;
 
+	//m
 	// This connects to DB and can be passed into any class that needs to
 	// connect to DB
 	// (best to config constructor initialization, refer to admin tab for
@@ -58,7 +59,7 @@ public class restWinMake extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					restWinMake frame = new restWinMake();
+					RestWinMake frame = new RestWinMake();
 					frame.pack();
 
 					frame.setVisible(true);
@@ -98,7 +99,7 @@ public class restWinMake extends JFrame {
 	// -------------------------------- Main
 	// ------------------------------------
 
-	public restWinMake() {// Begin Main
+	public RestWinMake() {// Begin Main
 		// printorder for test purpose
 		ArrayList<Order> oo = DBAction.getOpenOrders();
 		for (Order o : oo)
@@ -141,7 +142,7 @@ public class restWinMake extends JFrame {
 
 		// locksreen tab
 
-		lockscreen l = new lockscreen();
+		Lockscreen l = new Lockscreen();
 		tabbedPane.addTab("Lockscreen", null, l.lock(), null);
 
 		// ----------------------ADD employee tab (for managing of menu/past
