@@ -394,8 +394,8 @@ public class employeeTimeTrackingGui extends JPanel implements ActionListener {
 		
 		//Popup confirming that delete wants to be completed (maybe just null values and keep records?????)
 		else if (arg0.getSource() == btnDeleteSelected){
-			
-			
+		
+		
 		}
 		
 		else if(arg0.getSource() == btnUpdate){

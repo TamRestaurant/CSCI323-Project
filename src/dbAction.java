@@ -934,7 +934,8 @@ public class dbAction {
 		ArrayList<Order> openOrders = new ArrayList();
 		int OrderMenuItemID;
 		String itemName, itemDescription,categoryName;
-		int idMenuItem, itemPrice, idOrder, empId, table;
+		int idMenuItem, idOrder, empId, table;
+		double itemPrice;
 		Date orderOpenDate = null;
 		int currOrderCounter = 0, currTable;
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:MM:SS");
@@ -952,7 +953,7 @@ public class dbAction {
 				itemDescription = rs.getString("ItemName");
 				categoryName = rs.getString("ItemName");
 				idMenuItem = rs.getInt("idMenuItem");
-				itemPrice = rs.getInt("ItemPrice");
+				itemPrice = rs.getDouble("ItemPrice");
 				idOrder = rs.getInt("idOrder");
 				empId = rs.getInt("Employee_idEmployee");
 				String tempDate = rs.getString("OrderDate");
@@ -997,6 +998,8 @@ public class dbAction {
 
 				}
 			}
+			//Do one last time to get most recent order added to array.  This is needed because the order number does not change the last time and it was skipping the most recent order.
+			openOrders.add(new Order(currItems, tempTable, tempOrderNum, tempEmpId, tempOpenOrderDate));
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1013,7 +1016,27 @@ public class dbAction {
 		
 	}
 	
-	
+	public int getMostRecentOrderNum(){
+		int orderNum = 0;
+		String sql = "Select\n  `Order`.idOrder\nFrom\n  `Order`\nOrder By\n  `Order`.idOrder Desc  \nLIMIT 1";
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			rs.next();
+			orderNum = rs.getInt(1);
+
+		}
+		
+		catch (SQLException ex){
+		    // handle any errors
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+		} 
+		
+		return orderNum;
+	}
 }
 
 

@@ -2,11 +2,11 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import javax.swing.JTable;
 import javax.swing.table.*;
 import javax.swing.text.MaskFormatter;
 import javax.swing.ListSelectionModel;
+
 import java.awt.Color;
 
 import javax.swing.border.BevelBorder;
@@ -20,12 +20,14 @@ import java.util.ArrayList;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+
 import java.awt.Choice;
 
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
+import javax.swing.JWindow;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
@@ -33,12 +35,15 @@ import javax.swing.UIManager;
 import javax.swing.ScrollPaneConstants;
 
 import java.awt.ComponentOrientation;
-
 import java.util.Calendar;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DropMode;
+
 import java.awt.event.FocusListener;
 import java.awt.event.FocusEvent;
+
+import javax.swing.JToggleButton;
 
 
 
@@ -65,7 +70,7 @@ http://production.shippingapis.com/ShippingAPITest.dll?API=CityStateLookup&XML=<
  * 
  * 
  */
-public class employeeGui {
+public class employeeGui implements ActionListener {
 
 	//private JFrame frmEmployeeManagement;
 	private JTable table_employee;
@@ -92,14 +97,15 @@ public class employeeGui {
 	private JPanel panelEmpGui;
 	
 	//Connect to database on load
-	private dbAction myDBconnection;
+	private dbAction DBAction;
 	private JLabel lblHireDate;
 	private JComboBox comboBoxMonth;
 	private JComboBox comboBoxDay;
 	private JComboBox comboBoxYear;
 	private JPanel panel_1;
-	
-	
+	private JButton btnEditEmployee;
+	private ListTableModel model;
+	private JButton closeButton;
 	
 	/**
 	 * Launch the application.
@@ -141,7 +147,9 @@ public class employeeGui {
 //		frmEmployeeManagement.setBounds(100, 100, 1093, 571);
 //		frmEmployeeManagement.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		frmEmployeeManagement.getContentPane().setLayout(null);
-		myDBconnection = DBAction;
+		this.DBAction = DBAction;
+		closeButton = new JButton("Close");
+		closeButton.addActionListener(this);
 		
 		panelEmpGui = new JPanel();
 
@@ -188,7 +196,6 @@ public class employeeGui {
 		table_employee.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table_employee.setFont(new Font("Calibri", Font.PLAIN, 14));
 		table_employee.setAutoCreateRowSorter(true);
-		table_employee.setColumnSelectionAllowed(true);
 		scrollPane.setViewportView(table_employee);
 		table_employee.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		table_employee.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -438,6 +445,12 @@ public class employeeGui {
 		labelError.setFont(new Font("Calibri", Font.PLAIN, 14));
 		labelError.setBounds(10, 302, 491, 24);
 		panelEmpGui.add(labelError);
+		
+		btnEditEmployee = new JButton("Edit selected employee");
+		btnEditEmployee.addActionListener(this);
+		btnEditEmployee.setFont(new Font("Calibri", Font.PLAIN, 16));
+		btnEditEmployee.setBounds(10, 394, 200, 51);
+		panelEmpGui.add(btnEditEmployee);
 	} // end initialize
 	
 	
@@ -449,8 +462,8 @@ public class employeeGui {
 	private void populateEmployees(){
 		
 		
-		//dbAction myDBconnection = new dbAction();
-		resultSet = myDBconnection.getEmployeesFull();
+		//dbAction DBAction = new dbAction();
+		resultSet = DBAction.getEmployeesFull();
 		
 		//I was using the to troubleshoot based off of: http://www.youtube.com/watch?v=hg1S3QHFNrE
 		//requires external jar
@@ -459,7 +472,8 @@ public class employeeGui {
 		
 		try {
 			//create model from db result and add to table
-			ListTableModel model = ListTableModel.createModelFromResultSet(resultSet);
+			model = ListTableModel.createModelFromResultSet(resultSet);
+
 			table_employee.setModel(model);
 			populateRoles();
 			labelError.setForeground(Color.BLACK);
@@ -480,8 +494,8 @@ public class employeeGui {
 	 */
 	private void populateRoles(){
 		
-		//dbAction myDBconnection = new dbAction();
-		resultSet = myDBconnection.getRoles();
+		//dbAction DBAction = new dbAction();
+		resultSet = DBAction.getRoles();
 		roleList = new ArrayList();
 		try {
 			while (resultSet.next()){
@@ -494,8 +508,7 @@ public class employeeGui {
 				roleList.add(resultSet.getInt(2));
 			}
 			
-			//This creates
-
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -557,7 +570,7 @@ public class employeeGui {
 							String[] addr = {address, city, state, zip, phone};
 							
 							//Try to add employee to database
-							boolean[] employeeOutput = myDBconnection.addEmployee(names, addr, role, isActive, hireDate);
+							boolean[] employeeOutput = DBAction.addEmployee(names, addr, role, isActive, hireDate);
 							
 							if (employeeOutput[0] == true && employeeOutput[1] == true){
 								populateEmployees();
@@ -700,5 +713,43 @@ public class employeeGui {
 		return temp;
 		
 	}
+	/**
+	 * This method allows edits to the table to specific rows
+	 * 
+	 */
+	public void actionPerformed(ActionEvent arg0) {
+		JWindow window = new JWindow();
 
+		int Y = table_employee.getSelectedRow();
+		String[] employeeInfo = new String[12];
+		int EID = 0, FNAME=1,LNAME=2,ADDR=3,CITY=4,ST=5,ZIP=6,PH=7,ACTIVE=8,ROLE=9,HDATE=10,TDATE=11;
+		employeeInfo[EID]= table_employee.getValueAt(Y, EID).toString();
+		employeeInfo[FNAME]= table_employee.getValueAt(Y, FNAME).toString();
+		employeeInfo[LNAME]= table_employee.getValueAt(Y, LNAME).toString();
+		employeeInfo[ADDR]= table_employee.getValueAt(Y, ADDR).toString();
+		employeeInfo[CITY]= table_employee.getValueAt(Y, CITY).toString();
+		employeeInfo[ST]= table_employee.getValueAt(Y, ST).toString();
+		employeeInfo[ZIP]= table_employee.getValueAt(Y, ZIP).toString();
+		employeeInfo[PH]= table_employee.getValueAt(Y, PH).toString();
+		employeeInfo[ACTIVE]= table_employee.getValueAt(Y, ACTIVE).toString();
+		employeeInfo[ROLE]= table_employee.getValueAt(Y, ROLE).toString();
+		employeeInfo[HDATE]= table_employee.getValueAt(Y, HDATE).toString();
+		try{
+			employeeInfo[TDATE]= table_employee.getValueAt(Y, TDATE).toString();
+		} catch (NullPointerException e){
+			employeeInfo[TDATE]="0";
+		}
+		
+		//TODO- this all needs to be changed to a modal jdialog or something
+
+	 	window.setContentPane(new editEmployeePanelGui(employeeInfo, DBAction));
+	 	window.setAlwaysOnTop (true);
+	 	window.pack();
+	 	window.setVisible(false);
+	 	window.setLocationRelativeTo(null);
+		//window.add(new editEmployeePanelGui(employeeInfo, DBAction));
+		
+		window.setVisible(true);
+		
+	}
 }
