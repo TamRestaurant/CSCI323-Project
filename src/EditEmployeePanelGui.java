@@ -34,7 +34,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
-public class editEmployeePanelGui extends JPanel implements ActionListener {
+public class EditEmployeePanelGui extends JPanel implements ActionListener {
 	private JTextField textEmployeeID;
 	private JTextField textFName;
 	private JTextField textLName;
@@ -62,7 +62,7 @@ public class editEmployeePanelGui extends JPanel implements ActionListener {
 	private JSlider sliderActive;
 	private JLabel lblInactive;
 	private JSpinner spinnerHire;
-	private dbAction DBAction;
+	private DbAction DBAction;
 	private ArrayList roleList;
 	private Date dateIn = null, dateOut = null;
 	private JButton button;
@@ -71,7 +71,7 @@ public class editEmployeePanelGui extends JPanel implements ActionListener {
 	 * Create the panel.
 	 * @param closeButton 
 	 */
-	public editEmployeePanelGui(String[] employeeInfo, dbAction DBAction) {
+	public EditEmployeePanelGui(String[] employeeInfo, DbAction DBAction) {
 		this.DBAction = DBAction;
 		
 		lblNewLabel = new JLabel("Edit Employee");

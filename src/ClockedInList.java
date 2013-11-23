@@ -6,12 +6,12 @@ import java.util.Date;
  * @author Austin
  *
  */
-public class clockedInList {
+public class ClockedInList {
 	private int employeeTimeID, employeeID;
 	private Date clockInDate, clockOutDate;
 	
 	
-	public clockedInList(dbAction DBAction){
+	public ClockedInList(DbAction DBAction){
 		
 		
 		

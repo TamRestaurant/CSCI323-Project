@@ -8,12 +8,12 @@ import javax.swing.JComboBox;
  * @author Austin
  *
  */
-public class dateComboFill {
+public class DateComboFill {
 
 	private String[] states = {"AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"};
 	private String[] day = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
 
-	public dateComboFill(){}
+	public DateComboFill(){}
 	
 	
 	public boolean updateDayCombo(JComboBox comboBoxMonth,JComboBox comboBoxDay,JComboBox comboBoxYear){

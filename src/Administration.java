@@ -16,7 +16,7 @@ import javax.swing.JTabbedPane;
  *
  */
 
-public class admin extends JPanel {
+public class Administration extends JPanel {
 	private  JTabbedPane tabbedPane;
 	private   employeeGui empGui;
 	private  orderHistory orderHist;
@@ -24,7 +24,7 @@ public class admin extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public admin(dbAction DBAction) {
+	public Administration(DbAction DBAction) {
 		setBounds(new Rectangle(5, 5, 1100, 550));
 		setLayout(null);
 		

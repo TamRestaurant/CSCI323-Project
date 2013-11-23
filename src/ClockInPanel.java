@@ -33,7 +33,7 @@ import java.awt.event.ItemEvent;
  *
  */
 
-public class clockInPanel extends JPanel implements ActionListener, ItemListener {
+public class ClockInPanel extends JPanel implements ActionListener, ItemListener {
 	private JButton btnKey1;
 	private JButton btnKey2;
 	private JButton btnKey3;
@@ -55,7 +55,7 @@ public class clockInPanel extends JPanel implements ActionListener, ItemListener
 	private Vector<employee> employeeList; // I made this thinking that it would poplulate the combo box, but it is an object not a string
 	private String[] employeeStringArray;
 	//This arraylist holds an array that has two values index0=tempRecordID index1=employeeID
-	private dbAction DBAction;
+	private DbAction DBAction;
 	private ArrayList<int[]> clockedInEmployees;
 	private final int CLOCK_IN_RECORD_ID = 0, CLOCK_IN_EMP_ID = 1;
 	private JButton buttonClear;
@@ -66,7 +66,7 @@ public class clockInPanel extends JPanel implements ActionListener, ItemListener
 	 * @param DBAction
 	 */
 
-	public clockInPanel(dbAction DBAction) {
+	public ClockInPanel(DbAction DBAction) {
 		setLayout(null);
 		this.DBAction = DBAction;
 		

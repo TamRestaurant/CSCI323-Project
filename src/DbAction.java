@@ -21,11 +21,11 @@ import java.util.Vector;
  *
  */
 
-public class dbAction {
+public class DbAction {
 	//Examples from: http://dev.mysql.com/doc/connector-j/en/connector-j-usagenotes-statements.html
 	
 	private Connection conn;
-	private dbConnector myConnector = null;
+	private DbConnector myConnector = null;
 	
 	
 	private Statement stmt = null;
@@ -37,7 +37,7 @@ public class dbAction {
 	 * of every class thats need to call this method
 	 * TODO: fix this
 	 */
-	public dbAction(){
+	public DbAction(){
 		
 		// Connect to db
 		try {
@@ -45,7 +45,7 @@ public class dbAction {
             // broken Java implementations
 
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-            myConnector = new dbConnector();
+            myConnector = new DbConnector();
             //Get db connection to use for statements
             conn = myConnector.getConnection();
             

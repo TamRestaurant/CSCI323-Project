@@ -16,7 +16,7 @@ import java.sql.SQLException;
  * 
  */
 
-public class dbConnector{
+public class DbConnector{
 	
 	//place holder for connection
 	Connection conn = null;
@@ -27,7 +27,7 @@ public class dbConnector{
 	//private String username = "root", password="Passw0rd1", url="localhost";
 	
 	//Constructor
-	public dbConnector(){
+	public DbConnector(){
 		
 /*		try{
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
