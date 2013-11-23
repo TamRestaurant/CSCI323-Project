@@ -51,7 +51,7 @@ public class register extends JFrame {
 	private JTabbedPane reg = new JTabbedPane(JTabbedPane.TOP);
 	private static JPanel panel;
 	private JButton[] cashierButtons;
-	private dbAction DBAction;
+	private DbAction DBAction;
 	private JLabel enterPassword;
 	private String registerPassword = "tam";
 	private JPasswordField passwordBox;
@@ -59,7 +59,7 @@ public class register extends JFrame {
 
 	// pwdYourPin.setText("xxxxxxxx");
 //
-	public register(dbAction DBAction)
+	public register(DbAction DBAction)
 
 	{
 

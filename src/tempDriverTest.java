@@ -5,7 +5,7 @@ public class tempDriverTest {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		dbAction DBAction = new dbAction();
+		DbAction DBAction = new DbAction();
 		
 		ArrayList<Order> myOrders = DBAction.getOpenOrders();
 		

@@ -62,7 +62,7 @@ public class kitchen extends JFrame {
 	private JTextField txtComment;
 	private static  JTextArea massageCenter;
 	private JList orderListBox;
-	private dbAction DBAct;
+	private DbAction DBAct;
 	private ArrayList<Order> openOrdersArray;
 	private Vector<Order> openOrdersVector = new Vector();
 	private DefaultComboBoxModel model = new DefaultComboBoxModel(
@@ -75,7 +75,7 @@ public class kitchen extends JFrame {
 	private int orderNum = 0;
 	public menu myMenu; 
 
-	public kitchen(dbAction DBAction) {
+	public kitchen(DbAction DBAction) {
 
 		// Connect to DB (passed in as parameter)
 		DBAct = DBAction;
@@ -134,10 +134,10 @@ public class kitchen extends JFrame {
 		// ----------------------- settings ----------------------------
 		lblSelectOrd.setBounds(313, 11, 298, 31);
 		lblComments.setBounds(72, 62, 250, 14);
-		clearMessages.setBounds(84, 380, 170, 30);
-		lblMessage.setBounds(84, 460, 170, 30);
-		btnContact.setBounds(84, 340, 170, 30);
-		orderUp.setBounds(84, 305, 170, 31);
+		clearMessages.setBounds(84, 257, 170, 57);
+		lblMessage.setBounds(84, 341, 170, 30);
+		btnContact.setBounds(84, 188, 170, 57);
+		orderUp.setBounds(84, 145, 170, 31);
 		txtComment.setBounds(20, 87, 300, 30);
 
 		// ---------------------- adds to panel -----------------------------
@@ -159,13 +159,13 @@ public class kitchen extends JFrame {
 		// ----------------------------------------------------------------
 
 		scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(20, 500, 400, 150);
+		scrollPane_2.setBounds(20, 420, 350, 230);
 		messagePanel.add(scrollPane_2);
-		massageCenter = new JTextArea();
+		//massageCenter = new JTextArea();
 		//messagePanel.add(massageCenter);
-		messagePanel.add(scrollPane_2);
-		scrollPane_2.setViewportView(massageCenter);
-		massageCenter.setEnabled(true);
+		//messagePanel.add(scrollPane_2);
+//		scrollPane_2.setViewportView(massageCenter);
+//		massageCenter.setEnabled(true);
 
 		// ----------------------------------------------------------------
 
@@ -208,7 +208,10 @@ public class kitchen extends JFrame {
 		orderDetailTextArea = new JTextArea();
 		orderDetailTextArea.setBounds(10, 20, 400, 290);
 		scrollPane.setViewportView(orderDetailTextArea);
-
+		massageCenter = new JTextArea();
+		massageCenter.setBounds(31, 513, 365, 146);
+		massageCenter.setEnabled(false);//----
+		scrollPane_2.setViewportView(massageCenter);//----
 		btnContact.addActionListener(new buttonListener());
 		clearMessages.addActionListener(new buttonListener());
 		// ---------------------------------------------------
@@ -288,8 +291,6 @@ public void sendTowait()
 	menu.setKitchenMassages(m+"\n");
 }
 
-//---------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------
 
 public static  void setMenuMassages(String m)
 {
@@ -300,9 +301,7 @@ public static  void setMenuMassages(String m)
 	return massageCenter.getText();
 }
 	
-	//---------------------------------------------------------------------------------------------------------------
-    //---------------------------------------------------------------------------------------------------------------
-
+	
 
 	public void orderUp() {
 

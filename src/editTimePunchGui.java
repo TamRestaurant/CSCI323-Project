@@ -39,9 +39,10 @@ public class editTimePunchGui extends JPanel implements ActionListener {
 	private JComboBox comboClockInYear;
 	private JComboBox comboClockOutMonth;
 	private JComboBox comboClockOutDay;
+	
 	private JComboBox comboClockOutYear;
 	private DefaultComboBoxModel nameCombo = new DefaultComboBoxModel();
-	private dateComboFill fillDate = new dateComboFill();
+	private DateComboFill fillDate = new DateComboFill();
 	private boolean addNewRecord;
 	private JButton btnCancel;
 	private JPanel contentPane;

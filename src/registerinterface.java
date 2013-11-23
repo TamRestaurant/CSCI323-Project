@@ -59,7 +59,7 @@ public class registerinterface extends JFrame {
 	private JLabel lblChange, changelbl;
 	private JButton[] mb;
 	private int index = 0;
-	private dbAction DBAction;
+	private DbAction DBAction;
 	private JTextField tipAmountTxtBox;
 	private JLabel lblEnterTipReceived;
 	private boolean amtTend = false;
@@ -89,7 +89,7 @@ public class registerinterface extends JFrame {
 	 * Because this is in its own application, the dbAction is required to be
 	 * final
 	 */
-	public static void main(String[] args, final dbAction DBAct) {
+	public static void main(String[] args, final DbAction DBAct) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -108,7 +108,7 @@ public class registerinterface extends JFrame {
 	 * 
 	 * @param dbAction
 	 */
-	public registerinterface(dbAction DBAct) {
+	public registerinterface(DbAction DBAct) {
 		// Create instance of DBAction (database interface)
 		DBAction = DBAct;
 		// Get all open orders from the database so that menu can be populated

@@ -46,7 +46,7 @@ import javax.swing.event.ChangeEvent;
 
 public class employeeTimeTrackingGui extends JPanel implements ActionListener {
 
-	public dbAction DBAction;
+	public DbAction DBAction;
 	private JTable table;
 	private JButton btnPopulateTable;
 	private JPanel panelEdit;
@@ -81,7 +81,7 @@ public class employeeTimeTrackingGui extends JPanel implements ActionListener {
 	/**
 	 * Create the panel.
 	 */
-	public employeeTimeTrackingGui(dbAction DBAction) {
+	public employeeTimeTrackingGui(DbAction DBAction) {
 
 		
 		this.DBAction = DBAction;
@@ -394,8 +394,8 @@ public class employeeTimeTrackingGui extends JPanel implements ActionListener {
 		
 		//Popup confirming that delete wants to be completed (maybe just null values and keep records?????)
 		else if (arg0.getSource() == btnDeleteSelected){
-			
-			
+		
+		
 		}
 		
 		else if(arg0.getSource() == btnUpdate){

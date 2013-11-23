@@ -54,7 +54,7 @@ public class orderHistory implements ActionListener {
 	private JComboBox comboToYear;
 	private JPanel panelStartDate;
 	private JPanel panelFromDate;
-	private dateComboFill fillDate = new dateComboFill();
+	private DateComboFill fillDate = new DateComboFill();
 	final private int CURR_YEAR = Calendar.getInstance().get(Calendar.YEAR);
 	final private int CURR_MONTH = Calendar.getInstance().get(Calendar.MONTH);
 	final private int CURR_DAY = Calendar.getInstance().get(Calendar.DATE);
@@ -68,7 +68,7 @@ public class orderHistory implements ActionListener {
 	private JPanel panelReportOptions;
 	private JButton btnSubmit;
 	private JButton btnSaveReport;
-	private dbAction myDBconnection;
+	private DbAction myDBconnection;
 	private JLabel lblErrorLabel;
 	
 	private ResultSet resultSet;
@@ -94,7 +94,7 @@ public class orderHistory implements ActionListener {
 	/**
 	 * Create the application.
 	 */
-	public orderHistory(dbAction DBAction) {
+	public orderHistory(DbAction DBAction) {
 		initialize(DBAction);
 	}
 	
@@ -105,7 +105,7 @@ public class orderHistory implements ActionListener {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(dbAction DBAction) {
+	private void initialize(DbAction DBAction) {
 //		frame = new JFrame();
 //		frame.setBounds(100, 100, 984, 612);
 //		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
