@@ -126,7 +126,7 @@ public class RestWinMake extends JFrame {
 		contentPane.add(tabbedPane);
 		// -----------------------ADD menu
 		// tab-----------------------------------
-		menu m = new menu(getMenuItems(), DBAction);
+		Menu m = new Menu(getMenuItems(), DBAction);
 		tabbedPane.addTab("menu", null, m.m(), null);
 		// -----------------------ADD wait station
 		// tab-----------------------------------

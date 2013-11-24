@@ -73,7 +73,7 @@ public class kitchen extends JFrame {
 	private JScrollPane scrollPane;//, orderScroll;
 	private JScrollPane scrollPane_1, scrollPane_2;
 	private int orderNum = 0;
-	public menu myMenu; 
+	public Menu myMenu; 
 
 	public kitchen(DbAction DBAction) {
 
@@ -288,7 +288,7 @@ public void sendTowait()
 {
 	String m ="";
 	m=massageCenter.getText();
-	menu.setKitchenMassages(m+"\n");
+	Menu.setKitchenMassages(m+"\n");
 }
 
 
