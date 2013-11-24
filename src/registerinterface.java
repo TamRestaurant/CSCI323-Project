@@ -44,7 +44,9 @@ import javax.swing.JFormattedTextField;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+
 import javax.swing.SwingConstants;
+
 import java.awt.Font;
 
 public class registerinterface extends JFrame {
@@ -81,6 +83,7 @@ public class registerinterface extends JFrame {
 	private int ordernum = 0;
 	private JLabel label;
 	private JLabel label_1;
+	private final String managerPw = "tamman";
 
 	// private NumberFormat fmt=new NumberFormat();.getCurrencyInstance();
 	/*
@@ -334,12 +337,21 @@ public class registerinterface extends JFrame {
 					try {
 						discountPercent = (Double.parseDouble(discountTextBox
 								.getText())) / 100;
-						
+
 						// get password for discount over 15%
 						if (discountPercent > .15) {
-							String pwrd = JOptionPane
-									.showInputDialog("Enter Manager PIN.");
-							if (!pwrd.equals("tamman")) {
+							String pwrd = null;
+							try {
+								pwrd = JOptionPane
+										.showInputDialog("Enter Manager PIN.");
+								if(pwrd==null) {
+									return;
+								}
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								return;
+							}
+							if (!pwrd.equals(managerPw)) {
 								JOptionPane.showMessageDialog(null,
 										"Invalid PIN!");
 								return;
@@ -452,6 +464,10 @@ public class registerinterface extends JFrame {
 					 * will be created DBAction.closeOpenOrder(int orderNumber,
 					 * String date)
 					 */
+					discountCheckBox.setSelected(false);
+					discountTextBox.setEnabled(false);
+					totalLbl.setText(""
+							+ NumberFormat.getCurrencyInstance().format(0.0));
 					// this is not yet implemented... wait for austin
 					closeOrder();
 
