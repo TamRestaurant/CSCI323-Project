@@ -133,7 +133,7 @@ public class Register extends JFrame {
 				enteredpw += c;
 			}
 			if (enteredpw.equals(registerPassword)) {
-				registerinterface.main(null, DBAction);
+				RegisterGui.main(null, DBAction);
 			} else {
 				JOptionPane.showMessageDialog(null, "Password incorrect!!");
 			}

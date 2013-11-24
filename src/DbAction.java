@@ -105,7 +105,7 @@ public class DbAction {
 	 * This returns and array[2] that contains the record of clock in and the employee id
 	 * @param currEmployee
 	 */
-	public int[] clockInEmployee(employee currEmployee){
+	public int[] clockInEmployee(Employee currEmployee){
 		String sqlAddress = "INSERT into csci_323_exp20140101.EmployeeTimeRecord(Employee_idEmployee,ClockInDateTime) VALUES (?,?)";
 		int[] clockInRecordArray = new int[2];
 		final int CLOCK_IN_RECORD_ID = 0;
@@ -217,7 +217,7 @@ public class DbAction {
 	 */
 	public Vector getEmployees(boolean onlyActive){
 		
-		Vector<employee> employeeList = new Vector();
+		Vector<Employee> employeeList = new Vector();
 		String sqlAll = "Select\n  Employee.idEmployee,\n  Employee.FirstName,\n  Employee.LastName,\n  EmployeeRole.RoleName,\n  Employee.Pin,\n  Employee.Active\n"
 				+ "From\n  Employee Inner Join\n  EmployeeRole On Employee.EmployeeRole_idEmployeeRole =\n    EmployeeRole.idEmployeeRole"
 				+ "Order By\n  Employee.idEmployee";
@@ -236,7 +236,7 @@ public class DbAction {
 			
 			//Iterate through arraylist and add employees
 			while (rs.next()){
-				employeeList.add(new employee(rs.getInt("idEmployee"), rs.getString("FirstName"), rs.getString("LastName"), rs.getString("RoleName"), rs.getString("Pin")));
+				employeeList.add(new Employee(rs.getInt("idEmployee"), rs.getString("FirstName"), rs.getString("LastName"), rs.getString("RoleName"), rs.getString("Pin")));
 			}
 			
 		}

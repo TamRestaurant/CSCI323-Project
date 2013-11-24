@@ -74,9 +74,9 @@ import javax.swing.JTabbedPane;
 
 public class Administration extends JPanel {
 	private  JTabbedPane tabbedPane;
-	private   employeeGui empGui;
-	private  orderHistory orderHist;
-	private  employeeTimeTrackingGui empTimeTracking;
+	private   EmployeeGui empGui;
+	private  OrderHistory orderHist;
+	private  EmployeeTimeTrackingGui empTimeTracking;
 	/**
 	 * Create the panel.
 	 */
@@ -88,9 +88,9 @@ public class Administration extends JPanel {
 		tabbedPane.setBounds(0, 0, 1100, 550);
 		add(tabbedPane);
 		
-		empGui = new employeeGui(DBAction);
-		orderHist = new orderHistory(DBAction);
-		empTimeTracking = new employeeTimeTrackingGui(DBAction);
+		empGui = new EmployeeGui(DBAction);
+		orderHist = new OrderHistory(DBAction);
+		empTimeTracking = new EmployeeTimeTrackingGui(DBAction);
 		
 		
 		tabbedPane.addTab("Employee Management", empGui.getEmployeeGui());

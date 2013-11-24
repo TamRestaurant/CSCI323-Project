@@ -6,7 +6,7 @@ import java.util.Date;
  * @author Austin
  *
  */
-public class employee {
+public class Employee {
 	private String firstName, lastName, employeeRole;
 	private int empId;
 	private String pin;
@@ -23,7 +23,7 @@ public class employee {
 	 * @param employeeRole
 	 * @param pin
 	 */
-	public employee(int empId, String firstName, String lastName, String employeeRole, String pin){
+	public Employee(int empId, String firstName, String lastName, String employeeRole, String pin){
 		
 		setEmpId(empId);
 		setFirstName(firstName);setLastName(lastName);

@@ -671,6 +671,6 @@ public class Menu extends JFrame {
 	public void sendToKitchen() {
 		String m = "";
 		m = messagesList.getText();
-		kitchen.setMenuMassages(m + "\n");
+		Kitchen.setMenuMassages(m + "\n");
 	}
 }

@@ -35,10 +35,10 @@ import javax.swing.JSeparator;
 
 import java.awt.GridLayout;
 
-public class waitStation extends JFrame 
+public class WaitStation extends JFrame 
 {
 	private JTabbedPane wait;
-	public waitStation()
+	public WaitStation()
 	{
 		wait = new JTabbedPane(JTabbedPane.TOP);
 		

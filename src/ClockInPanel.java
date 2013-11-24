@@ -52,7 +52,7 @@ public class ClockInPanel extends JPanel implements ActionListener, ItemListener
 	private JButton buttonClockInOut;
 	private JLabel lblStatus;
 	
-	private Vector<employee> employeeList; // I made this thinking that it would poplulate the combo box, but it is an object not a string
+	private Vector<Employee> employeeList; // I made this thinking that it would poplulate the combo box, but it is an object not a string
 	private String[] employeeStringArray;
 	//This arraylist holds an array that has two values index0=tempRecordID index1=employeeID
 	private DbAction DBAction;
