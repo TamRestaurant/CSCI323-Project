@@ -47,14 +47,15 @@ public class RestWinMake extends JFrame {
 	private JPasswordField pwdYourPin;
 	private static JTabbedPane tabbedPane;
 
-	//m
+	// m
 	// This connects to DB and can be passed into any class that needs to
 	// connect to DB
 	// (best to config constructor initialization, refer to admin tab for
 	// example)
 	private DbAction DBAction = new DbAction();
-//
-	
+
+	//
+
 	/**
 	 * Launch the application.
 	 */
@@ -116,7 +117,7 @@ public class RestWinMake extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		//setBounds(0, 0, 1300, 767);
+		// setBounds(0, 0, 1300, 767);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.windowBorder);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -315,16 +316,16 @@ public class RestWinMake extends JFrame {
 		}
 
 	}// end listener
+
 	public static void setEnabledPanel(boolean is) {
-		//get components and set value
+		// get components and set value
 		tabbedPane.setEnabled(is);
-		Component[]comps= tabbedPane.getComponents();
-		for(Component c:comps) {
+		Component[] comps = tabbedPane.getComponents();
+		for (Component c : comps) {
 			c.setEnabled(is);
 		}
-		
+
 	}
-	
-	
+
 }// End
 
