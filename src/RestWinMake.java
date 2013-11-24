@@ -36,9 +36,11 @@ import javax.swing.JSeparator;
 
 //import RPSGui.buttonListener;
 
+
 import java.awt.GridLayout;
 
 import javax.swing.JScrollPane;
+
 import java.awt.SystemColor;
 import java.awt.Font;
 
@@ -106,8 +108,10 @@ public class RestWinMake extends JFrame {
 	public RestWinMake() {// Begin Main
 		// printorder for test purpose
 		ArrayList<Order> oo = DBAction.getOpenOrders();
-		for (Order o : oo)
-			System.out.println(o);
+		for (Order o : oo) {
+			System.out.println(o+"\t"+o.getOrderDate());
+			//System.out.println();
+			}
 
 		// ResultSet ii=DBAction.getMenuItems();
 		// //for(Item o:ii)

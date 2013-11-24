@@ -95,7 +95,8 @@ public class RegisterGui extends JFrame {
 	}
 
 	/**
-	 * @param managerPw the managerPw to set
+	 * @param managerPw
+	 *            the managerPw to set
 	 */
 	public static void setManagerPw(String managerPw) {
 		RegisterGui.managerPw = managerPw;
@@ -170,13 +171,13 @@ public class RegisterGui extends JFrame {
 				break;
 			}
 			panel_1.add(mb[i - 1]);
-			////
+			// //
 			// appearance settings for keypad
 			mb[i - 1].addActionListener(new buttonListener());
 			mb[i - 1].setFont(new Font("Calibri", Font.BOLD, 14));
 			mb[i - 1].setBackground(SystemColor.inactiveCaption);
 			mb[i - 1].setForeground(SystemColor.activeCaptionText);
-			////
+			// //
 		}
 		orderComboBox = new JComboBox(openOrdersVector);
 		orderComboBox.setBackground(SystemColor.scrollbar);
@@ -350,13 +351,14 @@ public class RegisterGui extends JFrame {
 		label_1.setFont(new Font("Calibri", Font.BOLD, 14));
 		label_1.setBounds(370, 227, 18, 14);
 		contentPane.add(label_1);
-		
-		JButton btnChangeManagerPassword = new JButton("Change Manager Password");
+
+		JButton btnChangeManagerPassword = new JButton(
+				"Change Manager Password");
 		btnChangeManagerPassword.setBackground(SystemColor.inactiveCaption);
 		btnChangeManagerPassword.setFont(new Font("Calibri", Font.BOLD, 12));
 		btnChangeManagerPassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ChangeRegPassword.main(null,managerPw,3);
+				ChangeRegPassword.main(null, managerPw, 3);
 			}
 		});
 		btnChangeManagerPassword.setBounds(217, 707, 350, 23);
@@ -406,7 +408,7 @@ public class RegisterGui extends JFrame {
 							try {
 								pwrd = JOptionPane
 										.showInputDialog("Enter Manager PIN.");
-								if(pwrd==null) {
+								if (pwrd == null) {
 									return;
 								}
 							} catch (Exception e) {
@@ -529,6 +531,8 @@ public class RegisterGui extends JFrame {
 					discountCheckBox.setSelected(false);
 					discountTextBox.setEnabled(false);
 					totalLbl.setText(""
+							+ NumberFormat.getCurrencyInstance().format(0.0));
+					changelbl.setText(""
 							+ NumberFormat.getCurrencyInstance().format(0.0));
 					// this is not yet implemented... wait for austin
 					closeOrder();

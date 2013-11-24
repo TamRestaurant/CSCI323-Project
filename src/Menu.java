@@ -322,13 +322,13 @@ public class Menu extends JFrame {
 					order = new Order(items, table, employeeID, orderNumber);
 					// db.addOrder(order);
 					if (db.addOrder(order)) {
-						System.out.println("added" + order);
+						System.out.println("added" + order+"\t"+order.getOrderDate());
 					}
 					// refresh database connection
 					// db=new dbAction();
 					ArrayList<Order> oo = db.getOpenOrders();
 					for (Order o : oo) {
-						System.out.println(o);
+						System.out.println(o+"\t"+o.getOrderDate());
 					}
 					// orderNumber++;
 					rePopulateOpenOrderList();
