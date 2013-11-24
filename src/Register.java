@@ -55,9 +55,23 @@ public class Register extends JFrame {
 	private JButton[] cashierButtons;
 	private DbAction DBAction;
 	private JLabel enterPassword;
-	private String registerPassword = "tam";
+	private  static String registerPassword = "tam";
+	/**
+	 * @return the registerPassword
+	 */
+	public static String getRegisterPassword() {
+		return registerPassword;
+	}
+
+	/**
+	 * @param registerPassword the registerPassword to set
+	 */
+	public static void setRegisterPassword(String registerPassword) {
+		Register.registerPassword = registerPassword;
+	}
 	private JPasswordField passwordBox;
 	private JPanel panel_1;
+	private JButton changeRegpwBtn;
 
 	// pwdYourPin.setText("xxxxxxxx");
 //
@@ -113,6 +127,18 @@ public class Register extends JFrame {
 		lblCashRegister.setFont(new Font("Calibri", Font.BOLD, 40));
 		lblCashRegister.setBounds(358, 91, 301, 69);
 		panel.add(lblCashRegister);
+		
+		changeRegpwBtn = new JButton("Change Register Password");
+		changeRegpwBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ChangeRegPassword.main(null,registerPassword,2);
+				
+			}
+		});
+		changeRegpwBtn.setFont(new Font("Calibri", Font.BOLD, 12));
+		changeRegpwBtn.setBounds(358, 514, 301, 23);
+		panel.add(changeRegpwBtn);
 		// reg.add(btnOpenRegister, BorderLayout.CENTER);
 		// reg.add(btnOpenRegister, BorderLayout.SOUTH);
 	}

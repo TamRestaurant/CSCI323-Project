@@ -109,7 +109,7 @@ public class Lockscreen extends JFrame {
 		changePwdBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				ChangeRegPassword.main(null,lockpwd);
+				ChangeRegPassword.main(null,lockpwd,1);
 			}
 		});
 		changePwdBtn.setFont(new Font("Calibri", Font.BOLD, 12));

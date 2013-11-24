@@ -20,6 +20,7 @@ public class ChangeRegPassword extends JFrame {
 	private JPasswordField newpwtxt2;
 	private JButton btnOk;
 	private String opw="";
+	private static int source=0;
 	
 	public ChangeRegPassword(String oldpw) {
 		setBounds(new Rectangle(350, 150, 400, 400));
@@ -77,6 +78,8 @@ public class ChangeRegPassword extends JFrame {
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+			
+				
 				char[] oldEnteredPwrd = oldpwtxt.getPassword();
 				String oldEnteredStrPwd = "";
 				for (char i : oldEnteredPwrd) {
@@ -105,7 +108,16 @@ public class ChangeRegPassword extends JFrame {
 					return;
 				}
 				opw=newStrPwd1;
-				Lockscreen.setLockpwd(newStrPwd1);
+				
+				switch(source) {
+				case 1:
+					Lockscreen.setLockpwd(newStrPwd1);
+					break;
+				case 2:
+					Register.setRegisterPassword(newStrPwd1);
+				}
+				
+				//Lockscreen.setLockpwd(newStrPwd1);
 				JOptionPane.showMessageDialog(null, "Password changed.");
 				dispose();
 				
@@ -116,7 +128,8 @@ public class ChangeRegPassword extends JFrame {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void main(String[] args, final String oldpw) {
+	public static void main(String[] args, final String oldpw,int src) {
+		source=src;
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
