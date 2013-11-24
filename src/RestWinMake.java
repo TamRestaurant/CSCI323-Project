@@ -40,6 +40,7 @@ import java.awt.GridLayout;
 
 import javax.swing.JScrollPane;
 import java.awt.SystemColor;
+import java.awt.Font;
 
 public class RestWinMake extends JFrame {
 	private JPanel contentPane;
@@ -124,12 +125,14 @@ public class RestWinMake extends JFrame {
 		contentPane.setLayout(null);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBackground(SystemColor.controlHighlight);
+		tabbedPane.setFont(new Font("Calibri", Font.BOLD, 13));
 		tabbedPane.setBounds(10, 10, 1100, 810);
 		contentPane.add(tabbedPane);
 		// -----------------------ADD menu
 		// tab-----------------------------------
 		Menu m = new Menu(getMenuItems(), DBAction);
-		tabbedPane.addTab("menu", null, m.m(), null);
+		tabbedPane.addTab("Menu", null, m.m(), null);
 		// -----------------------ADD wait station
 		// tab-----------------------------------
 		// waitStation w = new waitStation();

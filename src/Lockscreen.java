@@ -64,7 +64,7 @@ public class Lockscreen extends JFrame
                         		RestWinMake.setEnabledPanel(false);
                               
                         //menu.m().disable();//here
-                                 JOptionPane.showMessageDialog(null, "Locked!!");
+                                 JOptionPane.showMessageDialog(null, "Locked");
                         }
                 });
                 lockBtn.setBounds(28, 75, 445, 23);
@@ -75,13 +75,13 @@ public class Lockscreen extends JFrame
                 subLockpanel.setBackground(SystemColor.windowBorder);
                 subLockpanel.setLayout(null);
                 subLockpanel.setBounds(5, 5, 900, 900);
-                subLockpanel.setBorder(BorderFactory.createLoweredBevelBorder());
-                lockPanel.setBorder(BorderFactory.createLoweredBevelBorder());
+                subLockpanel.setBorder(BorderFactory.createRaisedBevelBorder());
+                lockPanel.setBorder(BorderFactory.createRaisedBevelBorder());
 
                 
-                lockscreen.addTab("Password tab", null, subLockpanel, null);
+               // lockscreen.addTab("Password tab", null, subLockpanel, null);
                 lockscreen.setBorder(BorderFactory.createLoweredBevelBorder());
-                
+                lockscreen.add(subLockpanel);
                 subLockpanel.add(lockPanel);
                 lockPanel.setBounds(275, 106, 500, 250);
                 
@@ -124,7 +124,7 @@ public class Lockscreen extends JFrame
                                 	 RestWinMake.setEnabledPanel(true);
                                 	
                              //menu.m().disable();//here
-                                      JOptionPane.showMessageDialog(null, "UNLocked!!");
+                                      JOptionPane.showMessageDialog(null, "Unlocked");
                                  }else {
                                          JOptionPane.showMessageDialog(null, "Wrong Password.");
                                  }
