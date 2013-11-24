@@ -46,6 +46,7 @@ public class Lockscreen extends JFrame {
 	private JTabbedPane lockscreen;
 	private JPanel lockPanel, subLockpanel;
 	private JLabel lblLockWorkstation;
+	private static String lockpwd="tam";
 
 	public Lockscreen() {
 		JButton unlockBtn = new JButton("Unlock Workstation");
@@ -57,10 +58,9 @@ public class Lockscreen extends JFrame {
 		lockBtn.setBackground(SystemColor.controlHighlight);
 		lockBtn.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lockBtn.addActionListener(new ActionListener() {
+			///////////Lock
 			public void actionPerformed(ActionEvent arg0) {
 				RestWinMake.setEnabledPanel(false);
-
-				// menu.m().disable();//here
 				JOptionPane.showMessageDialog(null, "Locked");
 			}
 		});
@@ -91,7 +91,7 @@ public class Lockscreen extends JFrame {
 				pwdYourPin.setText("");
 			}
 		});
-		pwdYourPin.setText("tam");
+		pwdYourPin.setText(lockpwd);
 		pwdYourPin.setBounds(219, 116, 62, 29);
 		lockPanel.setLayout(null);
 		lockPanel.add(pwdYourPin);
@@ -104,19 +104,28 @@ public class Lockscreen extends JFrame {
 		lblLockWorkstation.setFont(new Font("Calibri", Font.BOLD, 28));
 		lblLockWorkstation.setBounds(275, 38, 500, 36);
 		subLockpanel.add(lblLockWorkstation);
+		
+		JButton changePwdBtn = new JButton("Change Lockscreen Password");
+		changePwdBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ChangeRegPassword.main(null,lockpwd);
+			}
+		});
+		changePwdBtn.setFont(new Font("Calibri", Font.BOLD, 12));
+		changePwdBtn.setBounds(429, 552, 195, 25);
+		subLockpanel.add(changePwdBtn);
 		unlockBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				////////unlock
+				
 				char[] enteredPwrd = pwdYourPin.getPassword();
 				String enteredStrPwd = "";
 				for (char i : enteredPwrd) {
 					enteredStrPwd += i;
 				}
 				System.out.println(enteredStrPwd);
-
-				// enteredStrPwd=pwdYourPin.getText();
-
-				if (enteredStrPwd.equals("tam")) {
+				if (enteredStrPwd.equals(lockpwd)) {
 					RestWinMake.setEnabledPanel(true);
 
 					// menu.m().disable();//here
@@ -127,6 +136,20 @@ public class Lockscreen extends JFrame {
 
 			}
 		});
+	}
+
+	/**
+	 * @return the lockpwd
+	 */
+	public static String getLockpwd() {
+		return lockpwd;
+	}
+
+	/**
+	 * @param lockpwd the lockpwd to set
+	 */
+	public static void setLockpwd(String  pwd) {
+		 lockpwd =  pwd;
 	}
 
 	public JTabbedPane lock() {
