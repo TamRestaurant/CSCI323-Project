@@ -48,6 +48,7 @@ import java.awt.event.FocusEvent;
 import javax.swing.SwingConstants;
 
 import java.awt.Font;
+import java.awt.SystemColor;
 
 public class registerinterface extends JFrame {
 
@@ -121,11 +122,14 @@ public class registerinterface extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(185, 0, 800, 767);
 		contentPane = new JPanel();
+		contentPane.setBackground(SystemColor.windowBorder);
+		contentPane.setForeground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
 		JLabel lblNewLabel = new JLabel("Order");
-		lblNewLabel.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblNewLabel.setForeground(SystemColor.activeCaption);
+		lblNewLabel.setFont(new Font("Calibri", Font.BOLD, 12));
 		JPanel panel = new JPanel();
 		contentPane.add(panel);
 
@@ -151,14 +155,21 @@ public class registerinterface extends JFrame {
 			}
 			panel_1.add(mb[i - 1]);
 			mb[i - 1].addActionListener(new buttonListener());
+			mb[i - 1].setFont(new Font("Calibri", Font.BOLD, 12));
+			mb[i - 1].setBackground(SystemColor.inactiveCaption);
+			mb[i - 1].setForeground(SystemColor.activeCaptionText);
 		}
 		orderComboBox = new JComboBox(openOrdersVector);
+		orderComboBox.setBackground(SystemColor.scrollbar);
+		orderComboBox.setForeground(SystemColor.activeCaptionText);
 		orderComboBox.setFont(new Font("Calibri", Font.PLAIN, 12));
 		orderComboBox.setMaximumRowCount(100);
 		orderComboBox.setBounds(241, 67, 350, 20);
 		contentPane.add(orderComboBox);
 		applyPymtButton = new JButton("Apply Payment");
-		applyPymtButton.setFont(new Font("Calibri", Font.PLAIN, 12));
+		applyPymtButton.setBackground(SystemColor.inactiveCaption);
+		applyPymtButton.setForeground(SystemColor.activeCaptionText);
+		applyPymtButton.setFont(new Font("Calibri", Font.BOLD, 12));
 		applyPymtButton.setEnabled(false);
 
 		applyPymtButton.addActionListener(new applyPaymentAction());
@@ -171,11 +182,13 @@ public class registerinterface extends JFrame {
 		lblNewLabel.setText("Select Order");
 
 		lblEnterAmountTendered = new JLabel("Enter Amount tendered");
-		lblEnterAmountTendered.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblEnterAmountTendered.setForeground(SystemColor.activeCaption);
+		lblEnterAmountTendered.setFont(new Font("Calibri", Font.BOLD, 12));
 		lblEnterAmountTendered.setBounds(241, 226, 138, 14);
 		contentPane.add(lblEnterAmountTendered);
 
 		amountTendTxt = new JTextField();
+		amountTendTxt.setBackground(SystemColor.scrollbar);
 		amountTendTxt.setHorizontalAlignment(SwingConstants.TRAILING);
 		amountTendTxt.setFont(new Font("Calibri", Font.PLAIN, 12));
 		amountTendTxt.setText("0");
@@ -193,18 +206,22 @@ public class registerinterface extends JFrame {
 		amountTendTxt.setColumns(10);
 
 		lblChange = new JLabel("Change");
-		lblChange.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblChange.setForeground(SystemColor.activeCaption);
+		lblChange.setFont(new Font("Calibri", Font.BOLD, 12));
 		lblChange.setBounds(319, 628, 80, 20);
 		contentPane.add(lblChange);
 
 		changelbl = new JLabel("$0");
-		changelbl.setFont(new Font("Calibri", Font.PLAIN, 12));
+		changelbl.setForeground(SystemColor.activeCaption);
+		changelbl.setFont(new Font("Calibri", Font.BOLD, 12));
 		changelbl.setHorizontalAlignment(SwingConstants.RIGHT);
 		changelbl.setBounds(418, 631, 94, 14);
 		contentPane.add(changelbl);
 
 		closeOrderButton = new JButton("Close Order");
-		closeOrderButton.setFont(new Font("Calibri", Font.PLAIN, 12));
+		closeOrderButton.setBackground(SystemColor.inactiveCaption);
+		closeOrderButton.setForeground(SystemColor.activeCaptionText);
+		closeOrderButton.setFont(new Font("Calibri", Font.BOLD, 12));
 		closeOrderButton.setEnabled(false);
 		closeOrderButton.addActionListener(new closeOrderAction());
 		closeOrderButton.setBounds(241, 659, 350, 23);
@@ -212,6 +229,8 @@ public class registerinterface extends JFrame {
 
 		// /////close button
 		JButton closeBtn = new JButton("Close");
+		closeBtn.setBackground(SystemColor.inactiveCaption);
+		closeBtn.setForeground(SystemColor.activeCaptionText);
 		closeBtn.setFont(new Font("Calibri", Font.PLAIN, 12));
 		closeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -220,6 +239,7 @@ public class registerinterface extends JFrame {
 		});
 		closeBtn.setBounds(700, 11, 74, 23);
 		contentPane.add(closeBtn);
+		discountTextBox.setBackground(SystemColor.scrollbar);
 		discountTextBox.setHorizontalAlignment(SwingConstants.TRAILING);
 		discountTextBox.setFont(new Font("Calibri", Font.PLAIN, 12));
 		// / add discount checkbox and text field and action listener
@@ -238,13 +258,16 @@ public class registerinterface extends JFrame {
 		discountTextBox.setBounds(418, 102, 173, 20);
 		contentPane.add(discountTextBox);
 		discountTextBox.setColumns(10);
-		discountCheckBox.setFont(new Font("Calibri", Font.PLAIN, 12));
+		discountCheckBox.setBackground(SystemColor.windowBorder);
+		discountCheckBox.setForeground(SystemColor.activeCaption);
+		discountCheckBox.setFont(new Font("Calibri", Font.BOLD, 12));
 
 		discountCheckBox.addActionListener(new discountCheckBoxAction());
 		discountCheckBox.setBounds(241, 98, 138, 23);
 		contentPane.add(discountCheckBox);
 
 		tipAmountTxtBox = new JTextField();
+		tipAmountTxtBox.setBackground(SystemColor.scrollbar);
 		tipAmountTxtBox.setHorizontalAlignment(SwingConstants.TRAILING);
 		tipAmountTxtBox.setFont(new Font("Calibri", Font.PLAIN, 12));
 		tipAmountTxtBox.setText("0");
@@ -262,41 +285,49 @@ public class registerinterface extends JFrame {
 		tipAmountTxtBox.setColumns(10);
 
 		lblEnterTipReceived = new JLabel("Enter Tip Received");
-		lblEnterTipReceived.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblEnterTipReceived.setForeground(SystemColor.activeCaption);
+		lblEnterTipReceived.setFont(new Font("Calibri", Font.BOLD, 12));
 		lblEnterTipReceived.setBounds(241, 135, 151, 14);
 		contentPane.add(lblEnterTipReceived);
 
 		totalButon = new JButton("Calculate Total");
-		totalButon.setFont(new Font("Calibri", Font.PLAIN, 12));
+		totalButon.setBackground(SystemColor.inactiveCaption);
+		totalButon.setForeground(SystemColor.activeCaptionText);
+		totalButon.setFont(new Font("Calibri", Font.BOLD, 12));
 		totalButon.addActionListener(new calculateTotalAction());
 		totalButon.setBounds(241, 164, 350, 23);
 		contentPane.add(totalButon);
 
 		totalLabel = new JLabel("Total Due");
-		totalLabel.setFont(new Font("Calibri", Font.PLAIN, 12));
+		totalLabel.setForeground(SystemColor.activeCaption);
+		totalLabel.setFont(new Font("Calibri", Font.BOLD, 12));
 		totalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		totalLabel.setBounds(241, 201, 138, 14);
 		contentPane.add(totalLabel);
 
 		totalLbl = new JLabel("$ 0");
-		totalLbl.setFont(new Font("Calibri", Font.PLAIN, 12));
+		totalLbl.setForeground(SystemColor.activeCaption);
+		totalLbl.setFont(new Font("Calibri", Font.BOLD, 12));
 		totalLbl.setBounds(418, 201, 173, 14);
 		contentPane.add(totalLbl);
 
 		percentlbl = new JLabel("%");
-		percentlbl.setFont(new Font("Calibri", Font.PLAIN, 12));
+		percentlbl.setForeground(SystemColor.activeCaption);
+		percentlbl.setFont(new Font("Calibri", Font.BOLD, 12));
 		percentlbl.setBounds(593, 105, 46, 14);
 		contentPane.add(percentlbl);
 
 		label = new JLabel("$");
-		label.setFont(new Font("Calibri", Font.PLAIN, 12));
+		label.setForeground(SystemColor.activeCaption);
+		label.setFont(new Font("Calibri", Font.BOLD, 12));
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		label.setBounds(394, 136, 18, 14);
 		contentPane.add(label);
 
 		label_1 = new JLabel("$");
+		label_1.setForeground(SystemColor.activeCaption);
 		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_1.setFont(new Font("Calibri", Font.PLAIN, 12));
+		label_1.setFont(new Font("Calibri", Font.BOLD, 12));
 		label_1.setBounds(394, 227, 18, 14);
 		contentPane.add(label_1);
 	}// close constructor

@@ -71,7 +71,7 @@ public class register extends JFrame {
 		panel.setLayout(null);
 		
 		panel_1 = new JPanel();
-		panel_1.setBackground(SystemColor.desktop);
+		panel_1.setBackground(SystemColor.controlDkShadow);
 		panel_1.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		panel_1.setBounds(358, 208, 301, 221);
 		panel.add(panel_1);
@@ -87,8 +87,9 @@ public class register extends JFrame {
 		panel_1.add(passwordBox);
 		passwordBox.setHorizontalAlignment(SwingConstants.CENTER);
 		JButton btnOpenRegister = new JButton("Open Register");
+		btnOpenRegister.setBackground(SystemColor.inactiveCaption);
 		btnOpenRegister.setFont(new Font("Calibri", Font.BOLD, 12));
-		btnOpenRegister.setForeground(SystemColor.activeCaption);
+		btnOpenRegister.setForeground(SystemColor.activeCaptionText);
 //		btnOpenRegister.addKeyListener(new KeyAdapter() {
 //			@Override
 //			public void keyPressed(KeyEvent arg0) {
