@@ -46,6 +46,8 @@ import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Font;
+import java.awt.SystemColor;
 
 public class register extends JFrame {
 	private JTabbedPane reg = new JTabbedPane(JTabbedPane.TOP);
@@ -65,28 +67,34 @@ public class register extends JFrame {
 
 		this.DBAction = DBAction;
 		panel = new JPanel();
+		panel.setBackground(SystemColor.windowBorder);
 		panel.setLayout(null);
 		
 		panel_1 = new JPanel();
+		panel_1.setBackground(SystemColor.desktop);
 		panel_1.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
-		panel_1.setBounds(355, 128, 301, 221);
+		panel_1.setBounds(358, 208, 301, 221);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		enterPassword = new JLabel("Enter Password");
-		enterPassword.setBounds(90, 61, 121, 14);
+		enterPassword.setForeground(SystemColor.activeCaption);
+		enterPassword.setFont(new Font("Calibri", Font.BOLD, 25));
+		enterPassword.setBounds(64, 41, 171, 31);
 		panel_1.add(enterPassword);
 		enterPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordBox = new JPasswordField("tam");
-		passwordBox.setBounds(90, 97, 121, 20);
+		passwordBox.setBounds(90, 83, 121, 33);
 		panel_1.add(passwordBox);
 		passwordBox.setHorizontalAlignment(SwingConstants.CENTER);
 		JButton btnOpenRegister = new JButton("Open Register");
+		btnOpenRegister.setFont(new Font("Calibri", Font.BOLD, 12));
+		btnOpenRegister.setForeground(SystemColor.activeCaption);
 //		btnOpenRegister.addKeyListener(new KeyAdapter() {
 //			@Override
 //			public void keyPressed(KeyEvent arg0) {
 //			}
 //		});
-		btnOpenRegister.setBounds(90, 139, 121, 23);
+		btnOpenRegister.setBounds(90, 139, 121, 59);
 		panel_1.add(btnOpenRegister);
 		panel_1.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{passwordBox, btnOpenRegister}));
 		btnOpenRegister.addActionListener(new buttonListener());
@@ -97,6 +105,13 @@ public class register extends JFrame {
 			}
 		});
 		reg.add(panel);// , BorderLayout.NORTH);
+		
+		JLabel lblCashRegister = new JLabel("Cash Register");
+		lblCashRegister.setForeground(SystemColor.activeCaption);
+		lblCashRegister.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCashRegister.setFont(new Font("Calibri", Font.BOLD, 40));
+		lblCashRegister.setBounds(358, 91, 301, 69);
+		panel.add(lblCashRegister);
 		// reg.add(btnOpenRegister, BorderLayout.CENTER);
 		// reg.add(btnOpenRegister, BorderLayout.SOUTH);
 	}

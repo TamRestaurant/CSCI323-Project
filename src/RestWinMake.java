@@ -39,6 +39,7 @@ import javax.swing.JSeparator;
 import java.awt.GridLayout;
 
 import javax.swing.JScrollPane;
+import java.awt.SystemColor;
 
 public class RestWinMake extends JFrame {
 	private JPanel contentPane;
@@ -116,6 +117,7 @@ public class RestWinMake extends JFrame {
 
 		//setBounds(0, 0, 1300, 767);
 		contentPane = new JPanel();
+		contentPane.setBackground(SystemColor.windowBorder);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setPreferredSize(new Dimension(1125, 826));
 		setContentPane(contentPane);
@@ -149,7 +151,7 @@ public class RestWinMake extends JFrame {
 		// ----------------------ADD employee tab (for managing of menu/past
 		// orders/employees)----------------------
 		Administration a = new Administration(DBAction);
-		tabbedPane.addTab("Administration", a.getAdminPanel());
+		tabbedPane.addTab("Administration", a);
 		// TODO: Create dbConnector in one place and allow other classes to use
 		// it to avoid multiple connections
 
