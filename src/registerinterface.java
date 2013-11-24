@@ -334,6 +334,14 @@ public class registerinterface extends JFrame {
 					try {
 						discountPercent = (Double.parseDouble(discountTextBox
 								.getText())) / 100;
+						//get password for discount over 15%
+						if(discountPercent>.15) {
+							String pwrd=JOptionPane.showInputDialog("Enter Manager PIN.");
+							if(!pwrd.equals("tam")) {
+								JOptionPane.showMessageDialog(null,"Invalid PIN!");
+								return;
+							}
+						}
 						amountDue = (1 - discountPercent) * amountDue;
 
 					} catch (Exception e1) {
