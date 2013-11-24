@@ -49,7 +49,7 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Font;
 import java.awt.SystemColor;
 
-public class register extends JFrame {
+public class Register extends JFrame {
 	private JTabbedPane reg = new JTabbedPane(JTabbedPane.TOP);
 	private static JPanel panel;
 	private JButton[] cashierButtons;
@@ -61,7 +61,7 @@ public class register extends JFrame {
 
 	// pwdYourPin.setText("xxxxxxxx");
 //
-	public register(DbAction DBAction)
+	public Register(DbAction DBAction)
 
 	{
 

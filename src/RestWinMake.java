@@ -139,7 +139,7 @@ public class RestWinMake extends JFrame {
 		// tabbedPane.addTab("Wait Station", null, w.w(), null);
 		// -----------------------ADD register
 		// tab-----------------------------------
-		register r = new register(DBAction);
+		Register r = new Register(DBAction);
 		tabbedPane.addTab("Register", null, r.r(), null);
 		// -----------------------ADD kitchen
 		// tab-----------------------------------
