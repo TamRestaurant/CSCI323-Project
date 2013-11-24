@@ -441,7 +441,7 @@ public class menu extends JFrame
                                 	closeOrder.setEnabled(!openTicket);
                                 	orderButtons.setEnabled(false);
                                 	items = new ArrayList<Item>();
-                                	
+                                	orderNumber++;
                                 	//food.clear();
                                 	//list.setListData(food);
                                 	rePopulateOpenOrderList();
@@ -496,7 +496,7 @@ public class menu extends JFrame
 									for (Order o : oo) {
 										System.out.println(o);
 									}
-									orderNumber++;
+//									orderNumber++;
 									rePopulateOpenOrderList();
 									
 								}
