@@ -85,7 +85,21 @@ public class RegisterGui extends JFrame {
 	private int ordernum = 0;
 	private JLabel label;
 	private JLabel label_1;
-	private final String managerPw = "tamman";
+	private static String managerPw = "tamman";
+
+	/**
+	 * @return the managerPw
+	 */
+	public static String getManagerPw() {
+		return managerPw;
+	}
+
+	/**
+	 * @param managerPw the managerPw to set
+	 */
+	public static void setManagerPw(String managerPw) {
+		RegisterGui.managerPw = managerPw;
+	}
 
 	// private NumberFormat fmt=new NumberFormat();.getCurrencyInstance();
 	/*
@@ -121,7 +135,7 @@ public class RegisterGui extends JFrame {
 		// get vector of orders
 		listToVector();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(185, 0, 800, 767);
+		setBounds(185, 0, 825, 805);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.windowBorder);
 		contentPane.setForeground(SystemColor.activeCaption);
@@ -336,6 +350,17 @@ public class RegisterGui extends JFrame {
 		label_1.setFont(new Font("Calibri", Font.BOLD, 14));
 		label_1.setBounds(370, 227, 18, 14);
 		contentPane.add(label_1);
+		
+		JButton btnChangeManagerPassword = new JButton("Change Manager Password");
+		btnChangeManagerPassword.setBackground(SystemColor.inactiveCaption);
+		btnChangeManagerPassword.setFont(new Font("Calibri", Font.BOLD, 12));
+		btnChangeManagerPassword.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ChangeRegPassword.main(null,managerPw,3);
+			}
+		});
+		btnChangeManagerPassword.setBounds(217, 707, 350, 23);
+		contentPane.add(btnChangeManagerPassword);
 	}// close constructor
 		// //create open order vector from openorder arraylist
 

@@ -106,6 +106,7 @@ public class Lockscreen extends JFrame {
 		subLockpanel.add(lblLockWorkstation);
 		
 		JButton changePwdBtn = new JButton("Change Lockscreen Password");
+		changePwdBtn.setBackground(SystemColor.controlHighlight);
 		changePwdBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				

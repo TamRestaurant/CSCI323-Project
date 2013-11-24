@@ -129,6 +129,7 @@ public class Register extends JFrame {
 		panel.add(lblCashRegister);
 		
 		changeRegpwBtn = new JButton("Change Register Password");
+		changeRegpwBtn.setBackground(SystemColor.inactiveCaption);
 		changeRegpwBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
