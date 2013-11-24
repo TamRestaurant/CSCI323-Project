@@ -271,6 +271,18 @@ public class Kitchen extends JFrame {
 
 			} else if (event.getSource() == btnContact) {
 				if (orderUp.isSelected()) {
+					int index = orderListBox.getSelectedIndex();
+					if (index >= 0) {
+
+						openOrdersArray.get(index).setServed(true);
+						//Set foodPreparedDate in database so that order shows as prepared from the kitchen
+						//TODO - THIS IS NOT WORKIGN YET FOR SOME REASON, NEED TO INVESTIGATE
+						DBAct.setFoodPreppedDate(openOrdersArray.get(index).getOrderNumber());
+						
+						// list.remove(index);
+						listToVector();
+						orderListBox.setListData(openOrdersVector);
+					}
 					orderUp();
 					sendTowait();
 				} else {
