@@ -334,11 +334,14 @@ public class registerinterface extends JFrame {
 					try {
 						discountPercent = (Double.parseDouble(discountTextBox
 								.getText())) / 100;
-						//get password for discount over 15%
-						if(discountPercent>.15) {
-							String pwrd=JOptionPane.showInputDialog("Enter Manager PIN.");
-							if(!pwrd.equals("tam")) {
-								JOptionPane.showMessageDialog(null,"Invalid PIN!");
+						
+						// get password for discount over 15%
+						if (discountPercent > .15) {
+							String pwrd = JOptionPane
+									.showInputDialog("Enter Manager PIN.");
+							if (!pwrd.equals("tamman")) {
+								JOptionPane.showMessageDialog(null,
+										"Invalid PIN!");
 								return;
 							}
 						}
@@ -465,7 +468,6 @@ public class registerinterface extends JFrame {
 
 	public void closeOrder() {
 
-		
 		// for(int i=0;i<openOrders.size();i++) {
 		// System.out.println("list    "+openOrders.get(i)+" \n  vector  "+openOrdersVector.get(i)+"\n    combo   "+orderComboBox.getItemAt(i)+"\n");
 		// }
@@ -477,28 +479,32 @@ public class registerinterface extends JFrame {
 		 * and repopulate the combo box
 		 */
 		boolean updateOrder = true;
-		
-		try{
-			//Get required fields and close the order in the database
-			String discountAmount = Double.toString(discountPercent * openOrders.get(index).getOrderTotal());
-			
-			//Close order
-			DBAction.closeOrder(Integer.toString(ordernum), discountAmount, Double.toString(tip));					
+
+		try {
+			// Get required fields and close the order in the database
+			String discountAmount = Double.toString(discountPercent
+					* openOrders.get(index).getOrderTotal());
+
+			// Close order
+			DBAction.closeOrder(Integer.toString(ordernum), discountAmount,
+					Double.toString(tip));
 			openOrders.remove(index);
 			openOrdersVector.remove(index);
 			orderComboBox.validate();
 			orderComboBox.setSelectedIndex(0);
-			JOptionPane.showMessageDialog(null, "Order number " + ordernum
-					+ " has been closed successfully.\nSelect a new order to process.");
+			JOptionPane
+					.showMessageDialog(
+							null,
+							"Order number "
+									+ ordernum
+									+ " has been closed successfully.\nSelect a new order to process.");
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			// e.printStackTrace();
+			updateOrder = false;
 
 		}
-		catch (Exception e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			updateOrder = false;
-		
-		}
-		
 
 	}
 
