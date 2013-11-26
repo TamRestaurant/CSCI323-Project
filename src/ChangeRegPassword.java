@@ -128,6 +128,7 @@ public class ChangeRegPassword extends JFrame {
 					break;
 				case 3:
 					RegisterGui.setManagerPw(newStrPwd1);
+					break;
 				}
 				
 				//Lockscreen.setLockpwd(newStrPwd1);
