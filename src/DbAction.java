@@ -3,6 +3,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.Types;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -537,6 +538,123 @@ public class DbAction {
 	} // END addEmployees()
 	
 	
+	/**
+	 * This class updates the employee table (and address table)
+	 * 
+	 * In the long-run, I would probably want to re-factor this to only update changes on fields changed insted of all fields.
+	 * 
+	 * @param employeeID
+	 * @param employeeName
+	 * @param employeeAddress
+	 * @param employeeRole
+	 * @param isActive
+	 * @param hireDate
+	 * @param termDate
+	 * @return
+	 */
+	public boolean updateEmployee(String employeeID, String[] employeeName, String[] employeeAddress, String employeeRole, boolean isActive, String hireDate, String termDate){
+		boolean success = false;
+		int active = 0;
+		String sqlAddress = "UPDATE `csci_323_exp20140101`.`Address` "
+				+ "SET `Address1`=?, `City`=?, `State`=?, `Zip`=?, `phone`=? "
+				+ "WHERE `idAddress`= ? ";
+		String sqlEmployee = "UPDATE `csci_323_exp20140101`.`Employee` "
+				+ "SET `FirstName`=?, `LastName`=?, `EmployeeRole_idEmployeeRole`=?, `Active`=?, `HireDate`=? , `TerminationDate`=? "
+				+ "WHERE `idEmployee`=?";;
+		if (isActive){
+			active = 1;
+		}
+		
+		try{
+			//Prepare statement and update the database with address and employee
+			PreparedStatement updateAddress = conn.prepareStatement(sqlAddress);
+			PreparedStatement updateEmployee = conn.prepareStatement(sqlEmployee);
+			
+			//get employee role	
+			rs = getRoles(employeeRole);
+			//Get first item from column (key)
+			rs.next();
+			int roleKey = rs.getInt(1);
+			
+			//Prepare address prepared statement
+			for (int i = 0; i < employeeAddress.length; i++){
+				//Index starts at 1 for the first param (filling in for the ? above)
+				updateAddress.setString(i+1, employeeAddress[i]);
+			}//end for
+
+			updateAddress.setInt(6, getAddressId(Integer.parseInt(employeeID)));
+			
+			
+			updateEmployee.setString(1, employeeName[0]);
+			updateEmployee.setString(2, employeeName[1]);
+			updateEmployee.setInt(3, roleKey);
+			updateEmployee.setInt(4, active);
+			updateEmployee.setString(5, hireDate);
+			if (!isActive){
+				updateEmployee.setString(6, termDate);
+				updateEmployee.setString(7, employeeID);
+			}
+			else{
+				updateEmployee.setNull(6, Types.NULL);
+				updateEmployee.setString(7, employeeID);
+			}
+			
+			//Shazzaammmm!
+			System.out.println("about to execute address");
+			updateAddress.executeUpdate();
+			System.out.println("Address done :). \nAbout to execute employee");
+			updateEmployee.executeUpdate();
+			System.out.println("Shazzaamm!");
+			
+			success = true;
+			
+		}
+		
+		catch(SQLException ex){
+			//TODO print to console the exception if occurred
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+			success = false;
+		}
+		
+		return success;
+		
+	}
+	
+	/**
+	 * Get address id using employeeID
+	 * @param employeeID
+	 * @return
+	 */
+	private int getAddressId(int employeeID){
+		int addressID = 0;
+		String sql = "Select\n  Address.idAddress\n"
+				+ "From\n  EmployeeRole "
+				+ "Inner Join\n  Employee On Employee.EmployeeRole_idEmployeeRole = EmployeeRole.idEmployeeRole\n  "
+				+ "Inner Join\n  Address On Employee.Address_idAddress = Address.idAddress\nWhere\n  "
+				+ "Employee.idEmployee = " + employeeID;
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			rs.next();
+			addressID = rs.getInt(1);
+
+		}
+		
+		catch (SQLException ex){
+		    // handle any errors
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+		}
+
+		return addressID;
+	}
+	
+	
 	/***
 	 * This method gets the menu items from the database
 	 * @return ResultSet
@@ -1036,6 +1154,79 @@ public class DbAction {
 		} 
 		
 		return orderNum;
+	}
+	
+	
+	/**
+	 * Update time record in database
+	 * @param text
+	 * @param dateIn
+	 * @param dateOut
+	 */
+
+	public boolean updateTimeEntry(String recordID, String dateIn, String dateOut) {
+		boolean success = true;
+		
+		String sql = "UPDATE `csci_323_exp20140101`.`EmployeeTimeRecord` "
+				+ "SET `ClockInDateTime`=?, `ClockOutDateTime`=? "
+				+ "WHERE `idEmployeeTimeRecord`=?";
+
+		try {
+			//Prepared statement for the address
+			PreparedStatement updateTimeRecord = conn.prepareStatement(sql);
+			//Insert needed values into prepared statement
+			updateTimeRecord.setString(1, dateIn);
+			updateTimeRecord.setString(2, dateOut);
+			updateTimeRecord.setString(3, recordID);
+			//Execute prepared statement (run SQL query)
+			updateTimeRecord.executeUpdate();
+
+		}
+		
+		catch (SQLException ex){
+		    // handle any errors
+			success = false;
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+		} 
+		
+		
+		return success;
+		
+		
+	}
+
+	/**
+	 * Delete time record
+	 * @param parseInt
+	 * @return
+	 */
+	public boolean deleteTimeRecord(int timeRecordID) {
+		boolean success = true;
+		String sql = "DELETE FROM `csci_323_exp20140101`.`EmployeeTimeRecord` "
+				+ "WHERE `idEmployeeTimeRecord`= ?";
+		
+		try {
+			//Prepared statement for the address
+			PreparedStatement deleteTimeRecord = conn.prepareStatement(sql);
+			//Insert needed values into prepared statement
+			deleteTimeRecord.setInt(1, timeRecordID);
+
+			//Execute prepared statement (run SQL query)
+			deleteTimeRecord.executeUpdate();
+
+		}
+		
+		catch (SQLException ex){
+		    // handle any errors
+			success = false;
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+		} 
+
+		return success;
 	}
 }
 

@@ -7,6 +7,7 @@ import java.awt.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.ScrollPaneConstants;
@@ -37,6 +38,7 @@ import javax.swing.JSeparator;
 //import RPSGui.buttonListener;
 
 
+
 import java.awt.GridLayout;
 
 import javax.swing.JScrollPane;
@@ -44,7 +46,10 @@ import javax.swing.JScrollPane;
 import java.awt.SystemColor;
 import java.awt.Font;
 
-public class RestWinMake extends JFrame {
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+
+public class RestWinMake extends JFrame implements ChangeListener {
 	private JPanel contentPane;
 	private JPasswordField pwdYourPin;
 	private static JTabbedPane tabbedPane;
@@ -130,6 +135,7 @@ public class RestWinMake extends JFrame {
 		contentPane.setLayout(null);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.addChangeListener(this);
 		tabbedPane.setBackground(SystemColor.controlHighlight);
 		tabbedPane.setFont(new Font("Calibri", Font.BOLD, 13));
 		tabbedPane.setBounds(10, 10, 1100, 810);
@@ -331,5 +337,26 @@ public class RestWinMake extends JFrame {
 
 	}
 
+	
+	/**
+	 * This is a change listener for the tabbed pane to make sure that the administration panel is only available to management
+	 * 
+	 */
+	public void stateChanged(ChangeEvent arg0) {
+		
+		//Check to see if admin panel was the tab selected
+		if (tabbedPane.getSelectedIndex() == 4){
+			String password = JOptionPane.showInputDialog(this, "Manager Password Required", "Manager Authentication (will make behind panel not show in future)", JOptionPane.QUESTION_MESSAGE);
+			if (password.length() > 0){
+
+			}
+			else{
+				JOptionPane.showMessageDialog(this, "The password you entered is incorrect", "INCORRECT PASSWORD", JOptionPane.ERROR_MESSAGE);
+				tabbedPane.setSelectedIndex(0);
+			}
+				
+			
+		}
+	}
 }// End
 

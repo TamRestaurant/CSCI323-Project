@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import java.awt.Choice;
 
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
@@ -451,6 +452,7 @@ public class EmployeeGui implements ActionListener {
 		panelEmpGui.add(labelError);
 		
 		btnEditEmployee = new JButton("Edit selected employee");
+		btnEditEmployee.setEnabled(false);
 		btnEditEmployee.addActionListener(this);
 		btnEditEmployee.setFont(new Font("Calibri", Font.PLAIN, 16));
 		btnEditEmployee.setBounds(10, 394, 200, 51);
@@ -481,7 +483,9 @@ public class EmployeeGui implements ActionListener {
 			table_employee.setModel(model);
 			populateRoles();
 			labelError.setForeground(Color.BLACK);
-			labelError.setText("Connection Successful :D");
+			labelError.setText("Successful :D");
+			btnEditEmployee.setEnabled(true);
+			
 			
 	} catch (SQLException e) {
 			// TODO ADD EXCEPTION MESSAGE HERE
@@ -722,38 +726,36 @@ public class EmployeeGui implements ActionListener {
 	 * 
 	 */
 	public void actionPerformed(ActionEvent arg0) {
-		JWindow window = new JWindow();
 
-		int Y = table_employee.getSelectedRow();
-		String[] employeeInfo = new String[12];
-		int EID = 0, FNAME=1,LNAME=2,ADDR=3,CITY=4,ST=5,ZIP=6,PH=7,ACTIVE=8,ROLE=9,HDATE=10,TDATE=11;
-		employeeInfo[EID]= table_employee.getValueAt(Y, EID).toString();
-		employeeInfo[FNAME]= table_employee.getValueAt(Y, FNAME).toString();
-		employeeInfo[LNAME]= table_employee.getValueAt(Y, LNAME).toString();
-		employeeInfo[ADDR]= table_employee.getValueAt(Y, ADDR).toString();
-		employeeInfo[CITY]= table_employee.getValueAt(Y, CITY).toString();
-		employeeInfo[ST]= table_employee.getValueAt(Y, ST).toString();
-		employeeInfo[ZIP]= table_employee.getValueAt(Y, ZIP).toString();
-		employeeInfo[PH]= table_employee.getValueAt(Y, PH).toString();
-		employeeInfo[ACTIVE]= table_employee.getValueAt(Y, ACTIVE).toString();
-		employeeInfo[ROLE]= table_employee.getValueAt(Y, ROLE).toString();
-		employeeInfo[HDATE]= table_employee.getValueAt(Y, HDATE).toString();
-		try{
-			employeeInfo[TDATE]= table_employee.getValueAt(Y, TDATE).toString();
-		} catch (NullPointerException e){
-			employeeInfo[TDATE]="0";
+		if (table_employee.getSelectedRow() > 0){
+			JDialog w = new JDialog();
+			int Y = table_employee.getSelectedRow();
+			String[] employeeInfo = new String[12];
+			int EID = 0, FNAME=1,LNAME=2,ADDR=3,CITY=4,ST=5,ZIP=6,PH=7,ROLE=8,ACTIVE=9,HDATE=10,TDATE=11;
+			employeeInfo[EID]= table_employee.getValueAt(Y, EID).toString();
+			employeeInfo[FNAME]= table_employee.getValueAt(Y, FNAME).toString();
+			employeeInfo[LNAME]= table_employee.getValueAt(Y, LNAME).toString();
+			employeeInfo[ADDR]= table_employee.getValueAt(Y, ADDR).toString();
+			employeeInfo[CITY]= table_employee.getValueAt(Y, CITY).toString();
+			employeeInfo[ST]= table_employee.getValueAt(Y, ST).toString();
+			employeeInfo[ZIP]= table_employee.getValueAt(Y, ZIP).toString();
+			employeeInfo[PH]= table_employee.getValueAt(Y, PH).toString();
+			employeeInfo[ACTIVE]= table_employee.getValueAt(Y, ACTIVE).toString();
+			employeeInfo[ROLE]= table_employee.getValueAt(Y, ROLE).toString();
+			employeeInfo[HDATE]= table_employee.getValueAt(Y, HDATE).toString();
+			try{
+				employeeInfo[TDATE]= table_employee.getValueAt(Y, TDATE).toString();
+			} catch (NullPointerException e){
+				System.out.println("here");
+				employeeInfo[TDATE]="0";
+			}
+			w.setContentPane(new EditEmployeePanelGui(employeeInfo, DBAction));
+			w.pack();
+			w.setVisible(true);
+			labelError.setText("Make sure to click populate again to show updated changes");
 		}
-		
-		//TODO- this all needs to be changed to a modal jdialog or something
 
-	 	window.setContentPane(new EditEmployeePanelGui(employeeInfo, DBAction));
-	 	window.setAlwaysOnTop (true);
-	 	window.pack();
-	 	window.setVisible(false);
-	 	window.setLocationRelativeTo(null);
-		//window.add(new editEmployeePanelGui(employeeInfo, DBAction));
 		
-		window.setVisible(true);
 		
 	}
 }
