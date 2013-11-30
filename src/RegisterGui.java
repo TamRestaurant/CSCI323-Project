@@ -401,7 +401,13 @@ public class RegisterGui extends JFrame {
 					try {
 						discountPercent = (Double.parseDouble(discountTextBox
 								.getText())) / 100;
-
+						
+						// make sure discount is not over 100%
+						if(discountPercent > 1) {
+							JOptionPane.showMessageDialog(null,
+									"Discount cannot exceed 100%.");
+							return;
+						}
 						// get password for discount over 15%
 						if (discountPercent > .15) {
 							String pwrd = null;
@@ -490,6 +496,7 @@ public class RegisterGui extends JFrame {
 					JOptionPane.showMessageDialog(null, "Payment is "
 							+ NumberFormat.getCurrencyInstance().format(diff)
 							+ " short! Try again.");
+					return;
 				}
 				// reset flag for total calculation
 				totalCalculated = false;
