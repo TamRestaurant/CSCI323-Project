@@ -1,0 +1,25 @@
+Employee  ID,First Name,Last Name,Role Name,Entry  ID,Clock In Date Time,Clock Out Date Time
+1,Brody,Mathis,Server,3,2013-10-28 22:46:00.0,2013-10-30 22:48:50.0
+1,Brody,Mathis,Server,12,2013-10-29 23:21:00.0,2013-10-30 23:25:26.0
+1,Brody,Mathis,Server,1,2013-10-30 13:23:00.0,2013-10-30 14:50:00.0
+4,Rudyard,Rodriguez,Server,2,2013-10-30 13:23:00.0,2013-10-30 23:26:17.0
+5,Perry,Delacruz,Server,4,2013-10-30 22:51:23.0,2013-10-30 23:26:22.0
+1,Brody,Mathis,Server,5,2013-10-30 22:53:28.0,2013-10-30 23:19:24.0
+4,Rudyard,Rodriguez,Server,6,2013-10-30 22:57:49.0,2013-10-30 23:26:30.0
+1,Brody,Mathis,Server,7,2013-10-30 22:58:01.0,2013-10-30 23:19:41.0
+9,Theodore,Bray,Cook,8,2013-10-30 22:59:28.0,2013-10-30 23:26:49.0
+2,Xerxes,Cash,Server,9,2013-10-30 23:00:14.0,2013-10-30 23:50:00.0
+3,Margaret,Chaney,Server,11,2013-10-30 23:01:00.0,2013-10-30 23:27:00.0
+7,Myra,Stark,Cook,10,2013-10-30 23:02:00.0,2013-10-30 23:30:00.0
+1,Brody,Mathis,Server,13,2013-10-30 23:22:14.0,2013-10-30 23:26:53.0
+1,Brody,Mathis,Server,15,2013-10-30 23:25:32.0,2013-10-30 23:34:58.0
+1,Brody,Mathis,Server,39,2013-10-30 23:28:00.0,2013-10-31 12:35:29.0
+3,Margaret,Chaney,Server,40,2013-10-30 23:28:00.0,2013-10-31 12:35:29.0
+3,Margaret,Chaney,Server,17,2013-10-30 23:28:31.0,2013-10-30 23:28:35.0
+7,Myra,Stark,Cook,41,2013-10-30 23:50:47.0,2013-10-31 23:19:00.0
+3,Margaret,Chaney,Server,44,2013-10-31 12:43:39.0,2013-10-31 12:43:43.0
+6,Ava,Pearson,Accounting,45,2013-11-01 13:03:11.0,2013-11-02 23:19:00.0
+1,Brody,Mathis,Server,46,2013-11-28 00:45:41.0,null
+5,Perry,Delacruz,Server,47,2013-12-01 19:50:57.0,null
+7,Myra,Stark,Cook,48,2013-12-01 19:51:02.0,null
+2,Xerxes,Cash,Server,49,2013-12-01 19:51:06.0,null

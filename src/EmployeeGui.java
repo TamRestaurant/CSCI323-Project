@@ -111,6 +111,7 @@ public class EmployeeGui implements ActionListener {
 	private JButton btnEditEmployee;
 	private ListTableModel model;
 	private JButton closeButton;
+	private JButton btnSaveReportTo;
 	
 	/**
 	 * Launch the application.
@@ -457,6 +458,13 @@ public class EmployeeGui implements ActionListener {
 		btnEditEmployee.setFont(new Font("Calibri", Font.PLAIN, 16));
 		btnEditEmployee.setBounds(10, 394, 200, 51);
 		panelEmpGui.add(btnEditEmployee);
+		
+		btnSaveReportTo = new JButton("Save Report to File");
+		btnSaveReportTo.addActionListener(this);
+		btnSaveReportTo.setFont(new Font("Calibri", Font.PLAIN, 16));
+		btnSaveReportTo.setEnabled(false);
+		btnSaveReportTo.setBounds(10, 458, 200, 51);
+		panelEmpGui.add(btnSaveReportTo);
 	} // end initialize
 	
 	
@@ -485,6 +493,7 @@ public class EmployeeGui implements ActionListener {
 			labelError.setForeground(Color.BLACK);
 			labelError.setText("Successful :D");
 			btnEditEmployee.setEnabled(true);
+			btnSaveReportTo.setEnabled(true);
 			
 			
 	} catch (SQLException e) {
@@ -727,33 +736,45 @@ public class EmployeeGui implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent arg0) {
 
-		if (table_employee.getSelectedRow() > 0){
-			JDialog w = new JDialog();
-			int Y = table_employee.getSelectedRow();
-			String[] employeeInfo = new String[12];
-			int EID = 0, FNAME=1,LNAME=2,ADDR=3,CITY=4,ST=5,ZIP=6,PH=7,ROLE=8,ACTIVE=9,HDATE=10,TDATE=11;
-			employeeInfo[EID]= table_employee.getValueAt(Y, EID).toString();
-			employeeInfo[FNAME]= table_employee.getValueAt(Y, FNAME).toString();
-			employeeInfo[LNAME]= table_employee.getValueAt(Y, LNAME).toString();
-			employeeInfo[ADDR]= table_employee.getValueAt(Y, ADDR).toString();
-			employeeInfo[CITY]= table_employee.getValueAt(Y, CITY).toString();
-			employeeInfo[ST]= table_employee.getValueAt(Y, ST).toString();
-			employeeInfo[ZIP]= table_employee.getValueAt(Y, ZIP).toString();
-			employeeInfo[PH]= table_employee.getValueAt(Y, PH).toString();
-			employeeInfo[ACTIVE]= table_employee.getValueAt(Y, ACTIVE).toString();
-			employeeInfo[ROLE]= table_employee.getValueAt(Y, ROLE).toString();
-			employeeInfo[HDATE]= table_employee.getValueAt(Y, HDATE).toString();
-			try{
-				employeeInfo[TDATE]= table_employee.getValueAt(Y, TDATE).toString();
-			} catch (NullPointerException e){
-				System.out.println("here");
-				employeeInfo[TDATE]="0";
+		if (arg0.getSource() == btnPopulateEmployees){
+			if (table_employee.getSelectedRow() > 0){
+				JDialog w = new JDialog();
+				int Y = table_employee.getSelectedRow();
+				String[] employeeInfo = new String[12];
+				int EID = 0, FNAME=1,LNAME=2,ADDR=3,CITY=4,ST=5,ZIP=6,PH=7,ROLE=8,ACTIVE=9,HDATE=10,TDATE=11;
+				employeeInfo[EID]= table_employee.getValueAt(Y, EID).toString();
+				employeeInfo[FNAME]= table_employee.getValueAt(Y, FNAME).toString();
+				employeeInfo[LNAME]= table_employee.getValueAt(Y, LNAME).toString();
+				employeeInfo[ADDR]= table_employee.getValueAt(Y, ADDR).toString();
+				employeeInfo[CITY]= table_employee.getValueAt(Y, CITY).toString();
+				employeeInfo[ST]= table_employee.getValueAt(Y, ST).toString();
+				employeeInfo[ZIP]= table_employee.getValueAt(Y, ZIP).toString();
+				employeeInfo[PH]= table_employee.getValueAt(Y, PH).toString();
+				employeeInfo[ACTIVE]= table_employee.getValueAt(Y, ACTIVE).toString();
+				employeeInfo[ROLE]= table_employee.getValueAt(Y, ROLE).toString();
+				employeeInfo[HDATE]= table_employee.getValueAt(Y, HDATE).toString();
+				try{
+					employeeInfo[TDATE]= table_employee.getValueAt(Y, TDATE).toString();
+				} catch (NullPointerException e){
+					System.out.println("here");
+					employeeInfo[TDATE]="0";
+				}
+				w.setContentPane(new EditEmployeePanelGui(employeeInfo, DBAction));
+				w.pack();
+				w.setVisible(true);
+				labelError.setText("Make sure to click populate again to show updated changes");
 			}
-			w.setContentPane(new EditEmployeePanelGui(employeeInfo, DBAction));
-			w.pack();
-			w.setVisible(true);
-			labelError.setText("Make sure to click populate again to show updated changes");
 		}
+		else if (arg0.getSource() == btnSaveReportTo){
+
+			if (WriteTableToFile.tableToFile(table_employee, "employeeHistory")){
+				labelError.setText("File Creation Successful!");
+			}
+			else{
+				labelError.setText("File Creation Failed!");
+				}
+		}
+
 
 		
 		

@@ -243,8 +243,10 @@ public class OrderHistory implements ActionListener {
 		panelOrderHistory.add(btnSubmit);
 		
 		btnSaveReport = new JButton("Save Report to File");
+		btnSaveReport.addActionListener(this);
 		btnSaveReport.setMnemonic('S');
 		btnSaveReport.setBounds(10, 420, 160, 23);
+		btnSaveReport.setEnabled(false);
 		panelOrderHistory.add(btnSaveReport);
 		
 		lblErrorLabel = new JLabel("");
@@ -376,12 +378,20 @@ public class OrderHistory implements ActionListener {
 		else if(e.getSource().equals(btnSubmit)){
 			
 			populateReport();
+			btnSaveReport.setEnabled(true);
 
 		}
 
 		
 		else if(e.getSource().equals(btnSaveReport)){
 			
+			if (WriteTableToFile.tableToFile(tableOrderReports, "orderHistory")){
+				lblErrorLabel.setText("File Creation Successful!");
+			}
+			else{
+				lblErrorLabel.setText("File Creation Failed!");
+				}
+
 		}
 		
 	}

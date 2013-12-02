@@ -79,6 +79,7 @@ public class EmployeeTimeTrackingGui extends JPanel implements ActionListener, C
 	private String hoursWorkedString = "";
 	private Date origDateIn;
 	private Date origDateOut;
+	private JButton btnSaveReport;
 	
 	
 	
@@ -102,13 +103,14 @@ public class EmployeeTimeTrackingGui extends JPanel implements ActionListener, C
 		
 		panelEdit = new JPanel();
 		panelEdit.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Edit Time Punch", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelEdit.setBounds(3, 91, 163, 163);
+		panelEdit.setBounds(3, 91, 163, 210);
 		add(panelEdit);
 		panelEdit.setLayout(null);
 		
 		
 		
 		btnCreateRecord = new JButton("Create Record");
+		btnCreateRecord.addActionListener(this);
 		btnCreateRecord.setFont(new Font("Calibri", Font.PLAIN, 16));
 		btnCreateRecord.setBounds(10, 119, 147, 33);
 		panelEdit.add(btnCreateRecord);
@@ -245,6 +247,13 @@ public class EmployeeTimeTrackingGui extends JPanel implements ActionListener, C
 		btnCreateRecord.setEnabled(false);
 		btnDeleteSelected.setEnabled(false);
 		btnEditSelected.setEnabled(false);
+		
+		btnSaveReport = new JButton("Save Report");
+		btnSaveReport.addActionListener(this);
+		btnSaveReport.setFont(new Font("Calibri", Font.PLAIN, 16));
+		btnSaveReport.setEnabled(false);
+		btnSaveReport.setBounds(10, 163, 147, 33);
+		panelEdit.add(btnSaveReport);
 		btnSubmit.setEnabled(false);
 		spinnerClockIn.setEnabled(false);
 		spinnerClockOut.setEnabled(false);
@@ -328,7 +337,7 @@ public class EmployeeTimeTrackingGui extends JPanel implements ActionListener, C
 			ListTableModel model;
 			Vector<String> timeID = new Vector();
 			String currTimeEntryID;
-			
+			btnSaveReport.setEnabled(true);
 			
 			//Try to populate table with resultSet
 			try {
@@ -362,11 +371,7 @@ public class EmployeeTimeTrackingGui extends JPanel implements ActionListener, C
 		
 		//Popup window allowing edits to be entered
 		else if (arg0.getSource() == btnCreateRecord){
-				timePanel = new EditTimePunchGui("test", "5", "6", "test time", "test time", false);
-				JDialog dialog = new JDialog();
-				dialog.setContentPane(timePanel.getTimePunchPanel());
-				dialog.setBounds(100, 100, 491, 318);
-				dialog.setVisible(true);
+
 			
 		}
 		
@@ -472,6 +477,15 @@ public class EmployeeTimeTrackingGui extends JPanel implements ActionListener, C
 			}
 
 			
+		}
+		
+		else if(arg0.getSource() == btnSaveReport){
+			if (WriteTableToFile.tableToFile(table, "timeEntryReport")){
+				lblError.setText("File Creation Successful!");
+			}
+			else{
+				lblError.setText("File Creation Failed!");
+				}
 		}
 		
 		
