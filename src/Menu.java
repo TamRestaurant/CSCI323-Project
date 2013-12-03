@@ -228,7 +228,7 @@ public class Menu extends JFrame {
 				 * COMBOBOX
 				 * 
 				 */
-				rePopulateOpenOrderList();
+				methodForTimer();
 				
 			}
 		};
@@ -551,6 +551,12 @@ public class Menu extends JFrame {
 		repaint();
 	}
 
+	public void methodForTimer()
+	{
+		openFood = orderToVector(db.getOpenOrders());
+		openList.setListData(openFood);
+		repaint();
+	}
 	// ---------------------------------------------------------------------------------------------------------------
 	// ---------------------------------------------------------------------------------------------------------------
 
