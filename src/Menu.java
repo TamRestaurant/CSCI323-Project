@@ -216,6 +216,24 @@ public class Menu extends JFrame {
 		openList.setEnabled(true);
 		edit.setBounds(50, 330, 117, 29);
 		openOrders.add(edit);
+		
+		int delay = 10000; // milliseconds
+		ActionListener taskPerformer = new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				// Connect to DB (passed in as parameter)
+
+				// ---------------------------------------------------
+				/**
+				 * THIS GETS OPEN ORDERS FROM THE DB AND ADDS THEM TO THE
+				 * COMBOBOX
+				 * 
+				 */
+				rePopulateOpenOrderList();
+				
+			}
+		};
+		new Timer(delay, taskPerformer).start();
+		
 		edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
