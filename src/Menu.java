@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 
 import javax.swing.BoxLayout;
+import javax.swing.Timer;
 
 import java.awt.Component;
 import java.awt.Dimension;
