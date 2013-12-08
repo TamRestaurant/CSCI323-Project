@@ -107,7 +107,7 @@ public class DbAction {
 	 * @param currEmployee
 	 */
 	public int[] clockInEmployee(Employee currEmployee){
-		String sqlAddress = "INSERT into csci_323_exp20140101.EmployeeTimeRecord(Employee_idEmployee,ClockInDateTime) VALUES (?,?)";
+		String sqlAddress = "INSERT into sql424362.EmployeeTimeRecord(Employee_idEmployee,ClockInDateTime) VALUES (?,?)";
 		int[] clockInRecordArray = new int[2];
 		final int CLOCK_IN_RECORD_ID = 0;
 		final int CLOCK_IN_EMP_ID = 1;
@@ -182,8 +182,8 @@ public class DbAction {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
 		
-		//String sqlTimeUpdate= "UPDATE csci_323_exp20140101.EmployeeTimeRecord SET ClockOutDateTime = ? WHERE idEmployeeTimeRecord = ?";
-		String sqlTimeUpdate = "UPDATE csci_323_exp20140101.EmployeeTimeRecord SET ClockOutDateTime = \""+ dateFormat.format(date).toString() +"\" WHERE idEmployeeTimeRecord = " + recordId;
+		//String sqlTimeUpdate= "UPDATE sql424362.EmployeeTimeRecord SET ClockOutDateTime = ? WHERE idEmployeeTimeRecord = ?";
+		String sqlTimeUpdate = "UPDATE sql424362.EmployeeTimeRecord SET ClockOutDateTime = \""+ dateFormat.format(date).toString() +"\" WHERE idEmployeeTimeRecord = " + recordId;
 	
 		
 		
@@ -273,11 +273,11 @@ public class DbAction {
 	    		+ "Employee.Active,\n    "
 	    		+ "Employee.HireDate,\n    "
 	    		+ "Employee.TerminationDate\nFrom\n    "
-	    		+ "csci_323_exp20140101.Address\n        "
+	    		+ "sql424362.Address\n        "
 	    		+ "Inner Join\n    "
-	    		+ "csci_323_exp20140101.Employee ON csci_323_exp20140101.Employee.Address_idAddress = csci_323_exp20140101.Address.idAddress\n        "
+	    		+ "sql424362.Employee ON sql424362.Employee.Address_idAddress = sql424362.Address.idAddress\n        "
 	    		+ "Inner Join\n    "
-	    		+ "csci_323_exp20140101.EmployeeRole ON csci_323_exp20140101.Employee.EmployeeRole_idEmployeeRole = csci_323_exp20140101.EmployeeRole.idEmployeeRole\n  "
+	    		+ "sql424362.EmployeeRole ON sql424362.Employee.EmployeeRole_idEmployeeRole = sql424362.EmployeeRole.idEmployeeRole\n  "
 	    		+ "Order By\n Employee.idEmployee");
 	    		
 	    		
@@ -295,11 +295,11 @@ public class DbAction {
 	    		+ "Employee.Active,\n    "
 	    		+ "Employee.HireDate,\n    "
 	    		+ "Employee.TerminationDate FROM\n "
-	    		+ "csci_323_exp20140101.Address\n        "
+	    		+ "sql424362.Address\n        "
 	    		+ "Inner Join\n    "
-	    		+ "csci_323_exp20140101.Employee ON csci_323_exp20140101.Employee.Address_idAddress = Address.idAddress\n        "
+	    		+ "sql424362.Employee ON sql424362.Employee.Address_idAddress = Address.idAddress\n        "
 	    		+ "Inner Join\n    "
-	    		+ "csci_323_exp20140101.EmployeeRole ON csci_323_exp20140101.Employee.EmployeeRole_idEmployeeRole = csci_323_exp20140101.EmployeeRole.idEmployeeRole");
+	    		+ "sql424362.EmployeeRole ON sql424362.Employee.EmployeeRole_idEmployeeRole = sql424362.EmployeeRole.idEmployeeRole");
 				*/
 	    
 	}
@@ -328,7 +328,7 @@ public class DbAction {
 	public ResultSet getRoles(){
 		try{
 			 stmt = conn.createStatement();
-			 rs = stmt.executeQuery("SELECT RoleName, idEmployeeRole FROM csci_323_exp20140101.EmployeeRole");
+			 rs = stmt.executeQuery("SELECT RoleName, idEmployeeRole FROM sql424362.EmployeeRole");
 		}
 		
 		catch(SQLException ex){
@@ -350,7 +350,7 @@ public class DbAction {
 	public ResultSet getRoles(String roleName){
 		try{
 			 stmt = conn.createStatement();
-			 rs = stmt.executeQuery("SELECT idEmployeeRole, RoleName FROM csci_323_exp20140101.EmployeeRole WHERE EmployeeRole.RoleName = '" + roleName +"'");
+			 rs = stmt.executeQuery("SELECT idEmployeeRole, RoleName FROM sql424362.EmployeeRole WHERE EmployeeRole.RoleName = '" + roleName +"'");
 		}
 		
 		catch(SQLException ex){
@@ -376,7 +376,7 @@ public class DbAction {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		int orderKey;
 		
-		String sqlOrder = "INSERT into csci_323_exp20140101.Order(OrderDate,Employee_idEmployee,seatingTable) VALUES (?,?,?)";
+		String sqlOrder = "INSERT into sql424362.Order(OrderDate,Employee_idEmployee,seatingTable) VALUES (?,?,?)";
 		try{
 			
 			PreparedStatement addOrder = conn.prepareStatement(sqlOrder, Statement.RETURN_GENERATED_KEYS);
@@ -423,7 +423,7 @@ public class DbAction {
 	
 			//Loop through item array and all all items to the db
 			for (int i = 0; i < item.size(); i++){
-				String sqlItem = "INSERT into csci_323_exp20140101.OrderMenuItem(OrderMenuItemQTY,ItemComments,Order_idOrder, MenuItem_idMenuItem) VALUES (?,?,?,?)";
+				String sqlItem = "INSERT into sql424362.OrderMenuItem(OrderMenuItemQTY,ItemComments,Order_idOrder, MenuItem_idMenuItem) VALUES (?,?,?,?)";
 				PreparedStatement addItem = conn.prepareStatement(sqlItem);
 				addItem.setInt(1, itemQty);
 				addItem.setString(2, item.get(i).getItemComment());
@@ -465,9 +465,9 @@ public class DbAction {
 			active = 0;
 		}
 		
-		// SQL QUERY FOR REFERENCE::: INSERT into csci_323_exp20140101.Address(Address1,City,State,Zip,phone) VALUES (address,city,state,zip,phone); // Also will obtain addressKey after added
-		String sqlAddress = "INSERT into csci_323_exp20140101.Address(Address1,City,State,Zip,phone) VALUES (?,?,?,?,?)";
-		String sqlEmployee = "INSERT into csci_323_exp20140101.Employee(FirstName,LastName,EmployeeRole_idEmployeeRole,Active,Address_idAddress,HireDate) VALUES (?,?,?,?,?,?)";
+		// SQL QUERY FOR REFERENCE::: INSERT into sql424362.Address(Address1,City,State,Zip,phone) VALUES (address,city,state,zip,phone); // Also will obtain addressKey after added
+		String sqlAddress = "INSERT into sql424362.Address(Address1,City,State,Zip,phone) VALUES (?,?,?,?,?)";
+		String sqlEmployee = "INSERT into sql424362.Employee(FirstName,LastName,EmployeeRole_idEmployeeRole,Active,Address_idAddress,HireDate) VALUES (?,?,?,?,?,?)";
 		
 		try{
 			//Prepared statement for the address
@@ -555,10 +555,10 @@ public class DbAction {
 	public boolean updateEmployee(String employeeID, String[] employeeName, String[] employeeAddress, String employeeRole, boolean isActive, String hireDate, String termDate){
 		boolean success = false;
 		int active = 0;
-		String sqlAddress = "UPDATE `csci_323_exp20140101`.`Address` "
+		String sqlAddress = "UPDATE `sql424362`.`Address` "
 				+ "SET `Address1`=?, `City`=?, `State`=?, `Zip`=?, `phone`=? "
 				+ "WHERE `idAddress`= ? ";
-		String sqlEmployee = "UPDATE `csci_323_exp20140101`.`Employee` "
+		String sqlEmployee = "UPDATE `sql424362`.`Employee` "
 				+ "SET `FirstName`=?, `LastName`=?, `EmployeeRole_idEmployeeRole`=?, `Active`=?, `HireDate`=? , `TerminationDate`=? "
 				+ "WHERE `idEmployee`=?";;
 		if (isActive){
@@ -669,12 +669,9 @@ public class DbAction {
 		    		+ "MenuItem.ItemDescription,\n  "
 		    		+ "MenuItem.ItemPrice,\n  "
 		    		+ "menuItemCategory.CategoryName\n"
-		    		+ "From\n  csci_323_exp20140101.Menu "
+		    		+ "From\n  MenuItem "
 		    		+ "Inner Join\n  "
-		    		+ "csci_323_exp20140101.MenuItem On csci_323_exp20140101.MenuItem.Menu_idMenu = Menu.idMenu "
-		    		+ "Inner Join\n  "
-		    		+ "csci_323_exp20140101.menuItemCategory On csci_323_exp20140101.MenuItem.MenuCategory_idCategory =\n    "
-		    		+ "csci_323_exp20140101.menuItemCategory.idmenuItemCategory");
+		    		+ "menuItemCategory On MenuItem.MenuCategory_idCategory = menuItemCategory.idmenuItemCategory ");
 		    		
 		    		
 		    		
@@ -732,7 +729,7 @@ public class DbAction {
 	public ArrayList<String> getOpenOrderIDs(){
 		try {
 		    stmt = conn.createStatement();
-		    rs = stmt.executeQuery("SELECT * FROM csci_323_exp20140101.Order\n"
+		    rs = stmt.executeQuery("SELECT * FROM sql424362.Order\n"
 		    		+ "WHERE\n"
 		    		+ "Order.OrderClose is null");
 
@@ -761,7 +758,7 @@ public class DbAction {
 		    stmt = conn.createStatement();
 		    rs = stmt.executeQuery("Select\n  MenuItem.ItemName,\n  MenuItem.ItemDescription,\n  menuItemCategory.CategoryName,\n  MenuItem.idMenuItem,\n  MenuItem.ItemPrice,\n  "
 		    		+ "`Order`.idOrder,\n  `Order`.Employee_idEmployee,\n  `Order`.OrderDate,\n  `Order`.OrderClose,\n    `Order`.seatingTable\n, OrderMenuItem.idOrderMenuItem\n, OrderMenuItem.ItemComments\n"
-		    		+ "From\n  Menu Inner Join\n  MenuItem On MenuItem.Menu_idMenu = Menu.idMenu "
+		    		+ "From\n  MenuItem "
 		    		+ "Inner Join\n  menuItemCategory On MenuItem.MenuCategory_idCategory =\n    menuItemCategory.idmenuItemCategory "
 		    		+ "Inner Join\n  OrderMenuItem On OrderMenuItem.MenuItem_idMenuItem = MenuItem.idMenuItem\n  "
 		    		+ "Inner Join\n  `Order` On OrderMenuItem.Order_idOrder = `Order`.idOrder\n"
@@ -827,7 +824,7 @@ public class DbAction {
 		Date date = new Date();
 
 		try {
-			String sqlString = "UPDATE `csci_323_exp20140101`.`Order` SET `foodPreparedDate`="+ dateFormat.format(date).toString() +" WHERE `idOrder`='"+ Integer.toString(orderNum) +"'";
+			String sqlString = "UPDATE `sql424362`.`Order` SET `foodPreparedDate`="+ dateFormat.format(date).toString() +" WHERE `idOrder`='"+ Integer.toString(orderNum) +"'";
 			stmt = conn.createStatement();
 			stmt.execute(sqlString);
 			
@@ -850,7 +847,7 @@ public class DbAction {
 	 */
 	public void cancelOrderItem(int menuOrderItemID){
 		
-		String sqlQuery = "DELETE FROM `csci_323_exp20140101`.`OrderMenuItem` WHERE `idOrderMenuItem`= ?";
+		String sqlQuery = "DELETE FROM `sql424362`.`OrderMenuItem` WHERE `idOrderMenuItem`= ?";
 		
 		try {
 			PreparedStatement addItem = conn.prepareStatement(sqlQuery);
@@ -877,7 +874,7 @@ public class DbAction {
 	 */
 	public void addItemExistingOrder(int orderNumber, int itemID, String itemComments){
 		
-		String sqlQuery = "INSERT INTO `csci_323_exp20140101`.`OrderMenuItem` (`OrderMenuItemQTY`, `ItemComments`, `Order_idOrder`, `MenuItem_idMenuItem`) VALUES ('1', ?, ?, ?)";
+		String sqlQuery = "INSERT INTO `sql424362`.`OrderMenuItem` (`OrderMenuItemQTY`, `ItemComments`, `Order_idOrder`, `MenuItem_idMenuItem`) VALUES ('1', ?, ?, ?)";
 		
 		try {
 			PreparedStatement addItem = conn.prepareStatement(sqlQuery);
@@ -909,7 +906,7 @@ public class DbAction {
 		boolean success = true;
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
-		String SQLcloseOrder = "UPDATE `csci_323_exp20140101`.`Order` SET `OrderClose`= \""+ dateFormat.format(date).toString() + "\""
+		String SQLcloseOrder = "UPDATE `sql424362`.`Order` SET `OrderClose`= \""+ dateFormat.format(date).toString() + "\""
 				+ ", `discountAmount`=\'"+ discDollarAmount +"\', `tipAmount`=\'"+ tipAmount +"\' "
 				+ "WHERE `idOrder`=\'"+ orderNum +"\'";
 		try{
@@ -962,9 +959,9 @@ public class DbAction {
 		tempSQL[7] = "";
 		tempSQL[8] = "";
 		tempSQL[9] = "Employee Inner Join\n  ";
-		tempSQL[10] = "csci_323_exp20140101.Order On csci_323_exp20140101.Order.Employee_idEmployee = csci_323_exp20140101.Employee.idEmployee Inner Join\n  ";
-		tempSQL[11] = "csci_323_exp20140101.OrderMenuItem On csci_323_exp20140101.OrderMenuItem.Order_idOrder = csci_323_exp20140101.Order.idOrder Inner Join\n  ";
-		tempSQL[12] = "csci_323_exp20140101.MenuItem On csci_323_exp20140101.OrderMenuItem.MenuItem_idMenuItem = csci_323_exp20140101.MenuItem.idMenuItem\n  ";
+		tempSQL[10] = "sql424362.Order On sql424362.Order.Employee_idEmployee = sql424362.Employee.idEmployee Inner Join\n  ";
+		tempSQL[11] = "sql424362.OrderMenuItem On sql424362.OrderMenuItem.Order_idOrder = sql424362.Order.idOrder Inner Join\n  ";
+		tempSQL[12] = "sql424362.MenuItem On sql424362.OrderMenuItem.MenuItem_idMenuItem = sql424362.MenuItem.idMenuItem\n  ";
 		tempSQL[13] = "";
 		tempSQL[14] = "";
 		tempSQL[15] = "Order By\n \"Order Date\"";
@@ -1167,7 +1164,7 @@ public class DbAction {
 	public boolean updateTimeEntry(String recordID, String dateIn, String dateOut) {
 		boolean success = true;
 		
-		String sql = "UPDATE `csci_323_exp20140101`.`EmployeeTimeRecord` "
+		String sql = "UPDATE `sql424362`.`EmployeeTimeRecord` "
 				+ "SET `ClockInDateTime`=?, `ClockOutDateTime`=? "
 				+ "WHERE `idEmployeeTimeRecord`=?";
 
@@ -1204,7 +1201,7 @@ public class DbAction {
 	 */
 	public boolean deleteTimeRecord(int timeRecordID) {
 		boolean success = true;
-		String sql = "DELETE FROM `csci_323_exp20140101`.`EmployeeTimeRecord` "
+		String sql = "DELETE FROM `sql424362`.`EmployeeTimeRecord` "
 				+ "WHERE `idEmployeeTimeRecord`= ?";
 		
 		try {
@@ -1229,6 +1226,7 @@ public class DbAction {
 		return success;
 	}
 }
+
 
 
 
