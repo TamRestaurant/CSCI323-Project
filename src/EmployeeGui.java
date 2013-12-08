@@ -736,7 +736,7 @@ public class EmployeeGui implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent arg0) {
 
-		if (arg0.getSource() == btnPopulateEmployees){
+		if (arg0.getSource() == btnEditEmployee){
 			if (table_employee.getSelectedRow() > 0){
 				JDialog w = new JDialog();
 				int Y = table_employee.getSelectedRow();
