@@ -20,7 +20,8 @@ public class DbConnector{
 	
 	//place holder for connection
 	Connection conn = null;
-	private String username = "csci32320140101", password="lohrishuphei8xoPapai", url="db2.cs.umt.edu/csci_323_exp20140101";
+	//private String username = "csci32320140101", password="lohrishuphei8xoPapai", url="db2.cs.umt.edu/csci_323_exp20140101";
+	private String username = "sql424362", password="jT2*rE5*", url="sql4.freemysqlhosting.net/sql424362";
 	//Other test connections
 	//private String username = "bsc", password="Passw0rd1", url="db3.modwest.com"; // ---> This one may not have correct drivers installed
 	//private String username = "cs322", password="Passw0rd!", url="cs322.db.11713522.hostedresource.com/csci_323_exp20140101";
