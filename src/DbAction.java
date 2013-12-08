@@ -758,7 +758,7 @@ public class DbAction {
 		    stmt = conn.createStatement();
 		    rs = stmt.executeQuery("Select\n  MenuItem.ItemName,\n  MenuItem.ItemDescription,\n  menuItemCategory.CategoryName,\n  MenuItem.idMenuItem,\n  MenuItem.ItemPrice,\n  "
 		    		+ "`Order`.idOrder,\n  `Order`.Employee_idEmployee,\n  `Order`.OrderDate,\n  `Order`.OrderClose,\n    `Order`.seatingTable\n, OrderMenuItem.idOrderMenuItem\n, OrderMenuItem.ItemComments\n"
-		    		+ "From\n  Menu Inner Join\n  MenuItem On MenuItem.Menu_idMenu = Menu.idMenu "
+		    		+ "From\n  MenuItem "
 		    		+ "Inner Join\n  menuItemCategory On MenuItem.MenuCategory_idCategory =\n    menuItemCategory.idmenuItemCategory "
 		    		+ "Inner Join\n  OrderMenuItem On OrderMenuItem.MenuItem_idMenuItem = MenuItem.idMenuItem\n  "
 		    		+ "Inner Join\n  `Order` On OrderMenuItem.Order_idOrder = `Order`.idOrder\n"
